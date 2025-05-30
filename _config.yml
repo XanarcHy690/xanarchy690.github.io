@@ -44,8 +44,8 @@ social:
 
 # Postal address (add as many lines as necessary)
 address:
+  - line: Körfez
   - line: Atakum
-  - line: Samsun
 
 # Credits content
 credits: 
