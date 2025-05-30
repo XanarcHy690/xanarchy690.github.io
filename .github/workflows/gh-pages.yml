@@ -1,0 +1,36 @@
+name: Generate GitHub pages examples
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: ./examples/vite/package-lock.json
+
+      - run: |
+          npm ci
+          npm run build
+          cd examples/vite
+          npm ci
+          npm run build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          cname: tailwindcss.catppuccin.com
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./examples/vite/dist
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
