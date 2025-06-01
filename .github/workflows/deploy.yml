@@ -34,7 +34,7 @@ jobs:
           bundler-cache: true # bundle install'ı çalıştırır ve gem'leri önbelleğe alır
 
       - name: Build Jekyll site
-        run: bundle exec jyll build --destination ./_site
+        run: bundle exec jekyll build --destination ./_site
         env:
           JEKYLL_ENV: production
           # Eğer _config.yml içinde baseurl tanımlıysa ve GitHub Pages'da farklı bir baseurl gerekiyorsa
