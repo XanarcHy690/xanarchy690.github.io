@@ -139,37 +139,6 @@ layout: default
                 {{ data_profile.contact_intro }}
             </p>
 
-            <div class="bg-ctp-surface0 rounded-2xl p-8 md:p-12">
-                <form class="space-y-6" action="https://formspree.io/f/your_form_id" method="POST"> <!-- Formspree veya benzeri bir servis kullanın -->
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            İsim
-                            <input type="text" name="name" placeholder="{{ s.contact_form_name_placeholder }}" required
-                                   class="w-full bg-ctp-surface1 border border-ctp-surface2 rounded-lg px-4 py-3 text-ctp-text placeholder-ctp-overlay1 focus:outline-none focus:border-ctp-lavender transition-colors">
-                        </div>
-                        <div>
-                            Mail
-                            <input type="email" name="_replyto" placeholder="{{ s.contact_form_email_placeholder }}" required
-                                   class="w-full bg-ctp-surface1 border border-ctp-surface2 rounded-lg px-4 py-3 text-ctp-text placeholder-ctp-overlay1 focus:outline-none focus:border-ctp-lavender transition-colors">
-                        </div>
-                    </div>
-                    <div>
-                        Başlık
-                        <input type="text" name="subject" placeholder="{{ s.contact_form_subject_placeholder }}" required
-                               class="w-full bg-ctp-surface1 border border-ctp-surface2 rounded-lg px-4 py-3 text-ctp-text placeholder-ctp-overlay1 focus:outline-none focus:border-ctp-lavender transition-colors">
-                    </div>
-                    <div>
-                        Mesaj
-                        <textarea name="message" rows="5" placeholder="{{ s.contact_form_message_placeholder }}" required
-                                  class="w-full bg-ctp-surface1 border border-ctp-surface2 rounded-lg px-4 py-3 text-ctp-text placeholder-ctp-overlay1 focus:outline-none focus:border-ctp-lavender transition-colors resize-none"></textarea>
-                    </div>
-                    <button type="submit"
-                            class="bg-ctp-lavender hover:bg-ctp-blue text-ctp-base px-8 py-3 rounded-lg font-semibold transition-colors">
-                        {{ s.contact_form_submit_button }}
-                    </button>
-                </form>
-            </div>
-
             <div class="mt-12 flex flex-col sm:flex-row justify-center items-center sm:space-x-8 space-y-4 sm:space-y-0">
                 <a href="mailto:{{ site_profile.email }}" class="flex items-center text-ctp-subtext1 hover:text-ctp-lavender transition-colors">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
