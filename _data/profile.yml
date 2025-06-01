@@ -1,8 +1,8 @@
-name: "Ahmet Yılmaz"
-avatar: "/assets/images/profile.jpg" # Kendi profil fotoğrafınızın yolu
+name: "Muhammet Abdullah Şahin"
+avatar: "/assets/images/profile.png" # Kendi profil fotoğrafınızın yolu
 # Unsplash linki de kullanabilirsiniz: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
-email: "hello@ahmetyilmaz.dev"
-phone: "+90 555 123 45 67"
+email: "m.sahinabdullah@gmail.com"
+phone: # "+90 555 123 45 67"
 
 # Dil bazlı metinler
 tr:
@@ -23,7 +23,7 @@ tr:
       items: "PostgreSQL, MongoDB, Redis"
   contact_intro: "Yeni projeler için işbirliği yapmaya her zaman açığım. Haydi birlikte harika şeyler yaratalım!"
   footer_tagline: "Full Stack Developer & UI/UX Designer"
-  footer_copyright: "© {{ current_year }} {{ site_profile_name }}. Tüm hakları saklıdır. Jekyll ile ❤️ ile yapılmıştır."
+  footer_copyright: "© {{ current_year }} {{ site_profile_name }}. Tüm hakları saklıdır."
 
 en:
   tagline: "Full Stack Developer & UI/UX Designer"
@@ -43,4 +43,4 @@ en:
       items: "PostgreSQL, MongoDB, Redis"
   contact_intro: "I'm always open to collaborating on new projects. Let's create amazing things together!"
   footer_tagline: "Full Stack Developer & UI/UX Designer"
-  footer_copyright: "© {{ current_year }} {{ site_profile_name }}. All rights reserved. Made with ❤️ using Jekyll."
+  footer_copyright: "© {{ current_year }} {{ site_profile_name }}. All rights reserved."

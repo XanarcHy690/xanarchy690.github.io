@@ -1,109 +1,106 @@
-<script>
-    // Proje verilerini Jekyll'dan alıp JS'e aktarmak için
-    const allProjectsData = {
-      {% assign s = site.data.strings %}
-      tr: {
-        strings: {
-            modal_about_project: "{{ s.tr.project_modal_about_project }}",
-            modal_features: "{{ s.tr.project_modal_features }}",
-            modal_tech_details: "{{ s.tr.project_modal_tech_details }}"
-        },
-        projects: [
-          {% assign projects_tr = site.projects | where_exp: "item", "item.path contains '/_projects/tr/'" %}
-          {% for p_tr in projects_tr %}
-          {
-            id: "{{ p_tr.id | slugify }}",
-            title: "{{ p_tr.title | escape }}",
-            content: {{ p_tr.content | strip_newlines | escape | jsonify }},
-            tags: {{ p_tr.tags | jsonify }},
-            github: "{{ p_tr.github_url }}",
-            live: "{{ p_tr.live_url }}"
-          }{% unless forloop.last %},{% endunless %}
-          {% endfor %}
-        ]
-      },
-      en: {
-        strings: {
-            modal_about_project: "{{ s.en.project_modal_about_project }}",
-            modal_features: "{{ s.en.project_modal_features }}",
-            modal_tech_details: "{{ s.en.project_modal_tech_details }}"
-        },
-        projects: [
-          {% assign projects_en = site.projects | where_exp: "item", "item.path contains '/_projects/en/'" %}
-          {% for p_en in projects_en %}
-          {
-            id: "{{ p_en.id | slugify }}",
-            title: "{{ p_en.title | escape }}",
-            content: {{ p_en.content | strip_newlines | escape | jsonify }},
-            tags: {{ p_en.tags | jsonify }},
-            github: "{{ p_en.github_url }}",
-            live: "{{ p_en.live_url }}"
-          }{% unless forloop.last %},{% endunless %}
-          {% endfor %}
-        ]
-      }
-    };
-    
-    const projectModal = document.getElementById('projectModal');
-    const modalTitleEl = document.getElementById('modalTitle');
-    const modalContentEl = document.getElementById('modalContent');
-    const modalTagsEl = document.getElementById('modalTags');
-    const modalGithubEl = document.getElementById('modalGithub');
-    const modalLiveEl = document.getElementById('modalLive');
-    
-    function openProjectModal(projectId, lang) {
-        const currentLangData = allProjectsData[lang] || allProjectsData['{{ site.default_lang }}'];
-        const project = currentLangData.projects.find(p => p.id === projectId);
-    
-        if (project && projectModal && modalTitleEl && modalContentEl && modalTagsEl && modalGithubEl && modalLiveEl) {
-            modalTitleEl.textContent = project.title;
-            modalContentEl.innerHTML = project.content; // Jekyll Markdown içeriği HTML'e çevrilmiş olmalı
-            
-            modalTagsEl.innerHTML = ''; // Clear previous tags
-            if (project.tags && project.tags.length > 0) {
-                project.tags.forEach(tag => {
-                    const tagElement = document.createElement('span');
-                    tagElement.className = 'px-3 py-1 bg-ctp-lavender/20 text-ctp-lavender rounded-full text-xs';
-                    tagElement.textContent = tag;
-                    modalTagsEl.appendChild(tagElement);
-                });
-            }
-            
-            modalGithubEl.href = project.github || '#';
-            modalLiveEl.href = project.live || '#';
-    
-            modalGithubEl.style.display = project.github ? 'inline-block' : 'none';
-            modalLiveEl.style.display = project.live ? 'inline-block' : 'none';
-            
-            projectModal.classList.remove('hidden');
-            projectModal.classList.add('flex');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        } else {
-            console.error("Project data or modal elements not found for ID:", projectId, "and lang:", lang);
-        }
+const allProjectsData = {
+    {% assign s = site.data.strings %}
+    tr: {
+    strings: {
+        modal_about_project: "{{ s.tr.project_modal_about_project }}",
+        modal_features: "{{ s.tr.project_modal_features }}",
+        modal_tech_details: "{{ s.tr.project_modal_tech_details }}"
+    },
+    projects: [
+        {% assign projects_tr = site.projects | where_exp: "item", "item.path contains '/_projects/tr/'" %}
+        {% for p_tr in projects_tr %}
+        {
+        id: "{{ p_tr.id | slugify }}",
+        title: "{{ p_tr.title | escape }}",
+        content: {{ p_tr.content | strip_newlines | escape | jsonify }},
+        tags: {{ p_tr.tags | jsonify }},
+        github: "{{ p_tr.github_url }}",
+        live: "{{ p_tr.live_url }}"
+        }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+    ]
+    },
+    en: {
+    strings: {
+        modal_about_project: "{{ s.en.project_modal_about_project }}",
+        modal_features: "{{ s.en.project_modal_features }}",
+        modal_tech_details: "{{ s.en.project_modal_tech_details }}"
+    },
+    projects: [
+        {% assign projects_en = site.projects | where_exp: "item", "item.path contains '/_projects/en/'" %}
+        {% for p_en in projects_en %}
+        {
+        id: "{{ p_en.id | slugify }}",
+        title: "{{ p_en.title | escape }}",
+        content: {{ p_en.content | strip_newlines | escape | jsonify }},
+        tags: {{ p_en.tags | jsonify }},
+        github: "{{ p_en.github_url }}",
+        live: "{{ p_en.live_url }}"
+        }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+    ]
     }
-    
-    function closeProjectModal() {
-        if (projectModal) {
-            projectModal.classList.add('hidden');
-            projectModal.classList.remove('flex');
-            document.body.style.overflow = 'auto'; // Restore scrolling
+};
+
+const projectModal = document.getElementById('projectModal');
+const modalTitleEl = document.getElementById('modalTitle');
+const modalContentEl = document.getElementById('modalContent');
+const modalTagsEl = document.getElementById('modalTags');
+const modalGithubEl = document.getElementById('modalGithub');
+const modalLiveEl = document.getElementById('modalLive');
+
+function openProjectModal(projectId, lang) {
+    const currentLangData = allProjectsData[lang] || allProjectsData['{{ site.default_lang }}'];
+    const project = currentLangData.projects.find(p => p.id === projectId);
+
+    if (project && projectModal && modalTitleEl && modalContentEl && modalTagsEl && modalGithubEl && modalLiveEl) {
+        modalTitleEl.textContent = project.title;
+        modalContentEl.innerHTML = project.content; // Jekyll Markdown içeriği HTML'e çevrilmiş olmalı
+        
+        modalTagsEl.innerHTML = ''; // Clear previous tags
+        if (project.tags && project.tags.length > 0) {
+            project.tags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'px-3 py-1 bg-ctp-lavender/20 text-ctp-lavender rounded-full text-xs';
+                tagElement.textContent = tag;
+                modalTagsEl.appendChild(tagElement);
+            });
         }
+        
+        modalGithubEl.href = project.github || '#';
+        modalLiveEl.href = project.live || '#';
+
+        modalGithubEl.style.display = project.github ? 'inline-block' : 'none';
+        modalLiveEl.style.display = project.live ? 'inline-block' : 'none';
+        
+        projectModal.classList.remove('hidden');
+        projectModal.classList.add('flex');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    } else {
+        console.error("Project data or modal elements not found for ID:", projectId, "and lang:", lang);
     }
-    
-    // Close modal when clicking outside
+}
+
+function closeProjectModal() {
     if (projectModal) {
-        projectModal.addEventListener('click', (e) => {
-            if (e.target.id === 'projectModal') {
-                closeProjectModal();
-            }
-        });
+        projectModal.classList.add('hidden');
+        projectModal.classList.remove('flex');
+        document.body.style.overflow = 'auto'; // Restore scrolling
     }
-    
-    // Close modal with Escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && projectModal && !projectModal.classList.contains('hidden')) {
+}
+
+// Close modal when clicking outside
+if (projectModal) {
+    projectModal.addEventListener('click', (e) => {
+        if (e.target.id === 'projectModal') {
             closeProjectModal();
         }
     });
-    </script>
+}
+
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && projectModal && !projectModal.classList.contains('hidden')) {
+        closeProjectModal();
+    }
+});

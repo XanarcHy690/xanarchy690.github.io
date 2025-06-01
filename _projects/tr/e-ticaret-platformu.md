@@ -1,6 +1,6 @@
 ---
 id: project-one
-order: 1
+order: 2
 title: "Proje Bir Başlığı"
 short_description: "Kısa açıklama."
 tags: ["Teknoloji1", "Teknoloji2"]
