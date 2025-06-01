@@ -17,11 +17,11 @@
 
             <div class="border-t border-ctp-surface0 pt-8">
                 <p class="text-ctp-overlay1 text-sm">
-                    {% comment %} Değişkenleri atama {% endcomment %}
-                    {% assign current_year_val = site.time | date: '%Y' %}
-                    {% assign site_profile_name_val = site.data.profile.name %}
-                    {% comment %} Atanan değişkenlerle stringi render etme {% endcomment %}
-                    {{ data_profile.footer_copyright | replace: '{{ current_year }}', current_year_val | replace: '{{ site_profile_name }}', site_profile_name_val }}
+                    {% assign year_str = site.time | date: '%Y' %}
+                    {% assign name_str = site.data.profile.name | default: "Default Name" %} {% comment %} Nil ise varsayılan ata {% endcomment %}
+                
+                    {% assign step1 = data_profile.footer_copyright | replace: '{{ current_year }}', year_str %}
+                    {{ step1 | replace: '{{ site_profile_name }}', name_str }}
                 </p>
             </div>
         </div>
