@@ -2,12 +2,13 @@
   Gerekli değişkenler: project, lang, s (strings)
 {% endcomment %}
 {% assign p = include.project %}
-{% assign current_lang = include.lang %}
-{% assign strings = include.s %}
+{% assign current_lang_for_card = include.lang %}
+{% assign strings_for_card = include.s %}
 
-<div class="card-hover bg-ctp-surface0 rounded-2xl overflow-hidden glow-effect cursor-pointer" 
-     onclick="openProjectModal('{{ p.id | remove_first: "/_projects/" | remove_first: current_lang | remove_first: "/" | replace: ".md", "" | slugify }}', '{{ current_lang }}')">
+<div class="card-hover bg-ctp-surface0 rounded-2xl overflow-hidden glow-effect cursor-pointer"
+     onclick="openProjectModal('{{ p.id | slugify }}', '{{ current_lang_for_card }}')">
     <div class="h-48 bg-gradient-to-br from-{{ p.image_gradient_from | default: 'ctp-blue' }} to-{{ p.image_gradient_to | default: 'ctp-sapphire' }} relative overflow-hidden">
+        <!-- ... (ikon ve overlay kısmı) ... -->
         <div class="absolute inset-0 bg-black/20"></div>
         <div class="absolute bottom-4 left-4 text-white">
             <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
@@ -22,14 +23,17 @@
         </div>
     </div>
     <div class="p-6">
-        <h3 class="text-xl font-semibold mb-2 text-ctp-text">{{ p.title }}</h3>
+        <h3 class="text-xl font-semibold mb-2 text-ctp-text">{{ p.title | default: "Proje Başlığı Eksik" }}</h3>
         <p class="text-ctp-subtext1 mb-4 text-sm">
-            {{ p.short_description }}
+            {{ p.short_description | default: "Kısa açıklama eksik." }}
         </p>
         <div class="flex flex-wrap gap-2">
             {% for tag in p.tags limit:3 %}
             <span class="px-3 py-1 bg-ctp-blue/20 text-ctp-blue rounded-full text-xs">{{ tag }}</span>
             {% endfor %}
+            {% if p.tags == nil or p.tags.size == 0 %}
+             <span class="px-3 py-1 bg-ctp-overlay0/20 text-ctp-overlay0 rounded-full text-xs">Etiket Yok</span>
+            {% endif %}
         </div>
     </div>
 </div>

@@ -87,14 +87,23 @@ layout: default
     <div class="container mx-auto px-6">
         <h2 class="text-4xl font-bold text-center mb-12 text-ctp-lavender">{{ s.section_title_projects }}</h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {% comment %} Düzeltme: Dil önekini dışarıda oluştur {% endcomment %}
-            {% assign lang_prefix = '/_projects/' | append: lang | append: '/' %}
-            {% comment %} Düzeltme: where_exp içinde değişkeni kullan, filtre değil {% endcomment %}
-            {% assign projects_lang = site.projects | where_exp: "item", "item.path contains lang_prefix" | sort: "order" %}
+            {% assign lang_for_projects = site.active_lang | default: site.default_lang | default: "tr" %}
+            {% assign project_path_prefix = '/_projects/' | append: lang_for_projects | append: '/' %}
+            <!-- DEBUG: Project Path Prefix = {{ project_path_prefix }} -->
+            <!-- DEBUG: Number of all projects found by Jekyll = {{ site.projects.size }} -->
 
-            {% for project in projects_lang %}
-                {% include project_card.html project=project lang=lang s=s %}
-            {% endfor %}
+            {% assign projects_lang = site.projects | where_exp: "item", "item.path contains project_path_prefix" | sort: "order" %}
+            <!-- DEBUG: Number of projects for lang '{{ lang_for_projects }}' = {{ projects_lang.size }} -->
+
+            {% if projects_lang.size > 0 %}
+                {% for project in projects_lang %}
+                    <!-- DEBUG: Processing project: {{ project.title }} (Path: {{ project.path }}) (Order: {{ project.order | inspect }}) -->
+                    {% include project_card.html project=project lang=lang_for_projects s=s %}
+                {% endfor %}
+            {% else %}
+                <p class="text-ctp-subtext1 text-center col-span-full">Bu dilde gösterilecek proje bulunamadı. (Dil: {{ lang_for_projects }})</p>
+                <!-- DEBUG: Fallback message shown because projects_lang.size is 0 or less. -->
+            {% endif %}
         </div>
     </div>
 </section>
