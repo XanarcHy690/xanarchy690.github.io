@@ -1,0 +1,46 @@
+name: "Ahmet Yılmaz"
+avatar: "/assets/images/profile.jpg" # Kendi profil fotoğrafınızın yolu
+# Unsplash linki de kullanabilirsiniz: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
+email: "hello@ahmetyilmaz.dev"
+phone: "+90 555 123 45 67"
+
+# Dil bazlı metinler
+tr:
+  tagline: "Full Stack Developer & UI/UX Designer"
+  greeting_intro: "Merhaba, Ben"
+  about_title: "Kim Miyim?"
+  about_bio_1: "5+ yıllık deneyime sahip Full Stack Developer'ım. Modern web teknolojileri ile kullanıcı dostu ve performanslı uygulamalar geliştiriyorum. Özellikle React, Node.js ve Python teknolojilerinde uzmanım."
+  about_bio_2: "Sürekli öğrenen biriyim ve yeni teknolojileri takip etmeyi seviyorum. Açık kaynak projelere katkıda bulunmayı ve bilgimi paylaşmayı seviyorum."
+  skills:
+    frontend:
+      title: "Frontend"
+      items: "React, Vue.js, TypeScript, Tailwind CSS"
+    backend:
+      title: "Backend"
+      items: "Node.js, Python, Django, Express.js"
+    database:
+      title: "Database"
+      items: "PostgreSQL, MongoDB, Redis"
+  contact_intro: "Yeni projeler için işbirliği yapmaya her zaman açığım. Haydi birlikte harika şeyler yaratalım!"
+  footer_tagline: "Full Stack Developer & UI/UX Designer"
+  footer_copyright: "© {year} {name}. Tüm hakları saklıdır. Jekyll ile ❤️ ile yapılmıştır."
+
+en:
+  tagline: "Full Stack Developer & UI/UX Designer"
+  greeting_intro: "Hello, I'm"
+  about_title: "Who Am I?"
+  about_bio_1: "I am a Full Stack Developer with 5+ years of experience. I develop user-friendly and high-performance applications with modern web technologies. I specialize particularly in React, Node.js, and Python technologies."
+  about_bio_2: "I am a continuous learner and love to follow new technologies. I enjoy contributing to open-source projects and sharing my knowledge."
+  skills:
+    frontend:
+      title: "Frontend"
+      items: "React, Vue.js, TypeScript, Tailwind CSS"
+    backend:
+      title: "Backend"
+      items: "Node.js, Python, Django, Express.js"
+    database:
+      title: "Database"
+      items: "PostgreSQL, MongoDB, Redis"
+  contact_intro: "I'm always open to collaborating on new projects. Let's create amazing things together!"
+  footer_tagline: "Full Stack Developer & UI/UX Designer"
+  footer_copyright: "© {year} {name}. All rights reserved. Made with ❤️ using Jekyll."

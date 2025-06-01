@@ -1,0 +1,35 @@
+{% comment %}
+  Gerekli değişkenler: project, lang, s (strings)
+{% endcomment %}
+{% assign p = include.project %}
+{% assign current_lang = include.lang %}
+{% assign strings = include.s %}
+
+<div class="card-hover bg-ctp-surface0 rounded-2xl overflow-hidden glow-effect cursor-pointer" 
+     onclick="openProjectModal('{{ p.id | remove_first: "/_projects/" | remove_first: current_lang | remove_first: "/" | replace: ".md", "" | slugify }}', '{{ current_lang }}')">
+    <div class="h-48 bg-gradient-to-br from-{{ p.image_gradient_from | default: 'ctp-blue' }} to-{{ p.image_gradient_to | default: 'ctp-sapphire' }} relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="absolute bottom-4 left-4 text-white">
+            <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                {% if p.icon_svg_path %}
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="{{ p.icon_svg_path }}"></path>
+                </svg>
+                {% else %}
+                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path></svg>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2 text-ctp-text">{{ p.title }}</h3>
+        <p class="text-ctp-subtext1 mb-4 text-sm">
+            {{ p.short_description }}
+        </p>
+        <div class="flex flex-wrap gap-2">
+            {% for tag in p.tags limit:3 %}
+            <span class="px-3 py-1 bg-ctp-blue/20 text-ctp-blue rounded-full text-xs">{{ tag }}</span>
+            {% endfor %}
+        </div>
+    </div>
+</div>

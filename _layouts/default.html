@@ -1,24 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ site.active_lang | default: site.default_lang }}">
 {% include head.html %}
+<body class="bg-ctp-base text-ctp-text min-h-screen">
+    {% include header.html %}
 
-<body id="page-top" class="index">
-  {% include nav.html %}
-  {% include header.html %}
-  {% include portfolio_grid.html %}
-  {% include about.html %}
+    <main>
+        {{ content }}
+    </main>
 
-  {% if site.contact == "static" %}
-  {% include contact_static.html %}
-  {% elsif site.contact == "disqus" %}
-  {% include contact_disqus.html %}
-  {% else %}
-  {% include contact.html %}
-  {% endif %}
-
-  {% include footer.html %}
-  {% include modals.html %}
-  {% include js.html %}
+    {% include footer.html %}
+    
+    {% include project_modal_scripts.html %}
+    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
 </body>
-
 </html>

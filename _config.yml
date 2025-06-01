@@ -1,63 +1,47 @@
-# Site settings
-title: Portfolio
-email: m.sahinabdullah@gmail.com
-url: portfolio.masahin.dev
-description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
-keywords: "machine learning engineer, learning engineer, software engineer, computer engineer"
-skills: "Web Developer - Machine Learning"
-meta_author: Şahin Muhammet Abdullah
-
-# Google webmaster tools
-google_verify:
-
-# https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
-bing_verify:
-
-# Contact form:
-# - static : pass through formspree.io to validate email sending
-# - disqus : replace contact form by disqus thread
-# - comment the line below if you want to stick with the default PHP contact form
-contact: static
-
-# If you use disqus you need disqus shortname
-# https://help.disqus.com/customer/portal/articles/466208
-disqus_shortname: masain
-
-# Color settings (hex-codes without the leading hash-tag)
-color:
-  primary: 18bc9c #80B3FF
-  primary-rgb: "24,288,156" #"128,179,255"
-  secondary: 2c3e50 #FD6E8A
-  secondary-dark: 233140 #A2122F
-
-# Footer settings
-footer:
-  copyright: Muhammet Abdullah Şahin
-  location: Samsun
-  social: Around the Web
-  credits: Credits
-
-# Social networks usernames (many more available: google-plus, flickr, dribbble, pinterest, instagram, tumblr, linkedin, etc.)
-social:
-  - title: github
-    url: https://github.com/SahinMuhammetAbdullah
-
-# Postal address (add as many lines as necessary)
-address:
-  - line: Körfez
-  - line: Atakum
-
-# Credits content
-credits: 
+title: Ahmet Yılmaz - Portfolio
+email: hello@ahmetyilmaz.dev
+description: >- # this means to ignore newlines until "baseurl:"
+  Ahmet Yılmaz'ın Full Stack Developer ve UI/UX Designer olarak projelerini
+  ve deneyimlerini içeren kişisel portfolyo sitesi.
+baseurl: "" # Depo adınız, eğer site "kullaniciadi.github.io/depo-adi/" altında ise "/depo-adi"
+url: "https://kullaniciadi.github.io" # GitHub Pages ana URL'niz
+github_username:  kullaniciadi # GitHub kullanıcı adınız
 
 # Build settings
 markdown: kramdown
-permalink: pretty
+theme: null # Kendi temamızı kullanıyoruz
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-polyglot
 
-#for posts
-defaults:
-  - scope:
-      path: ""
-      type: "posts"
-    values:
-      permalink: ""
+# Collections (Projeler için)
+collections:
+  projects:
+    output: false # Projeler için ayrı sayfa oluşturmayacağız, modal kullanacağız
+    # Eğer ayrı proje sayfaları isterseniz true yapın ve permalink ekleyin
+
+# Jekyll Polyglot Ayarları
+languages: ["tr", "en"]
+default_lang: "tr"
+exclude_from_localization: ["assets/", "admin/"] # Çevrilmeyecek dosyalar/klasörler
+parallel_localization: false # Hata ayıklama için false, performans için true
+
+# Sass ayarları (Eğer SASS kullanacaksanız)
+# sass:
+#   sass_dir: _sass
+#   style: compressed
+
+# Exclude from processing.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+  - .github
+  - .vscode

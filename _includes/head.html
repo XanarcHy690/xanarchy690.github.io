@@ -1,35 +1,36 @@
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{{ site.title }}</title>
-  <meta name="viewport" content="width=device-width">
-  <meta name="description" content="{{ site.description }}">
-  <meta name="keywords" content="{{ site.keywords }}" />
-  {% if site.meta_author %}
-  <meta name="author" content="{{ site.meta_author }}">{% endif %}
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="feed.xml">
-
-  <!-- Custom CSS & Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
-  <link rel="stylesheet" href="{{ " style.css" }}">
-
-  <!-- Google verification -->
-  {% if site.google_verify %}
-  <meta name="google-site-verification" content="{{ site.google_verify }}">{% endif %}
-
-  <!-- Bing Verification -->
-  {% if site.bing_verify %}
-  <meta name="msvalidate.01" content="{{ site.bing_verify }}">{% endif %}
-
-  <!-- Custom Fonts -->
-  <link rel="stylesheet" href="{{ " css/font-awesome/css/all.min.css" }}">
-  <link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-  <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% seo %} <!-- jekyll-seo-tag eklentisi başlık, meta açıklamaları vb. otomatik oluşturur -->
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Catppuccin Mocha color palette (Orijinaldeki gibi)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ctp-base': '#1e1e2e', 'ctp-mantle': '#181825', 'ctp-crust': '#11111b',
+                        'ctp-surface0': '#313244', 'ctp-surface1': '#45475a', 'ctp-surface2': '#585b70',
+                        'ctp-overlay0': '#6c7086', 'ctp-overlay1': '#7f849c', 'ctp-overlay2': '#9399b2',
+                        'ctp-subtext0': '#a6adc8', 'ctp-subtext1': '#bac2de', 'ctp-text': '#cdd6f4',
+                        'ctp-lavender': '#b4befe', 'ctp-blue': '#89b4fa', 'ctp-sapphire': '#74c7ec',
+                        'ctp-sky': '#89dceb', 'ctp-teal': '#94e2d5', 'ctp-green': '#a6e3a1',
+                        'ctp-yellow': '#f9e2af', 'ctp-peach': '#fab387', 'ctp-maroon': '#eba0ac',
+                        'ctp-red': '#f38ba8', 'ctp-mauve': '#cba6f7', 'ctp-pink': '#f5c2e7',
+                        'ctp-flamingo': '#f2cdcd', 'ctp-rosewater': '#f5e0dc'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    {% feed_meta %} <!-- jekyll-feed eklentisi için -->
+    <link rel="canonical" href="{{ page.url | absolute_url | replace:'index.html','' }}">
+    {% for lang in site.languages %}
+        {% if lang != site.active_lang %}
+            <link rel="alternate" hreflang="{{ lang }}" href="{{ site.baseurl_root }}{{ lang }}{{ page.url_ χωρίς_lang }}">
+        {% endif %}
+    {% endfor %}
 </head>

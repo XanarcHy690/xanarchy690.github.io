@@ -1,0 +1,39 @@
+html {
+    scroll-behavior: smooth;
+}
+.gradient-bg {
+    background: linear-gradient(135deg, #1e1e2e 0%, #181825 100%);
+}
+.card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+.social-btn {
+    transition: all 0.3s ease;
+}
+.social-btn:hover {
+    transform: translateY(-2px);
+}
+.floating-animation {
+    animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+.glow-effect {
+    box-shadow: 0 0 20px rgba(180, 190, 254, 0.3);
+}
+.glow-effect:hover {
+    box-shadow: 0 0 30px rgba(180, 190, 254, 0.5);
+}
+
+/* Prose styles for modal content (Tailwind Typography eklentisi yoksa) */
+.prose h4 { @apply text-xl font-semibold mb-4 text-ctp-lavender; }
+.prose h5 { @apply text-lg font-semibold mb-3 text-ctp-blue; } /* veya başka bir renk */
+.prose p { @apply mb-4 text-ctp-subtext1; }
+.prose ul { @apply list-disc list-inside mb-4 space-y-1 text-ctp-subtext1; }
+.prose li { @apply mb-1; }
+.prose a { @apply text-ctp-blue hover:text-ctp-sapphire; }
