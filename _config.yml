@@ -4,7 +4,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Ahmet Yılmaz'ın Full Stack Developer ve UI/UX Designer olarak projelerini
   ve deneyimlerini içeren kişisel portfolyo sitesi.
 baseurl: "" # Depo adınız, eğer site "kullaniciadi.github.io/depo-adi/" altında ise "/depo-adi"
-url: "https://kullaniciadi.github.io" # GitHub Pages ana URL'niz
+url: "https://sahinmuhammetabdullah.github.io" # GitHub Pages ana URL'niz
 github_username:  kullaniciadi # GitHub kullanıcı adınız
 
 # Build settings

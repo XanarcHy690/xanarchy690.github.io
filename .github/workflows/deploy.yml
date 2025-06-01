@@ -4,6 +4,14 @@ on:
   push:
     branches:
       - main  # Veya sitenizin ana dalı (master, main vb.)
+    paths:
+      - '**.yml'
+      - '**.md'
+      - '**.html'
+      - '**.css'
+      - '**.js'
+      - 'Gemfile'
+      - 'Gemfile.lock'
 
 jobs:
   build_and_deploy:
@@ -15,18 +23,24 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.0' # Jekyll ve eklentilerinizle uyumlu Ruby sürümü
-          bundler-cache: true # bundle install'ı hızlandırır
+          ruby-version: '3.0' # Veya Gemfile.lock dosyanızdaki Ruby sürümünü kontrol edin
+          bundler-cache: true # bundle install'ı çalıştırır ve gem'leri önbelleğe alır
 
       - name: Build Jekyll site
-        run: bundle exec jekyll build
+        # Bu adım kendi Gemfile'ınızdaki Jekyll ve eklentileri kullanır
+        run: bundle exec jekyll build --destination ./_site
         env:
           JEKYLL_ENV: production
+          # Eğer baseurl kullanıyorsanız _config.yml içinde, buraya da ekleyebilirsiniz:
+          # JEKYLL_BASEURL: ${{ secrets.GITHUB_PAGES_BASEURL }} # Eğer özel bir secret tanımladıysanız
+          # Veya doğrudan _config.yml'deki baseurl alanını kullanın
 
       - name: Deploy to GitHub Pages
+        # Build sonucunda oluşan _site klasörünü yayınlar
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-          # Eğer özel bir domain kullanıyorsanız:
+          publish_dir: ./_site # Build çıktısının olduğu klasör
+          # Eğer özel bir domain kullanıyorsanız, deponuzun ayarlarında
+          # Custom Domain kısmına ekleyebilir veya buraya cname: yourdomain.com yazabilirsiniz.
           # cname: yourdomain.com
