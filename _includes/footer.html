@@ -1,22 +1,32 @@
+{% comment %} Hata ayıklama için site.active_lang değerini en başta kontrol edelim {% endcomment %}
+<!-- DEBUG: site.active_lang = {{ site.active_lang | inspect }} -->
+<!-- DEBUG: site.default_lang = {{ site.default_lang | inspect }} -->
+
 {% assign current_active_lang = site.active_lang | default: site.default_lang | default: "tr" %}
-{% assign data_profile = site.data.profile[current_active_lang] %}
-{% assign s = site.data.strings[current_active_lang] %}
+<!-- DEBUG: current_active_lang = {{ current_active_lang | inspect }} -->
+
+{% assign data_profile_for_footer = site.data.profile[current_active_lang] %}
+<!-- DEBUG: data_profile_for_footer (profile data for current lang) = {{ data_profile_for_footer | inspect }} -->
+
+{% assign s_for_footer = site.data.strings[current_active_lang] %}
+<!-- DEBUG: s_for_footer (strings data for current lang) = {{ s_for_footer | inspect }} -->
 
 <footer class="bg-ctp-crust py-12">
     <div class="container mx-auto px-6">
         <div class="text-center">
             <div class="mb-8">
-                <h3 class="text-2xl font-bold text-ctp-lavender mb-4">{{ site.data.profile.name | default: "My Name" }}</h3>
-                {% if data_profile %}
-                    <p class="text-ctp-subtext1">{{ data_profile.footer_tagline }}</p>
+                <h3 class="text-2xl font-bold text-ctp-lavender mb-4">{{ site.data.profile.name | default: "My Portfolio Name" }}</h3>
+                {% if data_profile_for_footer and data_profile_for_footer.footer_tagline %}
+                    <p class="text-ctp-subtext1">{{ data_profile_for_footer.footer_tagline }}</p>
                 {% else %}
-                    <p class="text-ctp-subtext1">Default tagline if data_profile is nil for lang: {{ current_active_lang }}</p>
+                    <p class="text-ctp-subtext1">Default tagline. (data_profile_for_footer or footer_tagline is nil for lang: {{ current_active_lang }})</p>
+                    <!-- DEBUG: data_profile_for_footer.footer_tagline = {{ data_profile_for_footer.footer_tagline | inspect }} -->
                 {% endif %}
             </div>
 
             <div class="flex justify-center space-x-6 mb-8">
                 {% for social in site.data.social.links %}
-                <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer" class="text-ctp-overlay1 hover:text-{{ social.hover_bg_color | default: 'ctp-blue' }} transition-colors" aria-label="{{ s.footer_social_aria_label_prefix | default: 'Social: ' | append: social.name }}">
+                <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer" class="text-ctp-overlay1 hover:text-{{ social.hover_bg_color | default: 'ctp-blue' }} transition-colors" aria-label="{{ s_for_footer.footer_social_aria_label_prefix | default: 'Social: ' | append: social.name }}">
                     {{ social.icon_svg }}
                 </a>
                 {% endfor %}
@@ -25,12 +35,18 @@
             <div class="border-t border-ctp-surface0 pt-8">
                 <p class="text-ctp-overlay1 text-sm">
                     {% assign year_str = site.time | date: '%Y' %}
-                    {% assign name_str = site.data.profile.name | default: "My Name" %}
+                    {% assign name_str = site.data.profile.name | default: "My Name Default" %}
+                    <!-- DEBUG: year_str = {{ year_str | inspect }} -->
+                    <!-- DEBUG: name_str = {{ name_str | inspect }} -->
+                    <!-- DEBUG: data_profile_for_footer.footer_copyright (before replace) = {{ data_profile_for_footer.footer_copyright | inspect }} -->
 
-                    {% if data_profile and data_profile.footer_copyright %}
-                        {{ data_profile.footer_copyright | replace: '{{ current_year }}', year_str | replace: '{{ site_profile_name }}', name_str }}
+                    {% if data_profile_for_footer and data_profile_for_footer.footer_copyright %}
+                        {% assign copyright_template = data_profile_for_footer.footer_copyright %}
+                        {% assign final_copyright = copyright_template | replace: '{{ current_year }}', year_str %}
+                        {% assign final_copyright = final_copyright | replace: '{{ site_profile_name }}', name_str %}
+                        {{ final_copyright }}
                     {% else %}
-                        © {{ year_str }} {{ name_str }}. Default copyright if data_profile.footer_copyright is nil for lang: {{ current_active_lang }}.
+                        © {{ year_str }} {{ name_str }}. Default copyright. (data_profile_for_footer or footer_copyright is nil for lang: {{ current_active_lang }})
                     {% endif %}
                 </p>
             </div>
