@@ -3,50 +3,49 @@ name: Build and Deploy Jekyll Site
 on:
   push:
     branches:
-      - main  # Veya sitenizin ana dalı (master, main vb.)
-    # Sadece ilgili dosyalarda değişiklik olduğunda çalışması için paths ekleyebilirsiniz.
-    # paths:
-    #   - '**.yml'
-    #   - '**.md'
-    #   - '**.html'
-    #   - '**.css'
-    #   - '**.js'
-    #   - '_data/**'
-    #   - '_includes/**'
-    #   - '_layouts/**'
-    #   - '_projects/**'
-    #   - 'assets/**'
-    #   - 'Gemfile'
-    #   - 'Gemfile.lock'
-    #   - '_config.yml'
+      - main # Veya sitenizin ana dalı (master, main vb.)
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    # GitHub Pages'a yazma izni vermek için
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    # GitHub Pages'a deploy için ortam ayarı
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v4 # Son sürümü kullanmak iyi bir pratiktir
+        uses: actions/checkout@v4
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.0' # Gemfile.lock dosyanızdaki Ruby sürümünü kontrol edin veya projenize uygun olanı seçin
-          bundler-cache: true # bundle install'ı çalıştırır ve gem'leri önbelleğe alır
+          ruby-version: '3.0' # Gemfile'ınızla uyumlu Ruby sürümü
+          bundler-cache: true # 'bundle install' çalıştırır ve gem'leri önbelleğe alır
 
-      - name: Build Jekyll site
-        run: bundle exec jekyll build --destination ./_site
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v4
+
+      - name: Build with Jekyll
+        # Kendi Gemfile'ınızdaki Jekyll ve eklentileri kullanır
+        # Baseurl'i GitHub Pages ortam değişkeninden alır
+        run: bundle exec jekyll build --destination ./_site --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
-          # Eğer _config.yml içinde baseurl tanımlıysa ve GitHub Pages'da farklı bir baseurl gerekiyorsa
-          # Örneğin: username.github.io/repository-name için baseurl: /repository-name
-          # Bu durumda _config.yml'deki baseurl'i doğru ayarlayın veya burada override edin.
-          # JEKYLL_BASEURL: /repository-name # Eğer depoyla aynı isimde değilse
+
+      - name: Upload artifact
+        # Jekyll build çıktısını GitHub Pages'a yükler
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-          # Eğer özel bir domain kullanıyorsanız:
-          # cname: yourdomain.com
-          # publish_branch: gh-pages # Genellikle bu varsayılandır ve iyidir.
+        id: deployment
+        uses: actions/deploy-pages@v4
+        # Bu adım, 'Upload artifact' adımından gelen çıktıyı alır ve deploy eder
