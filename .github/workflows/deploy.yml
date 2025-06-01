@@ -4,43 +4,49 @@ on:
   push:
     branches:
       - main  # Veya sitenizin ana dalı (master, main vb.)
-    paths:
-      - '**.yml'
-      - '**.md'
-      - '**.html'
-      - '**.css'
-      - '**.js'
-      - 'Gemfile'
-      - 'Gemfile.lock'
+    # Sadece ilgili dosyalarda değişiklik olduğunda çalışması için paths ekleyebilirsiniz.
+    # paths:
+    #   - '**.yml'
+    #   - '**.md'
+    #   - '**.html'
+    #   - '**.css'
+    #   - '**.js'
+    #   - '_data/**'
+    #   - '_includes/**'
+    #   - '_layouts/**'
+    #   - '_projects/**'
+    #   - 'assets/**'
+    #   - 'Gemfile'
+    #   - 'Gemfile.lock'
+    #   - '_config.yml'
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Son sürümü kullanmak iyi bir pratiktir
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.0' # Veya Gemfile.lock dosyanızdaki Ruby sürümünü kontrol edin
+          ruby-version: '3.0' # Gemfile.lock dosyanızdaki Ruby sürümünü kontrol edin veya projenize uygun olanı seçin
           bundler-cache: true # bundle install'ı çalıştırır ve gem'leri önbelleğe alır
 
       - name: Build Jekyll site
-        # Bu adım kendi Gemfile'ınızdaki Jekyll ve eklentileri kullanır
-        run: bundle exec jekyll build --destination ./_site
+        run: bundle exec jyll build --destination ./_site
         env:
           JEKYLL_ENV: production
-          # Eğer baseurl kullanıyorsanız _config.yml içinde, buraya da ekleyebilirsiniz:
-          # JEKYLL_BASEURL: ${{ secrets.GITHUB_PAGES_BASEURL }} # Eğer özel bir secret tanımladıysanız
-          # Veya doğrudan _config.yml'deki baseurl alanını kullanın
+          # Eğer _config.yml içinde baseurl tanımlıysa ve GitHub Pages'da farklı bir baseurl gerekiyorsa
+          # Örneğin: username.github.io/repository-name için baseurl: /repository-name
+          # Bu durumda _config.yml'deki baseurl'i doğru ayarlayın veya burada override edin.
+          # JEKYLL_BASEURL: /repository-name # Eğer depoyla aynı isimde değilse
 
       - name: Deploy to GitHub Pages
-        # Build sonucunda oluşan _site klasörünü yayınlar
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site # Build çıktısının olduğu klasör
-          # Eğer özel bir domain kullanıyorsanız, deponuzun ayarlarında
-          # Custom Domain kısmına ekleyebilir veya buraya cname: yourdomain.com yazabilirsiniz.
+          publish_dir: ./_site
+          # Eğer özel bir domain kullanıyorsanız:
           # cname: yourdomain.com
+          # publish_branch: gh-pages # Genellikle bu varsayılandır ve iyidir.
