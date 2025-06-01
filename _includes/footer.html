@@ -6,18 +6,22 @@
                 <h3 class="text-2xl font-bold text-ctp-lavender mb-4">{{ site.data.profile.name }}</h3>
                 <p class="text-ctp-subtext1">{{ data_profile.footer_tagline }}</p>
             </div>
-            
+
             <div class="flex justify-center space-x-6 mb-8">
                 {% for social in site.data.social.links %}
-                <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer" class="text-ctp-overlay1 hover:text-{{ social.hover_bg_color | default: 'ctp-blue' }} transition-colors" aria-label="{{ social.name }}">
+                <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer" class="text-ctp-overlay1 hover:text-{{ social.hover_bg_color | default: 'ctp-blue' }} transition-colors" aria-label="{{ s.footer_social_aria_label_prefix | default: 'Social: ' | append: social.name }}">
                     {{ social.icon_svg }}
                 </a>
                 {% endfor %}
             </div>
-            
+
             <div class="border-t border-ctp-surface0 pt-8">
                 <p class="text-ctp-overlay1 text-sm">
-                    {{ data_profile.footer_copyright | replace: "{year}", "now" | date: "%Y" | replace: "{name}", site.data.profile.name }}
+                    {% comment %} Değişkenleri atama {% endcomment %}
+                    {% assign current_year_val = site.time | date: '%Y' %}
+                    {% assign site_profile_name_val = site.data.profile.name %}
+                    {% comment %} Atanan değişkenlerle stringi render etme {% endcomment %}
+                    {{ data_profile.footer_copyright | replace: '{{ current_year }}', current_year_val | replace: '{{ site_profile_name }}', site_profile_name_val }}
                 </p>
             </div>
         </div>

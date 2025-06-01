@@ -23,7 +23,7 @@ tr:
       items: "PostgreSQL, MongoDB, Redis"
   contact_intro: "Yeni projeler için işbirliği yapmaya her zaman açığım. Haydi birlikte harika şeyler yaratalım!"
   footer_tagline: "Full Stack Developer & UI/UX Designer"
-  footer_copyright: "© {year} {name}. Tüm hakları saklıdır. Jekyll ile ❤️ ile yapılmıştır."
+  footer_copyright: "© {{ current_year }} {{ site_profile_name }}. Tüm hakları saklıdır. Jekyll ile ❤️ ile yapılmıştır."
 
 en:
   tagline: "Full Stack Developer & UI/UX Designer"
@@ -43,4 +43,4 @@ en:
       items: "PostgreSQL, MongoDB, Redis"
   contact_intro: "I'm always open to collaborating on new projects. Let's create amazing things together!"
   footer_tagline: "Full Stack Developer & UI/UX Designer"
-  footer_copyright: "© {year} {name}. All rights reserved. Made with ❤️ using Jekyll."
+  footer_copyright: "© {{ current_year }} {{ site_profile_name }}. All rights reserved. Made with ❤️ using Jekyll."
