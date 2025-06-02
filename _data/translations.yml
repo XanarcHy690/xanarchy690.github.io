@@ -1,0 +1,126 @@
+tr:
+  # =========================
+  # Genel Arayüz Metinleri (Türkçe)
+  # =========================
+
+  # Navigasyon (Bu başlıklar _data/navigation.yml dosyasındaki 'title' alanlarından gelir,
+  # ancak burada da tutarlılık veya başka kullanımlar için bulunabilirler)
+  nav_home: "Ana Sayfa"
+  nav_about: "Hakkımda"
+  nav_projects: "Projeler"
+  nav_contact: "İletişim"
+
+  # Dil Değiştirici Metinleri
+  lang_tr_short: "TR"
+  lang_en_short: "EN"
+  lang_switch_label: "Dili değiştir" # Ekran okuyucular için
+
+  # Hero Bölümü
+  hero_scroll_aria_label: "Daha fazla bilgi için aşağı kaydırın" # Ok ikonu için ARIA etiketi
+
+  # Bölüm Başlıkları (index.html'de kullanılır)
+  # _data/strings.tr.yml (GEÇİCİ TEST İÇERİĞİ)
+  section_title_about: "HAKKIMDA (TR TEST)"
+  test_veri: "Bu Türkçe test verisidir."
+  section_title_projects: "Projelerim"
+  section_title_contact: "Benimle İletişime Geçin"
+
+  # İletişim Formu (index.html'de kullanılır)
+  contact_form_name_placeholder: "Adınız"
+  contact_form_email_placeholder: "E-posta Adresiniz"
+  contact_form_subject_placeholder: "Konu"
+  contact_form_message_placeholder: "Mesajınız"
+  contact_form_submit_button: "Mesaj Gönder"
+  # Form gönderme sonrası mesajlar (opsiyonel, eğer JS ile yönetilecekse)
+  # contact_form_success: "Mesajınız başarıyla gönderildi!"
+  # contact_form_error: "Bir hata oluştu. Lütfen tekrar deneyin."
+
+  # Footer Bölümü
+  footer_social_aria_label_prefix: "Sosyal medya profilim: " # Örn: "Sosyal medya profilim: GitHub"
+  # footer_copyright metni _data/profile.yml içindedir.
+
+  # Proje Kartları (Ana sayfada proje listesi için)
+  # Proje kartlarındaki metinler çoğunlukla _projects/../[proje].md dosyasından gelir.
+  # Ancak "Detayları Gör" gibi bir buton olsaydı buraya eklenebilirdi.
+
+  # Proje Modal Penceresi (Detaylar için)
+  project_modal_close_button_text: "Kapat" # Görünür metin (eğer varsa)
+  project_modal_close_button_aria_label: "Proje detayları penceresini kapat" # Kapatma (X) ikonu için ARIA etiketi
+  project_modal_github_link_text: "GitHub"
+  project_modal_live_demo_link_text: "Canlı Demo"
+  project_modal_tags_title: "Kullanılan Teknolojiler:" # Opsiyonel, eğer etiketler için bir başlık istenirse
+
+  # Genel Metinler
+  read_more: "Devamını Oku"
+  go_back: "Geri Dön"
+  loading_text: "Yükleniyor..."
+  error_text: "Bir hata oluştu."
+
+  # Erişilebilirlik Metinleri
+  external_link_aria_label: "(yeni sekmede açılır)" # Dış bağlantılar için
+
+  no_projects_found_prefix: "Bu dilde ("
+  no_projects_found_suffix: ") gösterilecek proje bulunamadı."
+
+
+en:
+  # =========================
+  # General UI Strings (English)
+  # =========================
+
+  # Navigation (These titles come from 'title' field in _data/navigation.yml,
+  # but can be here for consistency or other uses)
+  nav_home: "Home"
+  nav_about: "About"
+  nav_projects: "Projects"
+  nav_contact: "Contact"
+
+  # Language Switcher Texts
+  lang_tr_short: "TR"
+  lang_en_short: "EN"
+  lang_switch_label: "Change language" # For screen readers
+
+  # Hero Section
+  hero_scroll_aria_label: "Scroll down for more information" # ARIA label for the arrow icon
+
+  # Section Titles (Used in index.html)
+  section_title_about: "About Me"
+  section_title_projects: "My Projects"
+  section_title_contact: "Get In Touch"
+
+  # Contact Form (Used in index.html)
+  contact_form_name_placeholder: "Your Name"
+  contact_form_email_placeholder: "Your Email Address"
+  contact_form_subject_placeholder: "Subject"
+  contact_form_message_placeholder: "Your Message"
+  contact_form_submit_button: "Send Message"
+  # Post-submission messages (optional, if handled via JS)
+  # contact_form_success: "Your message has been sent successfully!"
+  # contact_form_error: "An error occurred. Please try again."
+
+  # Footer Section
+  footer_social_aria_label_prefix: "My social media profile: " # e.g., "My social media profile: GitHub"
+  # footer_copyright text is in _data/profile.yml
+
+  # Project Cards (For project listing on the main page)
+  # Texts on project cards mostly come from _projects/../[project].md.
+  # However, if there was a "View Details" button, it could be added here.
+
+  # Project Modal Window (For details)
+  project_modal_close_button_text: "Close" # Visible text (if any)
+  project_modal_close_button_aria_label: "Close project details window" # ARIA label for close (X) icon
+  project_modal_github_link_text: "GitHub"
+  project_modal_live_demo_link_text: "Live Demo"
+  project_modal_tags_title: "Technologies Used:" # Optional, if a title for tags is desired
+
+  # General Texts
+  read_more: "Read More"
+  go_back: "Go Back"
+  loading_text: "Loading..."
+  error_text: "An error occurred."
+
+  # Accessibility Texts
+  external_link_aria_label: "(opens in a new tab)" # For external links
+
+  no_projects_found_prefix: "No projects found for this language ("
+  no_projects_found_suffix: ")."
