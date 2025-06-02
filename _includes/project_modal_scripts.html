@@ -1,41 +1,40 @@
 <script>
   // Proje verilerini Jekyll'dan alıp JS'e aktarmak için
   const allProjectsData = {
-    {% assign s_global = site.data.strings %}
+    {% assign s_global_js = site.data.strings %}
     tr: {
       projects: [
-        {% assign projects_tr_modal = site.projects | where_exp: "item", "item.path contains '/_projects/tr/'" %}
-        {% for p_tr_modal in projects_tr_modal %}
+        {% assign projects_tr_modal_js = site.projects | where_exp: "item", "item.path contains '/_projects/tr/'" %}
+        {% for p_tr_modal_js in projects_tr_modal_js %}
         {
-          id: "{{ p_tr_modal.id | slugify }}",
-          title: "{{ p_tr_modal.title | escape_once }}",
-          content: {{ p_tr_modal.content | strip_newlines | jsonify }}, // jsonify, stringi JS için uygun hale getirir
-          tags: {{ p_tr_modal.tags | jsonify }},
-          github: "{{ p_tr_modal.github_url }}",
-          live: "{{ p_tr_modal.live_url }}"
+          id: "{{ p_tr_modal_js.id | slugify }}",
+          title: "{{ p_tr_modal_js.title | escape_once }}",
+          content: {{ p_tr_modal_js.content | strip_newlines | jsonify }},
+          tags: {{ p_tr_modal_js.tags | jsonify }},
+          github: "{{ p_tr_modal_js.github_url }}",
+          live: "{{ p_tr_modal_js.live_url }}"
         }{% unless forloop.last %},{% endunless %}
         {% endfor %}
       ]
     },
     en: {
       projects: [
-        {% assign projects_en_modal = site.projects | where_exp: "item", "item.path contains '/_projects/en/'" %}
-        {% for p_en_modal in projects_en_modal %}
+        {% assign projects_en_modal_js = site.projects | where_exp: "item", "item.path contains '/_projects/en/'" %}
+        {% for p_en_modal_js in projects_en_modal_js %}
         {
-          id: "{{ p_en_modal.id | slugify }}",
-          title: "{{ p_en_modal.title | escape_once }}",
-          content: {{ p_en_modal.content | strip_newlines | jsonify }},
-          tags: {{ p_en_modal.tags | jsonify }},
-          github: "{{ p_en_modal.github_url }}",
-          live: "{{ p_en_modal.live_url }}"
+          id: "{{ p_en_modal_js.id | slugify }}",
+          title: "{{ p_en_modal_js.title | escape_once }}",
+          content: {{ p_en_modal_js.content | strip_newlines | jsonify }},
+          tags: {{ p_en_modal_js.tags | jsonify }},
+          github: "{{ p_en_modal_js.github_url }}",
+          live: "{{ p_en_modal_js.live_url }}"
         }{% unless forloop.last %},{% endunless %}
         {% endfor %}
       ]
     }
   };
   
-  // DEBUG: allProjectsData'yı konsola yazdır
-  // console.log("allProjectsData:", JSON.stringify(allProjectsData, null, 2));
+  console.log("MODAL SCRIPTS: allProjectsData object initialized:", JSON.parse(JSON.stringify(allProjectsData))); // Deep copy for clean logging
   
   const projectModal = document.getElementById('projectModal');
   const modalTitleEl = document.getElementById('modalTitle');
@@ -44,64 +43,75 @@
   const modalGithubEl = document.getElementById('modalGithub');
   const modalLiveEl = document.getElementById('modalLive');
   
-  function openProjectModal(projectId, lang) {
-      // DEBUG: openProjectModal çağrıldı
-      // console.log("openProjectModal called with projectId:", projectId, " lang:", lang);
+  console.log("MODAL SCRIPTS: Modal HTML elements obtained:",
+      { projectModal, modalTitleEl, modalContentEl, modalTagsEl, modalGithubEl, modalLiveEl }
+  );
   
-      // Dil verisini al, eğer yoksa varsayılan dili veya 'tr'yi kullan
-      const currentLangProjectData = allProjectsData[lang] || allProjectsData['{{ site.default_lang }}'] || allProjectsData['tr'];
-      
+  function openProjectModal(projectId, lang) {
+      console.log("MODAL SCRIPTS: openProjectModal function CALLED with projectId:", projectId, " lang:", lang);
+  
+      if (!projectModal) {
+          console.error("MODAL SCRIPTS: ERROR - projectModal element is null. Modal cannot be shown.");
+          return;
+      }
+  
+      const currentLangProjectData = allProjectsData[lang];
+      console.log("MODAL SCRIPTS: Data for selected language (" + lang + "):", currentLangProjectData);
+  
       if (!currentLangProjectData || !currentLangProjectData.projects) {
-          console.error("Project data for language '" + lang + "' not found or invalid in allProjectsData.");
-          if (projectModal) projectModal.classList.add('hidden'); // Hata durumunda modalı gizle
+          console.error("MODAL SCRIPTS: ERROR - Project data for language '" + lang + "' not found or invalid in allProjectsData.");
+          projectModal.classList.add('hidden');
           return;
       }
   
       const project = currentLangProjectData.projects.find(p => p.id === projectId);
-      // DEBUG: Bulunan proje
-      // console.log("Found project:", project);
+      console.log("MODAL SCRIPTS: Project found by ID '" + projectId + "':", project);
   
-      if (project && projectModal && modalTitleEl && modalContentEl && modalTagsEl && modalGithubEl && modalLiveEl) {
-          modalTitleEl.textContent = project.title;
-          // İçeriği HTML olarak ayarlıyoruz, çünkü .md dosyasındaki body zaten HTML'e çevrilmiş olmalı
-          modalContentEl.innerHTML = project.content;
-          
-          modalTagsEl.innerHTML = ''; // Önceki etiketleri temizle
+      if (project && modalTitleEl && modalContentEl && modalTagsEl && modalGithubEl && modalLiveEl) {
+          console.log("MODAL SCRIPTS: All conditions met. Populating and showing modal.");
+          modalTitleEl.textContent = project.title || "Title Not Available";
+          modalContentEl.innerHTML = project.content || "<p>Content Not Available.</p>";
+  
+          modalTagsEl.innerHTML = '';
           if (project.tags && project.tags.length > 0) {
+              console.log("MODAL SCRIPTS: Populating tags:", project.tags);
               project.tags.forEach(tag => {
                   const tagElement = document.createElement('span');
-                  // Etiketlerin renklerini dinamik yapabilir veya sabit bir renk kullanabilirsiniz
                   tagElement.className = 'px-3 py-1 bg-ctp-sky/20 text-ctp-sky rounded-full text-xs';
                   tagElement.textContent = tag;
                   modalTagsEl.appendChild(tagElement);
               });
+          } else {
+              console.log("MODAL SCRIPTS: No tags for this project.");
           }
-          
+  
           modalGithubEl.href = project.github || '#';
           modalLiveEl.href = project.live || '#';
   
-          // Linkleri sadece URL varsa göster
-          modalGithubEl.style.display = project.github ? 'inline-flex' : 'none'; // inline-flex kullandım, ikon varsa daha iyi olur
+          modalGithubEl.style.display = project.github ? 'inline-flex' : 'none';
           modalLiveEl.style.display = project.live ? 'inline-flex' : 'none';
-          
+          console.log("MODAL SCRIPTS: GitHub link display:", modalGithubEl.style.display, " Live link display:", modalLiveEl.style.display);
+  
           projectModal.classList.remove('hidden');
-          projectModal.classList.add('flex'); // flex ile ortalamak için
-          document.body.style.overflow = 'hidden'; // Arka plan kaymasını engelle
+          projectModal.classList.add('flex');
+          document.body.style.overflow = 'hidden';
+          console.log("MODAL SCRIPTS: Modal should be visible now.");
       } else {
-          console.error("Project data for ID '"+ projectId +"' not found OR modal HTML elements are missing.");
-          if (projectModal) projectModal.classList.add('hidden');
+          console.error("MODAL SCRIPTS: ERROR - Project data for ID '"+ projectId +"' found BUT some modal HTML elements are missing OR project object is incomplete.");
+          console.error("MODAL SCRIPTS: Details - project:", project, "modalTitleEl:", modalTitleEl, "modalContentEl:", modalContentEl, "modalTagsEl:", modalTagsEl, "modalGithubEl:", modalGithubEl, "modalLiveEl:", modalLiveEl);
+          projectModal.classList.add('hidden');
       }
   }
   
   function closeProjectModal() {
+      console.log("MODAL SCRIPTS: closeProjectModal function CALLED.");
       if (projectModal) {
           projectModal.classList.add('hidden');
           projectModal.classList.remove('flex');
-          document.body.style.overflow = 'auto'; // Kaymayı geri getir
+          document.body.style.overflow = 'auto';
       }
   }
   
-  // Modal dışına tıklayınca kapat
   if (projectModal) {
       projectModal.addEventListener('click', (e) => {
           if (e.target.id === 'projectModal') {
@@ -110,10 +120,11 @@
       });
   }
   
-  // Escape tuşu ile kapat
   document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && projectModal && !projectModal.classList.contains('hidden')) {
           closeProjectModal();
       }
   });
+  
+  console.log("MODAL SCRIPTS: Event listeners for close attached.");
   </script>
