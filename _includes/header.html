@@ -32,26 +32,24 @@ Eğer polyglot çalışmıyorsa veya tanımsızsa, varsayılan dile düşer.
                     {% assign current_lang = site.lang %}
                     {% assign languages = site.languages %}
                     {% assign base = site.baseurl %}
-
+                
                     {% for lang in languages %}
                     {% if lang == current_lang %}
-                    <!-- Aktif dili göster -->
-                    <span
-                        class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
+                        <!-- Aktif dil -->
+                        <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
                         {{ lang }}
-                    </span>
+                        </span>
                     {% else %}
-                    {% assign target_url = base | append: "/" | append: lang %}
-                    {% if lang == site.default_lang %}
-                    {% assign target_url = base %}
-                    {% endif %}
-
-                    <a href="{{ target_url }}"
+                        {% assign target_url = base | append: "/" | append: lang %}
+                        {% if lang == site.default_lang %}
+                        {% assign target_url = base %}
+                        {% endif %}
+                        <a href="{{ target_url }}"
                         class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                         aria-label="Switch language to {{ lang }}">
                         {{ lang }}
-                    </a>
-                    {% endif %}
+                        </a>
+                    {% endif %} 
                     {% endfor %}
                 </div>
             </div>
@@ -63,27 +61,26 @@ Eğer polyglot çalışmıyorsa veya tanımsızsa, varsayılan dile düşer.
                     {% assign current_lang = site.lang %}
                     {% assign languages = site.languages %}
                     {% assign base = site.baseurl %}
-
+                
                     {% for lang in languages %}
                     {% if lang == current_lang %}
-                    <span
-                        class="text-ctp-lavender uppercase text-sm font-bold mr-3 px-2 py-1 rounded-md bg-ctp-surface1">
+                        <span class="text-ctp-lavender uppercase text-sm font-bold mr-3 px-2 py-1 rounded-md bg-ctp-surface1">
                         {{ lang }}
-                    </span>
+                        </span>
                     {% else %}
-                    {% assign target_url = base | append: "/" | append: lang %}
-                    {% if lang == site.default_lang %}
-                    {% assign target_url = base %}
-                    {% endif %}
-
-                    <a href="{{ target_url }}"
+                        {% assign target_url = base | append: "/" | append: lang %}
+                        {% if lang == site.default_lang %}
+                        {% assign target_url = base %}
+                        {% endif %}
+                        <a href="{{ target_url }}"
                         class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                         aria-label="Switch language to {{ lang }}">
                         {{ lang }}
-                    </a>
+                        </a>
                     {% endif %}
                     {% endfor %}
                 </div>
+                
 
                 <button id="mobile-menu-btn" class="text-ctp-text hover:text-ctp-lavender">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
