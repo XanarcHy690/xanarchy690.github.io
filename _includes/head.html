@@ -4,17 +4,34 @@
     {% seo %}
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
 
-    {# FAVICON LİNKLERİ BAŞLANGICI - Yollar assets/images/favicon/ olarak güncellendi #}
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/images/favicon/apple-touch-icon.png' | relative_url }}">
+    {# FAVICON ve APP İKON LİNKLERİ BAŞLANGICI #}
+    {# Apple Touch İkonları #}
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ '/assets/images/favicon/apple-icon-57x57.png' | relative_url }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ '/assets/images/favicon/apple-icon-60x60.png' | relative_url }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ '/assets/images/favicon/apple-icon-72x72.png' | relative_url }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ '/assets/images/favicon/apple-icon-76x76.png' | relative_url }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ '/assets/images/favicon/apple-icon-114x114.png' | relative_url }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ '/assets/images/favicon/apple-icon-120x120.png' | relative_url }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ '/assets/images/favicon/apple-icon-144x144.png' | relative_url }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ '/assets/images/favicon/apple-icon-152x152.png' | relative_url }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/images/favicon/apple-icon-180x180.png' | relative_url }}">
+
+    {# Android ve Genel İkonlar #}
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{ '/assets/images/favicon/android-icon-192x192.png' | relative_url }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon/favicon-32x32.png' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ '/assets/images/favicon/favicon-96x96.png' | relative_url }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/images/favicon/favicon-16x16.png' | relative_url }}">
-    <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}"> {# Manifest dosyası da aynı klasörde mi? #}
-    <link rel="shortcut icon" href="{{ '/assets/images/favicon/favicon.ico' | relative_url }}">
-    <meta name="msapplication-TileColor" content="{{ site.ms_tile_color | default: '#2d89ef' }}">
-    {# Eğer manifest dosyanızda tileImage varsa, bu satıra gerek olmayabilir veya path'i düzeltmeniz gerekebilir #}
-    {# <meta name="msapplication-config" content="{{ '/assets/images/favicon/browserconfig.xml' | relative_url }}"> #}
-    <meta name="theme-color" content="{{ site.theme_color | default: '#1e1e2e' }}">
-    {# FAVICON LİNKLERİ SONU #}
+    
+    {# Manifest Dosyası #}
+    <link rel="manifest" href="{{ '/manifest.json' | relative_url }}">
+    
+    {# Microsoft Tile İkonları #}
+    <meta name="msapplication-TileColor" content="{{ site.ms_tile_color | default: '#ffffff' }}">
+    <meta name="msapplication-TileImage" content="{{ '/assets/images/favicon/ms-icon-144x144.png' | relative_url }}">
+    
+    {# Tarayıcı Tema Rengi #}
+    <meta name="theme-color" content="{{ site.theme_color | default: '#ffffff' }}">
+    {# FAVICON ve APP İKON LİNKLERİ SONU #}
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -34,7 +51,8 @@
                     }
                 }
             }
-        }    </script>
+        }
+    </script>
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
     {% feed_meta %}
     <link rel="canonical" href="{{ page.url | absolute_url | replace:'index.html','' }}">
