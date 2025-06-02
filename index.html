@@ -109,14 +109,11 @@ layout: default
                 {% endfor %}
             {% else %}
                 <p class="text-ctp-subtext1 text-center col-span-full">
-                    {% comment %} GEÇİCİ BASİTLEŞTİRME BAŞLANGICI {% endcomment %}
-                    Test: Proje yok. Dil: {{ lang_for_projects }}
-                    {% if s_for_projects and s_for_projects.no_projects_found %}
-                        Mesaj şablonu: {{ s_for_projects.no_projects_found }}
+                    {% if s_for_projects and s_for_projects.no_projects_found_prefix %}
+                        {{ s_for_projects.no_projects_found_prefix }}{{ lang_for_projects }}{{ s_for_projects.no_projects_found_suffix }}
                     {% else %}
-                        s_for_projects.no_projects_found bulunamadı.
+                        No projects found for this language ({{ lang_for_projects }}). 
                     {% endif %}
-                    {% comment %} GEÇİCİ BASİTLEŞTİRME SONU {% endcomment %}
                 </p>
             {% endif %}
         </div>
