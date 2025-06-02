@@ -6,7 +6,7 @@ Gerekli değişkenler: project, lang, s (strings)
 {% assign strings_for_card = include.s %}
 
 <div class="card-hover bg-ctp-surface0 rounded-2xl overflow-hidden glow-effect cursor-pointer"
-    onclick="openProjectModal('{{ p.id | slugify }}', '{{ card_lang }}')">
+    onclick="alert('Kart tıklandı! ID: {{ p.id | slugify }}, Lang: {{ card_lang }}'); openProjectModal('{{ p.id | slugify }}', '{{ card_lang }}');">
 
     <div
         class="h-48 bg-gradient-to-br from-{{ p.image_gradient_from | default: 'ctp-blue' }} to-{{ p.image_gradient_to | default: 'ctp-sapphire' }} relative overflow-hidden">
