@@ -4,13 +4,17 @@
     {% seo %}
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ '/apple-touch-icon.png' | relative_url }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/favicon-32x32.png' | relative_url }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ '/favicon-16x16.png' | relative_url }}">
-    <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
-    <link rel="shortcut icon" href="{{ '/favicon.ico' | relative_url }}">
+    {# FAVICON LİNKLERİ BAŞLANGICI - Yollar assets/images/favicon/ olarak güncellendi #}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/images/favicon/apple-touch-icon.png' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon/favicon-32x32.png' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/images/favicon/favicon-16x16.png' | relative_url }}">
+    <link rel="manifest" href="{{ '/assets/images/favicon/site.webmanifest' | relative_url }}"> {# Manifest dosyası da aynı klasörde mi? #}
+    <link rel="shortcut icon" href="{{ '/assets/images/favicon/favicon.ico' | relative_url }}">
     <meta name="msapplication-TileColor" content="{{ site.ms_tile_color | default: '#2d89ef' }}">
+    {# Eğer manifest dosyanızda tileImage varsa, bu satıra gerek olmayabilir veya path'i düzeltmeniz gerekebilir #}
+    {# <meta name="msapplication-config" content="{{ '/assets/images/favicon/browserconfig.xml' | relative_url }}"> #}
     <meta name="theme-color" content="{{ site.theme_color | default: '#1e1e2e' }}">
+    {# FAVICON LİNKLERİ SONU #}
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -30,13 +34,11 @@
                     }
                 }
             }
-        }
-    </script>
+        }    </script>
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
     {% feed_meta %}
     <link rel="canonical" href="{{ page.url | absolute_url | replace:'index.html','' }}">
     
-    {# Alternate language links using jekyll-polyglot's site.active_lang_options #}
     {% for lang_option_arr in site.active_lang_options %}
       {% assign lang_code = lang_option_arr[0] %}
       {% assign lang_data = lang_option_arr[1] %}
