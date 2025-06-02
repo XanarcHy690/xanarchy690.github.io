@@ -4,11 +4,16 @@ layout: default
 <!-- DEBUG PAGE START -->
 <!-- DEBUG: site.active_lang = {{ site.active_lang | inspect }} -->
 {% assign current_page_lang = site.active_lang | default: site.default_lang %}
+{% if current_page_lang == "tr" %}
+  {% assign strings_for_current_page = site.data.ceviri_tr %}
+{% elsif current_page_lang == "en" %}
+  {% assign strings_for_current_page = site.data.ceviri_en %}
+{% else %}
+  {% assign strings_for_current_page = site.data.ceviri_tr %} {# Fallback to default lang's specific file #}
+{% endif %}
 <!-- DEBUG: current_page_lang = {{ current_page_lang | inspect }} -->
-
-{% assign strings_for_current_page = site.data.strings[current_page_lang] %}
-<!-- DEBUG AT TOP: strings_for_current_page.section_title_about = {{ strings_for_current_page.section_title_about | inspect }} -->
-<!-- DEBUG AT TOP: strings_for_current_page IS NIL? = {% if strings_for_current_page == nil %}YES{% else %}NO{% endif %} -->
+<!-- DEBUG: strings_for_current_page (after specific assign) IS NIL? = {% if strings_for_current_page == nil %}YES{% else %}NO{% endif %} -->
+<!-- DEBUG: strings_for_current_page.section_title_about = {{ strings_for_current_page.section_title_about | inspect }} -->
 
 {% assign profile_for_current_page = site.data.profile[current_page_lang] %}
 {% assign global_site_profile = site.data.profile %}
