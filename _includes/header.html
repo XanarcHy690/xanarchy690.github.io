@@ -39,12 +39,10 @@
             
             {% comment %} Tamamen manual yaklaşım {% endcomment %}
             {% if lang_code_d == site.default_lang %}
-              {% comment %} Default dile (TR) geçiş - sadece baseurl {% endcomment %}
-              {% assign target_url_d = site.baseurl | append: '/' %}
-            {% else %}
-              {% comment %} Non-default dile (EN) geçiş - baseurl + dil kodu {% endcomment %}
-              {% assign target_url_d = site.baseurl | append: '/' | append: lang_code_d | append: '/' %}
-            {% endif %}
+            {% assign target_url_d = base %}
+          {% else %}
+            {% assign target_url_d = base | append: lang_code_d | append: '/' %}
+          {% endif %}
 
             <a href="{{ target_url_d }}"
                class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
@@ -67,13 +65,11 @@
             {% assign target_url_m = "" %}
             
             {% comment %} Tamamen manual yaklaşım {% endcomment %}
-            {% if lang_code_m == site.default_lang %}
-              {% comment %} Default dile (TR) geçiş - sadece baseurl {% endcomment %}
-              {% assign target_url_m = site.baseurl | append: '/' %}
-            {% else %}
-              {% comment %} Non-default dile (EN) geçiş - baseurl + dil kodu {% endcomment %}
-              {% assign target_url_m = site.baseurl | append: '/' | append: lang_code_m | append: '/' %}
-            {% endif %}
+            {% if lang_code_d == site.default_lang %}
+            {% assign target_url_d = base %}
+          {% else %}
+            {% assign target_url_d = base | append: lang_code_d | append: '/' %}
+          {% endif %}
 
             <a href="{{ target_url_m }}"
                class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
