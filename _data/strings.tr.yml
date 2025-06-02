@@ -1,60 +1,30 @@
-# =========================
-# Genel Arayüz Metinleri (Türkçe)
-# =========================
-
-# Navigasyon (Bu başlıklar _data/navigation.yml dosyasındaki 'title' alanlarından gelir,
-# ancak burada da tutarlılık veya başka kullanımlar için bulunabilirler)
+# _data/strings.tr.yml
 nav_home: "Ana Sayfa"
 nav_about: "Hakkımda"
 nav_projects: "Projeler"
 nav_contact: "İletişim"
-
-# Dil Değiştirici Metinleri
 lang_tr_short: "TR"
 lang_en_short: "EN"
-lang_switch_label: "Dili değiştir" # Ekran okuyucular için
-
-# Hero Bölümü
-hero_scroll_aria_label: "Daha fazla bilgi için aşağı kaydırın" # Ok ikonu için ARIA etiketi
-
-# Bölüm Başlıkları (index.html'de kullanılır)
+lang_switch_label: "Dili değiştir"
+hero_scroll_aria_label: "Daha fazla bilgi için aşağı kaydırın"
 section_title_about: "Hakkımda"
 section_title_projects: "Projelerim"
 section_title_contact: "Benimle İletişime Geçin"
-
-# İletişim Formu (index.html'de kullanılır)
 contact_form_name_placeholder: "Adınız"
 contact_form_email_placeholder: "E-posta Adresiniz"
 contact_form_subject_placeholder: "Konu"
 contact_form_message_placeholder: "Mesajınız"
 contact_form_submit_button: "Mesaj Gönder"
-# Form gönderme sonrası mesajlar (opsiyonel, eğer JS ile yönetilecekse)
-# contact_form_success: "Mesajınız başarıyla gönderildi!"
-# contact_form_error: "Bir hata oluştu. Lütfen tekrar deneyin."
-
-# Footer Bölümü
-footer_social_aria_label_prefix: "Sosyal medya profilim: " # Örn: "Sosyal medya profilim: GitHub"
-# footer_copyright metni _data/profile.yml içindedir.
-
-# Proje Kartları (Ana sayfada proje listesi için)
-# Proje kartlarındaki metinler çoğunlukla _projects/../[proje].md dosyasından gelir.
-# Ancak "Detayları Gör" gibi bir buton olsaydı buraya eklenebilirdi.
-
-# Proje Modal Penceresi (Detaylar için)
-project_modal_close_button_text: "Kapat" # Görünür metin (eğer varsa)
-project_modal_close_button_aria_label: "Proje detayları penceresini kapat" # Kapatma (X) ikonu için ARIA etiketi
+footer_social_aria_label_prefix: "Sosyal medya profilim: "
+project_modal_close_button_text: "Kapat"
+project_modal_close_button_aria_label: "Proje detayları penceresini kapat"
 project_modal_github_link_text: "GitHub"
 project_modal_live_demo_link_text: "Canlı Demo"
-project_modal_tags_title: "Kullanılan Teknolojiler:" # Opsiyonel, eğer etiketler için bir başlık istenirse
-
-# Genel Metinler
+project_modal_tags_title: "Kullanılan Teknolojiler:"
 read_more: "Devamını Oku"
 go_back: "Geri Dön"
 loading_text: "Yükleniyor..."
 error_text: "Bir hata oluştu."
-
-# Erişilebilirlik Metinleri
-external_link_aria_label: "(yeni sekmede açılır)" # Dış bağlantılar için
-
+external_link_aria_label: "(yeni sekmede açılır)"
 no_projects_found_prefix: "Bu dilde ("
 no_projects_found_suffix: ") gösterilecek proje bulunamadı."
