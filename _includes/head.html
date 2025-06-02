@@ -3,6 +3,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% seo %} <!-- jekyll-seo-tag eklentisi başlık, meta açıklamaları vb. otomatik oluşturur -->
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+
+    {# FAVICON LİNKLERİ BAŞLANGICI #}
+    {# Bu dosyaların projenizin kök dizininde olduğunu varsayıyoruz. #}
+    {# Eğer /assets/favicons/ gibi bir klasördeyseler, yolları buna göre güncelleyin. #}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ '/apple-touch-icon.png' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/favicon-32x32.png' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ '/favicon-16x16.png' | relative_url }}">
+    <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
+    <link rel="shortcut icon" href="{{ '/favicon.ico' | relative_url }}">
+    {# Tema Renkleri (Opsiyonel ama iyi bir pratik) #}
+    {# _config.yml dosyanıza 'theme_color' ve 'ms_tile_color' ekleyebilirsiniz #}
+    <meta name="msapplication-TileColor" content="{{ site.ms_tile_color | default: '#2d89ef' }}">
+    <meta name="theme-color" content="{{ site.theme_color | default: '#1e1e2e' }}">
+    {# FAVICON LİNKLERİ SONU #}
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -28,9 +42,29 @@
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
     {% feed_meta %} <!-- jekyll-feed eklentisi için -->
     <link rel="canonical" href="{{ page.url | absolute_url | replace:'index.html','' }}">
+    
+    {% comment %}
+        Dil değiştirici alternate linkleri için site.active_lang_options kullanmak daha güvenilir olabilir.
+        Eğer page.url_ohne_lang tanımsızsa veya sorun çıkarıyorsa, aşağıdaki gibi bir yapı deneyebilirsiniz:
+        {% for lang_opt_code, lang_opt_data in site.active_lang_options %}
+            {% if lang_opt_code != site.active_lang %}
+                <link rel="alternate" hreflang="{{ lang_opt_code }}" href="{{ lang_opt_data.url | absolute_url }}">
+            {% endif %}
+        {% endfor %}
+        Şimdilik mevcut halini koruyorum.
+    {% endcomment %}
     {% for lang in site.languages %}
         {% if lang != site.active_lang %}
-            <link rel="alternate" hreflang="{{ lang }}" href="{{ site.baseurl_root }}{{ lang }}{{ page.url_ χωρίς_lang }}">
+            {# page.url_ohne_lang'ın polyglot tarafından sağlandığından emin olun, yoksa hata verir. #}
+            {# Daha güvenli bir yol, site.active_lang_options[lang].url kullanmaktır. #}
+            {% assign alternate_url = site.baseurl_root | default: site.baseurl | default: "" | append: '/' | append: lang | append: page.permalink_without_lang | default: '/' %}
+            {% assign alternate_url = alternate_url | replace: '//', '/' %}
+            {% if alternate_url == (site.baseurl | default: "") and (site.baseurl | default: "") != "" %}
+                {% assign alternate_url = alternate_url | append: '/' %}
+            {% elsif alternate_url == "" and (site.baseurl | default: "") == "" %}
+                {% assign alternate_url = "/" %}
+            {% endif %}
+            <link rel="alternate" hreflang="{{ lang }}" href="{{ alternate_url | absolute_url }}">
         {% endif %}
     {% endfor %}
 </head>
