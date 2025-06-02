@@ -5,29 +5,49 @@
 <nav class="fixed top-0 w-full bg-ctp-base/95 backdrop-blur-sm border-b border-ctp-surface0 z-50">
     <div class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
-            <a href="{{ '/' | relative_url }}" class="text-2xl font-bold text-ctp-lavender">
+            <a href="{{ site.baseurl_root }}{{ site.active_lang }}/" class="text-2xl font-bold text-ctp-lavender">
                 {{ site.data.profile.name }}
             </a>
-            <div class="hidden md:flex space-x-8">
+            <div class="hidden md:flex space-x-8 items-center"> {# items-center eklendi #}
                 {% for item in nav_links %}
                 <a href="{{ item.url | relative_url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
                 {% endfor %}
-                <!-- Language Switcher -->
+
+                <!-- Language Switcher (Desktop) -->
                 {% for lang_code in site.languages %}
                     {% if lang_code != site.active_lang %}
-                    <a href="{{ site.baseurl_root }}{{ lang_code }}{{ page.url_without_lang }}" class="hover:text-ctp-lavender transition-colors uppercase text-sm">
-                        {{ lang_code }}
-                    </a>
+                        {% comment %}
+                            site.baseurl_root: Sitenizin kök baseurl'i (dil olmadan)
+                            lang_code: Hedef dil kodu (örn: "tr", "en")
+                            page.permalink_without_lang: Mevcut sayfanın URL'si (dil öneki olmadan)
+                        {% endcomment %}
+                        <a href="{{ site.baseurl_root }}{{ lang_code }}{{ page.permalink_without_lang | default: '/' }}"
+                           class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                           aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code }}">
+                            {{ lang_code }}
+                        </a>
+                    {% else %}
+                        {# Aktif dili farklı göstermek isterseniz (opsiyonel) #}
+                        <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
+                            {{ lang_code }}
+                        </span>
                     {% endif %}
                 {% endfor %}
             </div>
+
             <div class="md:hidden flex items-center">
-                 <!-- Language Switcher Mobile -->
+                 <!-- Language Switcher (Mobile) -->
                 {% for lang_code in site.languages %}
                     {% if lang_code != site.active_lang %}
-                    <a href="{{ site.baseurl_root }}{{ lang_code }}{{ page.url_without_lang }}" class="hover:text-ctp-lavender transition-colors uppercase text-sm mr-4">
+                    <a href="{{ site.baseurl_root }}{{ lang_code }}{{ page.permalink_without_lang | default: '/' }}"
+                       class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                       aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code }}">
                         {{ lang_code }}
                     </a>
+                    {% else %}
+                        <span class="text-ctp-lavender uppercase text-sm font-bold mr-3 px-2 py-1 rounded-md bg-ctp-surface1">
+                            {{ lang_code }}
+                        </span>
                     {% endif %}
                 {% endfor %}
                 <button id="mobile-menu-btn" class="text-ctp-text hover:text-ctp-lavender">
