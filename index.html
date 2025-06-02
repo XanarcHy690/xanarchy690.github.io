@@ -1,26 +1,13 @@
 ---
 layout: default
 ---
-<!-- DEBUG PAGE START (index.html) -->
-<!-- DEBUG: site.active_lang = {{ site.active_lang | inspect }} -->
-<!-- DEBUG: site.default_lang = {{ site.default_lang | inspect }} -->
-{% assign lang_for_index = site.active_lang | default: site.default_lang %}
-<!-- DEBUG: lang_for_index = {{ lang_for_index | inspect }} -->
-
-{% assign s_for_index = site.data.strings[lang_for_index] %}
-<!-- DEBUG: s_for_index IS NIL? = {% if s_for_index == nil %}YES{% else %}NO{% endif %} -->
-<!-- DEBUG: s_for_index.section_title_about = {{ s_for_index.section_title_about | inspect }} -->
-<!-- DEBUG PAGE DEBUG END (index.html) -->
-
-{% assign data_profile = site.data.profile[lang_for_index] %}
-{% assign s = s_for_index %} 
-{% assign site_profile = site.data.profile %}
-
+{% assign current_page_lang = site.active_lang | default: site.default_lang %}
+{% assign profile_for_current_page = site.data.profile[current_page_lang] %}
+{% assign strings_for_current_page = site.data.strings[current_page_lang] %}
+{% assign global_site_profile = site.data.profile %}
 
 <!-- Hero Section -->
 <section id="home" class="gradient-bg min-h-screen flex items-center justify-center pt-20">
-        <!-- DEBUG IN HERO: strings_for_current_page.section_title_about = {{ strings_for_current_page.section_title_about | inspect }} -->
-
     <div class="text-center px-6">
         <div class="relative mb-8">
             <div class="w-40 h-40 rounded-full mx-auto overflow-hidden border-4 border-ctp-lavender glow-effect floating-animation">
@@ -28,7 +15,7 @@ layout: default
             </div>
         </div>
         <h1 class="text-5xl md:text-7xl font-bold mb-4">
-            <span class="text-ctp-text">{{ data_profile.greeting_intro }}</span>
+            <span class="text-ctp-text">{{ profile_for_current_page.greeting_intro }}</span>
             <br>
             <span class="text-ctp-lavender">{{ global_site_profile.name }}</span>
         </h1>
@@ -58,9 +45,8 @@ layout: default
 <section id="about" class="py-20 bg-ctp-mantle">
     <div class="container mx-auto px-6">
         <div class="max-w-4xl mx-auto">
-            <!-- DEBUG JUST BEFORE H2 (ABOUT): strings_for_current_page.section_title_about = {{ strings_for_current_page.section_title_about | inspect }} -->
-            <!-- DEBUG JUST BEFORE H2 (ABOUT): strings_for_current_page IS NIL? = {% if strings_for_current_page == nil %}YES{% else %}NO{% endif %} -->
-            <h2 class="text-4xl font-bold text-center mb-12 text-ctp-lavender">{{ s.section_title_about }}</h2>
+            <!-- DEBUG BEFORE H2 (ABOUT): strings_for_current_page.section_title_about = {{ strings_for_current_page.section_title_about | inspect }} -->
+            <h2 class="text-4xl font-bold text-center mb-12 text-ctp-lavender">{{ strings_for_current_page.section_title_about }}</h2>
             <div class="bg-ctp-surface0 rounded-2xl p-8 md:p-12">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div>
@@ -95,13 +81,15 @@ layout: default
 <!-- Projects Section -->
 <section id="projects" class="py-20 bg-ctp-base">
     <div class="container mx-auto px-6">
-        {% assign s_for_projects = site.data.strings[lang_for_index] %}
-
+        {# Projeler için zaten lang_for_projects ve s_for_projects kullanıyorsunuz, bu iyi #}
+        {% assign lang_for_projects = site.active_lang | default: site.default_lang | default: "tr" %}
+        {% assign s_for_projects_debug = site.data.strings[lang_for_projects] %}
+         <!-- DEBUG BEFORE H2 (PROJECTS): s_for_projects_debug.section_title_projects = {{ s_for_projects_debug.section_title_projects | inspect }} -->
         <h2 class="text-4xl font-bold text-center mb-12 text-ctp-lavender">
-            {% if s_for_projects and s_for_projects.section_title_projects %}
-                {{ s_for_projects.section_title_projects }}
+            {% if s_for_projects_debug and s_for_projects_debug.section_title_projects %}
+                {{ s_for_projects_debug.section_title_projects }}
             {% else %}
-                Projects (Title Missing for {{ lang_for_index }})
+                Projects (Title Missing for {{ lang_for_projects }})
             {% endif %}
         </h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
@@ -129,8 +117,8 @@ layout: default
 <section id="contact" class="py-20 bg-ctp-mantle">
     <div class="container mx-auto px-6">
         <div class="max-w-4xl mx-auto text-center">
-             <!-- DEBUG JUST BEFORE H2 (CONTACT): strings_for_current_page.section_title_contact = {{ strings_for_current_page.section_title_contact | inspect }} -->
-            <h2 class="text-4xl font-bold mb-8 text-ctp-lavender">{{ s.section_title_contact }}</h2>
+             <!-- DEBUG BEFORE H2 (CONTACT): strings_for_current_page.section_title_contact = {{ strings_for_current_page.section_title_contact | inspect }} -->
+            <h2 class="text-4xl font-bold mb-8 text-ctp-lavender">{{ strings_for_current_page.section_title_contact }}</h2>
             <p class="text-xl text-ctp-subtext1 mb-12">
                 {{ profile_for_current_page.contact_intro }}
             </p>
