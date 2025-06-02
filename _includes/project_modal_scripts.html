@@ -51,33 +51,66 @@
   );
   
   function openProjectModal(projectId, lang) {
-    // ... (proje bulma ve veri doldurma mantığı aynı kalacak) ...
+    console.log("MODAL SCRIPTS: openProjectModal function CALLED with projectId:", projectId, " lang:", lang);
 
-    if (project && modalTitleEl && modalContentEl /* && diğer kontroller */) {
-        // ... (Veri doldurma kısmı aynı)
+    if (!projectModal || !projectModalContentContainer || !modalTitleEl || !modalContentEl || !modalTagsEl || !modalGithubEl || !modalLiveEl) {
+        console.error("MODAL SCRIPTS: ERROR - One or more essential modal HTML elements are missing from the DOM.");
+        return;
+    }
+
+    const currentLangProjectData = allProjectsData[lang];
+    console.log("MODAL SCRIPTS: Data for selected language (" + lang + "):", currentLangProjectData);
+
+    if (!currentLangProjectData || !currentLangProjectData.projects) {
+        console.error("MODAL SCRIPTS: ERROR - Project data for language '" + lang + "' not found or invalid in allProjectsData.");
+        projectModal.classList.add('opacity-0', 'pointer-events-none');
+        projectModalContentContainer.classList.add('scale-95');
+        return;
+    }
+
+    const project = currentLangProjectData.projects.find(p => p.id === projectId);
+    console.log("MODAL SCRIPTS: Project found by ID '" + projectId + "':", project);
+
+    if (project) { // Sadece 'project' null/undefined değilse devam et
+        console.log("MODAL SCRIPTS: Project object is valid. Populating and showing modal.");
         modalTitleEl.textContent = project.title || "Title Not Available";
         modalContentEl.innerHTML = project.content || "<p>Content Not Available.</p>";
-        // ... (etiketler ve linkler aynı)
 
-        // Modal'ı görünür yapma ve animasyonu başlatma
-        if (projectModal && projectModalContentContainer) {
-            projectModal.classList.remove('opacity-0', 'pointer-events-none'); // Şeffaflığı kaldır, tıklanabilir yap
-            projectModalContentContainer.classList.remove('scale-95'); // Ölçeği normale getir
-            projectModal.classList.add('opacity-100'); // Tamamen görünür yap (transition için)
-            projectModalContentContainer.classList.add('scale-100'); // Tam ölçek (transition için)
-
-            document.body.style.overflow = 'hidden';
-            console.log("MODAL SCRIPTS: Modal should be visible and animated now.");
+        modalTagsEl.innerHTML = '';
+        if (project.tags && project.tags.length > 0) {
+            console.log("MODAL SCRIPTS: Populating tags:", project.tags);
+            project.tags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'px-3 py-1 bg-ctp-sky/20 text-ctp-sky rounded-full text-xs';
+                tagElement.textContent = tag;
+                modalTagsEl.appendChild(tagElement);
+            });
+        } else {
+            console.log("MODAL SCRIPTS: No tags for this project.");
         }
+
+        modalGithubEl.href = project.github || '#';
+        modalLiveEl.href = project.live || '#';
+
+        modalGithubEl.style.display = project.github ? 'inline-flex' : 'none';
+        modalLiveEl.style.display = project.live ? 'inline-flex' : 'none';
+        console.log("MODAL SCRIPTS: GitHub link display:", modalGithubEl.style.display, " Live link display:", modalLiveEl.style.display);
+
+        projectModal.classList.remove('opacity-0', 'pointer-events-none');
+        projectModalContentContainer.classList.remove('scale-95');
+        projectModal.classList.add('opacity-100');
+        projectModalContentContainer.classList.add('scale-100');
+
+        document.body.style.overflow = 'hidden';
+        console.log("MODAL SCRIPTS: Modal should be visible and animated now.");
+
     } else {
-        // ... (hata loglama kısmı aynı)
-        if (projectModal) {
-             projectModal.classList.add('opacity-0', 'pointer-events-none');
-             if(projectModalContentContainer) projectModalContentContainer.classList.add('scale-95');
-        }
+        console.error("MODAL SCRIPTS: ERROR - Project with ID '"+ projectId +"' NOT FOUND in language '" + lang + "'. Or modal HTML elements are missing.");
+        console.error("MODAL SCRIPTS: Details - project (should be null/undefined):", project);
+        projectModal.classList.add('opacity-0', 'pointer-events-none');
+        projectModalContentContainer.classList.add('scale-95');
     }
 }
-
 function closeProjectModal() {
     console.log("MODAL SCRIPTS: closeProjectModal function CALLED.");
     if (projectModal && projectModalContentContainer) {
