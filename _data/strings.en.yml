@@ -55,3 +55,6 @@ error_text: "An error occurred."
 
 # Accessibility Texts
 external_link_aria_label: "(opens in a new tab)" # For external links
+
+no_projects_found_prefix: "No projects found for this language ("
+no_projects_found_suffix: ")."

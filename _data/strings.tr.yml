@@ -55,3 +55,6 @@ error_text: "Bir hata oluştu."
 
 # Erişilebilirlik Metinleri
 external_link_aria_label: "(yeni sekmede açılır)" # Dış bağlantılar için
+
+no_projects_found_prefix: "Bu dilde ("
+no_projects_found_suffix: ") gösterilecek proje bulunamadı."
