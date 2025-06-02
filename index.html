@@ -85,12 +85,8 @@ layout: default
 <!-- Projects Section -->
 <section id="projects" class="py-20 bg-ctp-base">
     <div class="container mx-auto px-6">
-        <!-- DEBUG: Active language for this page (site.active_lang) = {{ site.active_lang | inspect }} -->
         {% assign lang_for_projects = site.active_lang | default: site.default_lang | default: "tr" %}
-        <!-- DEBUG: Language selected for projects (lang_for_projects) = {{ lang_for_projects | inspect }} -->
-
         {% assign s_for_projects = site.data.strings[lang_for_projects] %}
-        <!-- DEBUG: Strings data for project section (s_for_projects) = {{ s_for_projects | inspect }} -->
 
         <h2 class="text-4xl font-bold text-center mb-12 text-ctp-lavender">
             {% if s_for_projects and s_for_projects.section_title_projects %}
@@ -101,19 +97,13 @@ layout: default
         </h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {% assign base_project_path = '_projects/' | append: lang_for_projects | append: '/' %}
-            <!-- DEBUG: Base Project Path to filter = {{ base_project_path | inspect }} -->
-            <!-- DEBUG: Number of all projects found by Jekyll = {{ site.projects.size }} -->
-            <!-- DEBUG: Listing all site.projects paths for verification: -->
-            {% for p_debug in site.projects %}
-                <!-- Path: {{ p_debug.path | inspect }} (Lang: {{ p_debug.lang | inspect }}) -->
-            {% endfor %}
-
             {% assign projects_lang = site.projects | where_exp: "item", "item.path contains base_project_path" | sort: "order" %}
-            <!-- DEBUG: Number of projects found for lang '{{ lang_for_projects }}' = {{ projects_lang.size }} -->
 
             {% if projects_lang.size > 0 %}
                 {% for project_item in projects_lang %}
-                    <!-- DEBUG: Processing project: {{ project_item.title | inspect }} (Path: {{ project_item.path | inspect }}) (Order: {{ project_item.order | inspect }}) -->
+                    <!-- YENİ DEBUG SATIRI BAŞLANGICI -->
+                    <!-- DEBUG in index.html: Passing to project_card - lang_for_projects = {{ lang_for_projects | inspect }} -->
+                    <!-- YENİ DEBUG SATIRI SONU -->
                     {% include project_card.html project=project_item lang=lang_for_projects s=s_for_projects %}
                 {% endfor %}
             {% else %}
@@ -124,7 +114,6 @@ layout: default
                         No projects found for this language ({{ lang_for_projects }}).
                     {% endif %}
                 </p>
-                <!-- DEBUG: Fallback message shown because projects_lang.size is 0 or less. -->
             {% endif %}
         </div>
     </div>
