@@ -27,7 +27,7 @@
             <div class="flex justify-center space-x-6 mb-8">
                 {% for social in site.data.social.links %}
                 <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer" class="text-ctp-overlay1 hover:text-{{ social.hover_bg_color | default: 'ctp-blue' }} transition-colors" aria-label="{{ s_for_footer.footer_social_aria_label_prefix | default: 'Social: ' | append: social.name }}">
-                    {{ social.icon_svg }}
+                    {{ social.icon_class }}
                 </a>
                 {% endfor %}
             </div>
