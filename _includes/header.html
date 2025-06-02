@@ -22,8 +22,25 @@
                 <!-- Language Switcher (Desktop) -->
                 {% for lang_code_loop in site.languages %}
                     {% if lang_code_loop != current_active_lang %}
-                        {% assign target_lang_page_url = site.active_lang_options[lang_code_loop].url %}
-                        <a href="{{ target_lang_page_url | default: site.baseurl_root | default: '' | append: '/' | append: lang_code_loop | append: '/' }}"
+                        {% comment %} 
+                            Hedef dildeki sayfanın göreceli yolunu alıyoruz (örn: /en/about/ veya /en/)
+                            Bu yol genellikle baseurl'i içermez.
+                        {% endcomment %}
+                        {% assign relative_target_page_url = site.active_lang_options[lang_code_loop].url %}
+
+                        {% comment %}
+                            Eğer relative_target_page_url tanımsızsa (o dilde sayfa yoksa),
+                            o dilin ana sayfasına git (/en/ veya /tr/).
+                            Eğer site.baseurl_root tanımsızsa (baseurl yoksa), boş string kullan.
+                        {% endcomment %}
+                        {% if relative_target_page_url %}
+                            {% assign final_target_url = site.baseurl | default: '' | append: relative_target_page_url %}
+                        {% else %}
+                            {% assign final_target_url = site.baseurl | default: '' | append: '/' | append: lang_code_loop | append: '/' %}
+                        {% endif %}
+                        {% assign final_target_url = final_target_url | replace: '//', '/' %}
+
+                        <a href="{{ final_target_url }}"
                            class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                            aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code_loop }}">
                             {{ lang_code_loop }}
@@ -40,8 +57,15 @@
                  <!-- Language Switcher (Mobile) -->
                 {% for lang_code_loop_mobile in site.languages %}
                      {% if lang_code_loop_mobile != current_active_lang %}
-                        {% assign target_lang_page_url_mobile = site.active_lang_options[lang_code_loop_mobile].url %}
-                        <a href="{{ target_lang_page_url_mobile | default: site.baseurl_root | default: '' | append: '/' | append: lang_code_loop_mobile | append: '/' }}"
+                        {% assign relative_target_page_url_mobile = site.active_lang_options[lang_code_loop_mobile].url %}
+                        {% if relative_target_page_url_mobile %}
+                            {% assign final_target_url_mobile = site.baseurl | default: '' | append: relative_target_page_url_mobile %}
+                        {% else %}
+                            {% assign final_target_url_mobile = site.baseurl | default: '' | append: '/' | append: lang_code_loop_mobile | append: '/' %}
+                        {% endif %}
+                        {% assign final_target_url_mobile = final_target_url_mobile | replace: '//', '/' %}
+
+                        <a href="{{ final_target_url_mobile }}"
                            class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                            aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code_loop_mobile }}">
                             {{ lang_code_loop_mobile }}
