@@ -38,8 +38,8 @@
               {# Varsayılan dile geçiş: Sitenin kökü + sayfanın dil öneki olmayan yolu #}
               {# Bu, default_lang_in_url:false ayarının çalışmasını bekler #}
               {% assign page_path_for_default = page.permalink_without_lang | default: '/' %}
-              {% assign final_target_url_d = site.baseurl_root | default: '' | append: page_path_for_default %}
-            {% else %}
+              {% assign final_target_url_d = site.baseurl | default: '' | append: page_path_for_default %}
+              {% else %}
               {# Diğer dillere geçiş: Polyglot'un verdiği URL'yi kullan (bu zaten dil kodunu ve baseurl'i içermeli) #}
               {% assign polyglot_url_for_lang = site.active_lang_options[lang_code_d].url %}
               {% if polyglot_url_for_lang %}
@@ -76,8 +76,8 @@
             {% assign final_target_url_m = "" %}
             {% if lang_code_m == site.default_lang %}
               {% assign page_path_for_default_m = page.permalink_without_lang | default: '/' %}
-              {% assign final_target_url_m = site.baseurl_root | default: '' | append: page_path_for_default_m %}
-            {% else %}
+              {% assign final_target_url_m = site.baseurl | default: '' | append: page_path_for_default_m %}
+              {% else %}
               {% assign polyglot_url_for_lang_m = site.active_lang_options[lang_code_m].url %}
               {% if polyglot_url_for_lang_m %}
                 {% assign final_target_url_m = site.baseurl_root | default: '' | append: polyglot_url_for_lang_m %}
