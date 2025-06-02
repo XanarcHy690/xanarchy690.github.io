@@ -2,7 +2,7 @@
 id: e-ticaret-platformu # Türkçe dosyadaki ile aynı ID
 order: 1
 
-title: "E-Commerce Platform"
+title: "E-Ticaret Platformu"
 short_description: "A full-featured e-commerce platform developed with modern React and Node.js technologies."
 tags: ["React", "Node.js", "MongoDB", "TypeScript", "Redux"]
 

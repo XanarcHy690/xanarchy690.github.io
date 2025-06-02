@@ -1,34 +1,49 @@
-{% assign data_profile = site.data.profile[site.active_lang] | default: site.data.profile[site.default_lang] %}
-{% assign nav_links = site.data.navigation[site.active_lang] | default: site.data.navigation[site.default_lang] %}
-{% assign s = site.data.strings[site.active_lang] | default: site.data.strings[site.default_lang] %}
+{% assign current_active_lang = site.active_lang | default: site.default_lang | default: "tr" %}
+{% assign nav_links = site.data.navigation[current_active_lang] %}
+{% assign s = site.data.strings[current_active_lang] %}
 
 <nav class="fixed top-0 w-full bg-ctp-base/95 backdrop-blur-sm border-b border-ctp-surface0 z-50">
     <div class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
-            <a href="{{ site.baseurl_root }}{{ site.active_lang }}/" class="text-2xl font-bold text-ctp-lavender">
-                {{ site.data.profile.name }}
+            {# Aktif dilin ana sayfasına gitmek için #}
+            <a href="{{ site.baseurl_root }}/{{ current_active_lang }}/" class="text-2xl font-bold text-ctp-lavender">
+                {{ site.data.profile.name | default: "Site Name" }}
             </a>
-            <div class="hidden md:flex space-x-8 items-center"> {# items-center eklendi #}
+
+            <div class="hidden md:flex space-x-8 items-center">
                 {% for item in nav_links %}
-                <a href="{{ item.url | relative_url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
+                    {% comment %} Eğer URL # ile başlıyorsa, bu bir sayfa içi anchor linktir, relative_url gerekmez {% endcomment %}
+                    {% if item.url startswith '#' %}
+                        <a href="{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
+                    {% else %}
+                        {% comment %} 
+                            Diğer tüm linkler için (örn: /about/, /projects/ vs.)
+                            polyglot'un doğru linki oluşturması için başına / ekleyip relative_url kullanıyoruz.
+                            Eğer navigation.yml'deki item.url zaten / ile başlıyorsa (örn: /about/),
+                            bu yine de çalışır. Eğer başlamıyorsa (örn: about.html),
+                            bu başına / ekleyerek kökten itibaren doğru yolu oluşturur.
+                            Ancak, en güvenlisi navigation.yml'deki URL'lerin / ile başlamasıdır.
+                        {% endcomment %}
+                        <a href="{{ item.url | prepend: '/' | relative_url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
+                    {% endif %}
                 {% endfor %}
 
                 <!-- Language Switcher (Desktop) -->
-                {% for lang_code in site.languages %}
-                    {% if lang_code != site.active_lang %}
-                        {% comment %}
-                            site.baseurl_root: Sitenizin kök baseurl'i (dil olmadan)
-                            lang_code: Hedef dil kodu (örn: "tr", "en")
-                            page.permalink_without_lang: Mevcut sayfanın URL'si (dil öneki olmadan)
-                        {% endcomment %}
-                        <a href="{{ site.baseurl_root }}{{ lang_code }}{{ page.permalink_without_lang | default: '/' }}"
+                {% for lang_code_loop in site.languages %}
+                    {% assign target_page_path = page.permalink_without_lang | default: '/' %}
+                    {% assign target_url = site.baseurl_root | append: '/' | append: lang_code_loop | append: target_page_path %}
+                    {# URL'de çift // olmasını engellemek için #}
+                    {% assign target_url = target_url | replace: '//', '/' %}
+
+                    {% if lang_code_loop != current_active_lang %}
+                        <a href="{{ target_url }}"
                            class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                           aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code }}">
-                            {{ lang_code }}
+                           aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code_loop }}">
+                            {{ lang_code_loop }}
                         </a>
                     {% else %}
                         <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
-                            {{ lang_code }}
+                            {{ lang_code_loop }}
                         </span>
                     {% endif %}
                 {% endfor %}
@@ -36,16 +51,20 @@
 
             <div class="md:hidden flex items-center">
                  <!-- Language Switcher (Mobile) -->
-                {% for lang_code in site.languages %}
-                    {% if lang_code != site.active_lang %}
-                    <a href="{{ site.baseurl_root }}{{ lang_code }}{{ page.permalink_without_lang | default: '/' }}"
+                {% for lang_code_loop_mobile in site.languages %}
+                    {% assign target_page_path_mobile = page.permalink_without_lang | default: '/' %}
+                    {% assign target_url_mobile = site.baseurl_root | append: '/' | append: lang_code_loop_mobile | append: target_page_path_mobile %}
+                    {% assign target_url_mobile = target_url_mobile | replace: '//', '/' %}
+
+                    {% if lang_code_loop_mobile != current_active_lang %}
+                    <a href="{{ target_url_mobile }}"
                        class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                       aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code }}">
-                        {{ lang_code }}
+                       aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code_loop_mobile }}">
+                        {{ lang_code_loop_mobile }}
                     </a>
                     {% else %}
                         <span class="text-ctp-lavender uppercase text-sm font-bold mr-3 px-2 py-1 rounded-md bg-ctp-surface1">
-                            {{ lang_code }}
+                            {{ lang_code_loop_mobile }}
                         </span>
                     {% endif %}
                 {% endfor %}
@@ -60,7 +79,11 @@
     <div id="mobile-menu" class="hidden md:hidden bg-ctp-mantle border-t border-ctp-surface0">
         <div class="px-6 py-4 space-y-4">
             {% for item in nav_links %}
-            <a href="{{ item.url | relative_url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{ item.title }}</a>
+                 {% if item.url startswith '#' %}
+                    <a href="{{ item.url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{ item.title }}</a>
+                {% else %}
+                    <a href="{{ item.url | prepend: '/' | relative_url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{ item.title }}</a>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
