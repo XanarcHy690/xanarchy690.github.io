@@ -29,22 +29,34 @@
         <!-- Language Switcher (Desktop) -->
         {% for lang_code_d in site.languages %}
           {% if lang_code_d == current_active_lang %}
-            {# Aktif dil için farklı stil #}
             <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
               {{ lang_code_d }}
             </span>
           {% else %}
-            {# Diğer diller için link oluştur #}
-            {% assign target_url_d = "" %}
-            
-            {% comment %} Tamamen manual yaklaşım {% endcomment %}
+            {% assign final_target_url_d = "" %}
             {% if lang_code_d == site.default_lang %}
-            {% assign target_url_d = base %}
-          {% else %}
-            {% assign target_url_d = base | append: lang_code_d | append: '/' %}
-          {% endif %}
+              {# Varsayılan dile geçiş: Sitenin kökü + sayfanın dil öneki olmayan yolu #}
+              {# Bu, default_lang_in_url:false ayarının çalışmasını bekler #}
+              {% assign page_path_for_default = page.permalink_without_lang | default: '/' %}
+              {% assign final_target_url_d = site.baseurl_root | default: '' | append: page_path_for_default %}
+            {% else %}
+              {# Diğer dillere geçiş: Polyglot'un verdiği URL'yi kullan (bu zaten dil kodunu ve baseurl'i içermeli) #}
+              {% assign polyglot_url_for_lang = site.active_lang_options[lang_code_d].url %}
+              {% if polyglot_url_for_lang %}
+                {% assign final_target_url_d = site.baseurl_root | default: '' | append: polyglot_url_for_lang %}
+              {% else %}
+                {# Fallback: o dilin ana sayfasına git #}
+                {% assign final_target_url_d = site.baseurl_root | default: '' | append: '/' | append: lang_code_d | append: '/' %}
+              {% endif %}
+            {% endif %}
+            {% assign final_target_url_d = final_target_url_d | replace: '//', '/' %}
+             {# Eğer URL sadece baseurl_root ise ve baseurl_root boş değilse, sonuna / ekle #}
+            {% if final_target_url_d == (site.baseurl_root | default: '') and (site.baseurl_root | default: '') != "" %}
+                {% assign final_target_url_d = final_target_url_d | append: '/' %}
+            {% endif %}
 
-            <a href="{{ target_url_d }}"
+
+            <a href="{{ final_target_url_d }}"
                class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code_d }}">
               {{ lang_code_d }}
@@ -53,32 +65,38 @@
         {% endfor %}
       </div>
 
-      <!-- Mobile Menu Button + Language Switcher -->
+      <!-- Mobile Menu Button + Language Switcher (Aynı mantık mobil için de uygulanacak) -->
       <div class="md:hidden flex items-center">
-        <!-- Language Switcher (Mobile) -->
         {% for lang_code_m in site.languages %}
           {% if lang_code_m == current_active_lang %}
             <span class="text-ctp-lavender uppercase text-sm font-bold mr-3 px-2 py-1 rounded-md bg-ctp-surface1">
               {{ lang_code_m }}
             </span>
           {% else %}
-            {% assign target_url_m = "" %}
-            
-            {% comment %} Tamamen manual yaklaşım {% endcomment %}
-            {% if lang_code_d == site.default_lang %}
-            {% assign target_url_d = base %}
-          {% else %}
-            {% assign target_url_d = base | append: lang_code_d | append: '/' %}
-          {% endif %}
+            {% assign final_target_url_m = "" %}
+            {% if lang_code_m == site.default_lang %}
+              {% assign page_path_for_default_m = page.permalink_without_lang | default: '/' %}
+              {% assign final_target_url_m = site.baseurl_root | default: '' | append: page_path_for_default_m %}
+            {% else %}
+              {% assign polyglot_url_for_lang_m = site.active_lang_options[lang_code_m].url %}
+              {% if polyglot_url_for_lang_m %}
+                {% assign final_target_url_m = site.baseurl_root | default: '' | append: polyglot_url_for_lang_m %}
+              {% else %}
+                {% assign final_target_url_m = site.baseurl_root | default: '' | append: '/' | append: lang_code_m | append: '/' %}
+              {% endif %}
+            {% endif %}
+            {% assign final_target_url_m = final_target_url_m | replace: '//', '/' %}
+            {% if final_target_url_m == (site.baseurl_root | default: '') and (site.baseurl_root | default: '') != "" %}
+                {% assign final_target_url_m = final_target_url_m | append: '/' %}
+            {% endif %}
 
-            <a href="{{ target_url_m }}"
+            <a href="{{ final_target_url_m }}"
                class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code_m }}">
               {{ lang_code_m }}
             </a>
           {% endif %}
         {% endfor %}
-
         <button id="mobile-menu-btn" class="text-ctp-text hover:text-ctp-lavender">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
