@@ -1,41 +1,23 @@
 ---
 layout: default
-lang: tr
 ---
-<!-- ================= DEBUG BLOCK START ================= -->
-<!-- Page Path: {{ page.path }} -->
-<!-- Page URL: {{ page.url | inspect }} -->
-<!-- Page Lang (from front matter, if any): {{ page.lang | inspect }} -->
-<!-- Site Active Lang (from polyglot): {{ site.active_lang | inspect }} -->
-<!-- Site Default Lang (from _config.yml): {{ site.default_lang | inspect }} -->
+<!-- DEBUG PAGE START -->
+<!-- DEBUG: site.active_lang = {{ site.active_lang | inspect }} -->
+{% assign current_page_lang = site.active_lang | default: site.default_lang %}
+<!-- DEBUG: current_page_lang = {{ current_page_lang | inspect }} -->
 
-{% assign debug_current_lang_from_page = page.lang %}
-{% assign debug_current_lang_from_site_active = site.active_lang %}
-{% assign debug_current_lang_final = page.lang | default: site.active_lang | default: site.default_lang %}
-<!-- Effective 'current_lang' to be used: {{ debug_current_lang_final | inspect }} -->
+{% assign strings_for_current_page = site.data.strings[current_page_lang] %}
+<!-- DEBUG AT TOP: strings_for_current_page.section_title_about = {{ strings_for_current_page.section_title_about | inspect }} -->
+<!-- DEBUG AT TOP: strings_for_current_page IS NIL? = {% if strings_for_current_page == nil %}YES{% else %}NO{% endif %} -->
 
-{% assign debug_profile_data = site.data.profile[debug_current_lang_final] %}
-<!-- 'profile_for_current_page' based on '{{ debug_current_lang_final }}' IS NIL?: {% if debug_profile_data == nil %}YES{% else %}NO{% endif %} -->
-{% if debug_profile_data %}
-  <!-- profile_for_current_page.tagline: {{ debug_profile_data.tagline | inspect }} -->
-{% endif %}
-
-{% assign debug_strings_data = site.data.strings[debug_current_lang_final] %}
-<!-- 'strings_for_current_page' based on '{{ debug_current_lang_final }}' IS NIL?: {% if debug_strings_data == nil %}YES{% else %}NO{% endif %} -->
-{% if debug_strings_data %}
-  <!-- strings_for_current_page.section_title_about: {{ debug_strings_data.section_title_about | inspect }} -->
-{% endif %}
-
-<!-- global_site_profile.name (should be lang-independent): {{ site.data.profile.name | inspect }} -->
-<!-- ================= DEBUG BLOCK END =================== -->
-
-{% comment %} Sizin kullandığınız değişken atamaları (DEBUG'dan sonra) {% endcomment %}
-{% assign current_lang = page.lang | default: site.active_lang | default: site.default_lang %}
-{% assign profile_for_current_page = site.data.profile[current_lang] %}
-{% assign strings_for_current_page = site.data.strings[current_lang] %}
+{% assign profile_for_current_page = site.data.profile[current_page_lang] %}
 {% assign global_site_profile = site.data.profile %}
 
-<!-- ... Sayfanızın geri kalan HTML içeriği ... -->
+<!-- DEBUG BEFORE H2 (ABOUT): strings_for_current_page.section_title_about = {{ strings_for_current_page.section_title_about | inspect }} -->
+<!-- DEBUG BEFORE H2 (PROJECTS): s_for_projects_debug.section_title_projects = {{ s_for_projects_debug.section_title_projects | inspect }} -->
+<!-- DEBUG BEFORE H2 (CONTACT): strings_for_current_page.section_title_contact = {{ strings_for_current_page.section_title_contact | inspect }} -->
+
+<!-- DEBUG PAGE DEBUG END -->
 
 <!-- Hero Section -->
 <section id="home" class="gradient-bg min-h-screen flex items-center justify-center pt-20">
@@ -76,7 +58,6 @@ lang: tr
 <section id="about" class="py-20 bg-ctp-mantle">
     <div class="container mx-auto px-6">
         <div class="max-w-4xl mx-auto">
-            <!-- DEBUG BEFORE H2 (ABOUT): strings_for_current_page.section_title_about = {{ strings_for_current_page.section_title_about | inspect }} -->
             <h2 class="text-4xl font-bold text-center mb-12 text-ctp-lavender">{{ strings_for_current_page.section_title_about }}</h2>
             <div class="bg-ctp-surface0 rounded-2xl p-8 md:p-12">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
@@ -112,10 +93,8 @@ lang: tr
 <!-- Projects Section -->
 <section id="projects" class="py-20 bg-ctp-base">
     <div class="container mx-auto px-6">
-        {# Projeler için zaten lang_for_projects ve s_for_projects kullanıyorsunuz, bu iyi #}
         {% assign lang_for_projects = site.active_lang | default: site.default_lang | default: "tr" %}
         {% assign s_for_projects_debug = site.data.strings[lang_for_projects] %}
-         <!-- DEBUG BEFORE H2 (PROJECTS): s_for_projects_debug.section_title_projects = {{ s_for_projects_debug.section_title_projects | inspect }} -->
         <h2 class="text-4xl font-bold text-center mb-12 text-ctp-lavender">
             {% if s_for_projects_debug and s_for_projects_debug.section_title_projects %}
                 {{ s_for_projects_debug.section_title_projects }}
@@ -148,12 +127,10 @@ lang: tr
 <section id="contact" class="py-20 bg-ctp-mantle">
     <div class="container mx-auto px-6">
         <div class="max-w-4xl mx-auto text-center">
-             <!-- DEBUG BEFORE H2 (CONTACT): strings_for_current_page.section_title_contact = {{ strings_for_current_page.section_title_contact | inspect }} -->
             <h2 class="text-4xl font-bold mb-8 text-ctp-lavender">{{ strings_for_current_page.section_title_contact }}</h2>
             <p class="text-xl text-ctp-subtext1 mb-12">
                 {{ profile_for_current_page.contact_intro }}
             </p>
-            {# ... İletişim Formu HTML'i (varsa) ... #}
             <div class="mt-12 flex flex-col sm:flex-row justify-center items-center sm:space-x-8 space-y-4 sm:space-y-0">
                 <a href="mailto:{{ global_site_profile.email }}" class="flex items-center text-ctp-subtext1 hover:text-ctp-lavender transition-colors">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
