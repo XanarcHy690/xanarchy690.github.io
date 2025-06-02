@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="{{ site.active_lang | default: site.default_lang }}">
-    {% comment %} _layouts/default.html {% endcomment %}
-    <body>
-        {% include header.html %}
-        <main>
-            {{ content }}
-        </main>
-        {% include footer.html %}
+{% include head.html %}
+<body class="bg-ctp-base text-ctp-text min-h-screen">
+    {% include header.html %}
 
-        {% comment %} Modal JS'i buraya dahil ediyoruz {% endcomment %}
-        {% include project_modal_scripts.html %}
-        <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
-    </body>
+    <main>
+        {{ content }}
+    </main>
+
+    {% include footer.html %}
+    
+    {% include project_modal_scripts.html %}
+    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
 </html>
