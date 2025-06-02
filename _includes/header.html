@@ -1,4 +1,3 @@
-
 {% assign current_path_lang = page.url | split: '/' | slice: 1, 1 | first %}
 {% if site.languages contains current_path_lang %}
   {% assign current_active_lang = current_path_lang %}
@@ -19,61 +18,62 @@
       <!-- Desktop Menu -->
       <div class="hidden md:flex space-x-8 items-center">
         {% for item in nav_links %}
-          {% assign item_url_str = item.url | default: "" %}
-          {% assign first_char_item = item_url_str | slice: 0, 1 %}
-          {% if first_char_item == "#" %}
-            <a href="{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
-          {% else %}
-            <a href="{{ item.url | prepend: '/' | relative_url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
-          {% endif %}
+        <!-- LANGUAGE DETECTION -->
+        {% assign current_path_lang = page.url | split: '/' | slice: 1, 1 | first %}
+        {% if site.languages contains current_path_lang %}
+        {% assign current_active_lang = current_path_lang %}
+        {% else %}
+        {% assign current_active_lang = site.default_lang %}
+{% endif %}
         {% endfor %}
 
-        
-        <!-- Language Switcher (Desktop) -->
+        <!-- LANGUAGE SWITCHER (DESKTOP) -->
         {% for lang_code in site.languages %}
-          {% if lang_code == current_active_lang %}
+        {% if lang_code == current_active_lang %}
             <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
-              {{ lang_code }}
+            {{ lang_code }}
             </span>
-          {% else %}
-            {% assign target_url = site.baseurl | default: '' %}
-            {% if lang_code != site.default_lang %}
-              {% assign target_url = target_url | append: '/' | append: lang_code | append: '/' %}
+        {% else %}
+            {% assign base = site.baseurl | default: '' %}
+            {% if lang_code == site.default_lang %}
+            {% assign lang_url = base | append: '/' %}
             {% else %}
-              {% assign target_url = target_url | append: '/' %}
+            {% assign lang_url = base | append: '/' | append: lang_code | append: '/' %}
             {% endif %}
-            <a href="{{ target_url | replace: '//', '/' }}"
-               class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-               aria-label="Switch language to {{ lang_code }}">
-              {{ lang_code }}
+            <a href="{{ lang_url | replace: '//', '/' }}"
+            class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+            aria-label="Switch language to {{ lang_code }}">
+            {{ lang_code }}
             </a>
-          {% endif %}
+        {% endif %}
         {% endfor %}
+
         
       </div>
 
       <!-- Mobile Menu Button + Language Switcher -->
       <div class="md:hidden flex items-center">
-        <!-- Language Switcher (Mobile) -->
-        {% for lang_code_m in site.languages %}
-        {% if lang_code_m == current_active_lang %}
+        <!-- LANGUAGE SWITCHER (MOBILE) -->
+        {% for lang_code in site.languages %}
+        {% if lang_code == current_active_lang %}
             <span class="text-ctp-lavender uppercase text-sm font-bold mr-3 px-2 py-1 rounded-md bg-ctp-surface1">
-            {{ lang_code_m }}
+            {{ lang_code }}
             </span>
         {% else %}
-            {% assign final_target_url_m = site.baseurl | default: '' %}
-            {% if lang_code_m != site.default_lang %}
-            {% assign final_target_url_m = final_target_url_m | append: '/' | append: lang_code_m | append: '/' %}
+            {% assign base = site.baseurl | default: '' %}
+            {% if lang_code == site.default_lang %}
+            {% assign lang_url = base | append: '/' %}
             {% else %}
-            {% assign final_target_url_m = final_target_url_m | append: '/' %}
+            {% assign lang_url = base | append: '/' | append: lang_code | append: '/' %}
             {% endif %}
-            <a href="{{ final_target_url_m | replace: '//', '/' }}"
+            <a href="{{ lang_url | replace: '//', '/' }}"
             class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-            aria-label="Switch language to {{ lang_code_m }}">
-            {{ lang_code_m }}
+            aria-label="Switch language to {{ lang_code }}">
+            {{ lang_code }}
             </a>
         {% endif %}
         {% endfor %}
+
 
         <button id="mobile-menu-btn" class="text-ctp-text hover:text-ctp-lavender">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
