@@ -4,8 +4,6 @@
     {% seo %}
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
 
-    {# FAVICON ve APP İKON LİNKLERİ BAŞLANGICI #}
-    {# Apple Touch İkonları #}
     <link rel="apple-touch-icon" sizes="57x57" href="{{ '/assets/images/favicon/apple-icon-57x57.png' | relative_url }}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ '/assets/images/favicon/apple-icon-60x60.png' | relative_url }}">
     <link rel="apple-touch-icon" sizes="72x72" href="{{ '/assets/images/favicon/apple-icon-72x72.png' | relative_url }}">
@@ -16,22 +14,17 @@
     <link rel="apple-touch-icon" sizes="152x152" href="{{ '/assets/images/favicon/apple-icon-152x152.png' | relative_url }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/images/favicon/apple-icon-180x180.png' | relative_url }}">
 
-    {# Android ve Genel İkonlar #}
     <link rel="icon" type="image/png" sizes="192x192"  href="{{ '/assets/images/favicon/android-icon-192x192.png' | relative_url }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon/favicon-32x32.png' | relative_url }}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{ '/assets/images/favicon/favicon-96x96.png' | relative_url }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/images/favicon/favicon-16x16.png' | relative_url }}">
     
-    {# Manifest Dosyası #}
-    <link rel="manifest" href="{{ '/manifest.json.liquid' | relative_url }}">
+    <link rel="manifest" href="{{ '/.webmanifest' | relative_url }}">
     
-    {# Microsoft Tile İkonları #}
     <meta name="msapplication-TileColor" content="{{ site.ms_tile_color | default: '#ffffff' }}">
     <meta name="msapplication-TileImage" content="{{ '/assets/images/favicon/ms-icon-144x144.png' | relative_url }}">
     
-    {# Tarayıcı Tema Rengi #}
     <meta name="theme-color" content="{{ site.theme_color | default: '#ffffff' }}">
-    {# FAVICON ve APP İKON LİNKLERİ SONU #}
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
