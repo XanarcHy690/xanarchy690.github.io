@@ -1,6 +1,3 @@
----
-layout: null # Jekyll'ın bu dosyayı işlemesini sağlar ama layout uygulamaz
----
 {
     "name": "{{ site.title | default: 'Muhammet Abdullah Şahin' | escape }}",
     "short_name": "{{ site.short_name | default: 'M.A.Şahin' | escape }}",
