@@ -1,5 +1,5 @@
 ---
-id: e-commerce-platform # Türkçe dosyadaki ile aynı ID
+id: e-ticaret-platformu # Türkçe dosyadaki ile aynı ID
 order: 1
 
 title: "E-Commerce Platform"
@@ -19,7 +19,7 @@ live_url: "https://ecommerce-demo.com"
 
 <h5 class="text-lg font-semibold mb-3 text-ctp-blue">Features:</h5>
 <ul class="list-disc list-inside mb-4 space-y-1">
-    <li>Responsive design and mobile-first approach</li>
+    <li>deneme Responsive design and mobile-first approach</li>
     <li>Secure payment system integration</li>
     <li>Real-time inventory tracking</li>
     <li>Comprehensive admin panel</li>

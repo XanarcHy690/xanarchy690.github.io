@@ -38,83 +38,65 @@
   
   console.log("MODAL SCRIPTS: allProjectsData object initialized:", JSON.parse(JSON.stringify(allProjectsData)));
   
-  const projectModal = document.getElementById('projectModal');
-  const modalTitleEl = document.getElementById('modalTitle');
   const modalContentEl = document.getElementById('modalContent');
   const modalTagsEl = document.getElementById('modalTags');
   const modalGithubEl = document.getElementById('modalGithub');
   const modalLiveEl = document.getElementById('modalLive');
-  
+  const projectModal = document.getElementById('projectModal');
+  const projectModalContentContainer = document.getElementById('projectModalContentContainer'); // İç container'ı da seçelim
+  const modalTitleEl = document.getElementById('modalTitle');
+
   console.log("MODAL SCRIPTS: Modal HTML elements obtained:",
       { projectModal, modalTitleEl, modalContentEl, modalTagsEl, modalGithubEl, modalLiveEl }
   );
   
   function openProjectModal(projectId, lang) {
-      console.log("MODAL SCRIPTS: openProjectModal function CALLED with projectId:", projectId, " lang:", lang);
-  
-      if (!projectModal) {
-          console.error("MODAL SCRIPTS: ERROR - projectModal element is null. Modal cannot be shown.");
-          return;
-      }
-  
-      const currentLangProjectData = allProjectsData[lang];
-      console.log("MODAL SCRIPTS: Data for selected language (" + lang + "):", currentLangProjectData);
-  
-      if (!currentLangProjectData || !currentLangProjectData.projects) {
-          console.error("MODAL SCRIPTS: ERROR - Project data for language '" + lang + "' not found or invalid in allProjectsData.");
-          projectModal.classList.add('hidden');
-          return;
-      }
-  
-      const project = currentLangProjectData.projects.find(p => p.id === projectId);
-      console.log("MODAL SCRIPTS: Project found by ID '" + projectId + "':", project);
-  
-      if (project && modalTitleEl && modalContentEl && modalTagsEl && modalGithubEl && modalLiveEl) {
-          console.log("MODAL SCRIPTS: All conditions met. Populating and showing modal.");
-          modalTitleEl.textContent = project.title || "Title Not Available";
-          modalContentEl.innerHTML = project.content || "<p>Content Not Available.</p>";
-  
-          modalTagsEl.innerHTML = '';
-          if (project.tags && project.tags.length > 0) {
-              console.log("MODAL SCRIPTS: Populating tags:", project.tags);
-              project.tags.forEach(tag => {
-                  const tagElement = document.createElement('span');
-                  tagElement.className = 'px-3 py-1 bg-ctp-sky/20 text-ctp-sky rounded-full text-xs';
-                  tagElement.textContent = tag;
-                  modalTagsEl.appendChild(tagElement);
-              });
-          } else {
-              console.log("MODAL SCRIPTS: No tags for this project.");
-          }
-  
-          modalGithubEl.href = project.github || '#';
-          modalLiveEl.href = project.live || '#';
-  
-          modalGithubEl.style.display = project.github ? 'inline-flex' : 'none';
-          modalLiveEl.style.display = project.live ? 'inline-flex' : 'none';
-          console.log("MODAL SCRIPTS: GitHub link display:", modalGithubEl.style.display, " Live link display:", modalLiveEl.style.display);
-  
-          projectModal.classList.remove('hidden');
-            projectModal.classList.add('flex'); // Bu, display: flex; uygular
-            document.body.style.overflow = 'hidden';
-            console.log("MODAL SCRIPTS: Modal classes after update:", projectModal.className); // Modalın sınıflarını kontrol et
-            console.log("MODAL SCRIPTS: Modal should be visible now.");
+    // ... (proje bulma ve veri doldurma mantığı aynı kalacak) ...
 
-      } else {
-          console.error("MODAL SCRIPTS: ERROR - Project data for ID '"+ projectId +"' found BUT some modal HTML elements are missing OR project object is incomplete.");
-          console.error("MODAL SCRIPTS: Details - project:", project, "modalTitleEl:", modalTitleEl, "modalContentEl:", modalContentEl, "modalTagsEl:", modalTagsEl, "modalGithubEl:", modalGithubEl, "modalLiveEl:", modalLiveEl);
-          projectModal.classList.add('hidden');
-      }
-  }
-  
-  function closeProjectModal() {
-      console.log("MODAL SCRIPTS: closeProjectModal function CALLED.");
-      if (projectModal) {
-          projectModal.classList.add('hidden');
-          projectModal.classList.remove('flex');
-          document.body.style.overflow = 'auto';
-      }
-  }
+    if (project && modalTitleEl && modalContentEl /* && diğer kontroller */) {
+        // ... (Veri doldurma kısmı aynı)
+        modalTitleEl.textContent = project.title || "Title Not Available";
+        modalContentEl.innerHTML = project.content || "<p>Content Not Available.</p>";
+        // ... (etiketler ve linkler aynı)
+
+        // Modal'ı görünür yapma ve animasyonu başlatma
+        if (projectModal && projectModalContentContainer) {
+            projectModal.classList.remove('opacity-0', 'pointer-events-none'); // Şeffaflığı kaldır, tıklanabilir yap
+            projectModalContentContainer.classList.remove('scale-95'); // Ölçeği normale getir
+            projectModal.classList.add('opacity-100'); // Tamamen görünür yap (transition için)
+            projectModalContentContainer.classList.add('scale-100'); // Tam ölçek (transition için)
+
+            document.body.style.overflow = 'hidden';
+            console.log("MODAL SCRIPTS: Modal should be visible and animated now.");
+        }
+    } else {
+        // ... (hata loglama kısmı aynı)
+        if (projectModal) {
+             projectModal.classList.add('opacity-0', 'pointer-events-none');
+             if(projectModalContentContainer) projectModalContentContainer.classList.add('scale-95');
+        }
+    }
+}
+
+function closeProjectModal() {
+    console.log("MODAL SCRIPTS: closeProjectModal function CALLED.");
+    if (projectModal && projectModalContentContainer) {
+        projectModal.classList.add('opacity-0'); // Şeffaflaştır
+        projectModalContentContainer.classList.add('scale-95'); // Küçült
+
+        // Transition bittikten sonra pointer-events'i ayarla ve body scroll'u aç
+        // setTimeout süresi Tailwind'deki duration-300 ile eşleşmeli (300ms)
+        setTimeout(() => {
+            projectModal.classList.add('pointer-events-none');
+            // Eğer modal tamamen gizlenmiyorsa (sadece opacity ile oynuyorsak)
+            // ve hala DOM'da flex ise, display none yapabiliriz.
+            // Ama sadece opacity ve pointer-events ile de yönetilebilir.
+            // projectModal.classList.remove('flex'); // Eğer display'i de yönetmek isterseniz
+            // projectModal.classList.add('hidden'); // Veya tamamen gizlemek için
+            document.body.style.overflow = 'auto';
+        }, 300); // Tailwind transition süresiyle eşleşmeli
+    }
+}
   
   if (projectModal) {
       projectModal.addEventListener('click', (e) => {
