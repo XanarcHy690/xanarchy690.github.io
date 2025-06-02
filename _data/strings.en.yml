@@ -1,30 +1,60 @@
-# _data/strings.en.yml
+# =========================
+# General UI Strings (English)
+# =========================
+
+# Navigation (These titles come from 'title' field in _data/navigation.yml,
+# but can be here for consistency or other uses)
 nav_home: "Home"
 nav_about: "About"
 nav_projects: "Projects"
 nav_contact: "Contact"
+
+# Language Switcher Texts
 lang_tr_short: "TR"
 lang_en_short: "EN"
-lang_switch_label: "Change language"
-hero_scroll_aria_label: "Scroll down for more information"
+lang_switch_label: "Change language" # For screen readers
+
+# Hero Section
+hero_scroll_aria_label: "Scroll down for more information" # ARIA label for the arrow icon
+
+# Section Titles (Used in index.html)
 section_title_about: "About Me"
 section_title_projects: "My Projects"
 section_title_contact: "Get In Touch"
+
+# Contact Form (Used in index.html)
 contact_form_name_placeholder: "Your Name"
 contact_form_email_placeholder: "Your Email Address"
 contact_form_subject_placeholder: "Subject"
 contact_form_message_placeholder: "Your Message"
 contact_form_submit_button: "Send Message"
-footer_social_aria_label_prefix: "My social media profile: "
-project_modal_close_button_text: "Close"
-project_modal_close_button_aria_label: "Close project details window"
+# Post-submission messages (optional, if handled via JS)
+# contact_form_success: "Your message has been sent successfully!"
+# contact_form_error: "An error occurred. Please try again."
+
+# Footer Section
+footer_social_aria_label_prefix: "My social media profile: " # e.g., "My social media profile: GitHub"
+# footer_copyright text is in _data/profile.yml
+
+# Project Cards (For project listing on the main page)
+# Texts on project cards mostly come from _projects/../[project].md.
+# However, if there was a "View Details" button, it could be added here.
+
+# Project Modal Window (For details)
+project_modal_close_button_text: "Close" # Visible text (if any)
+project_modal_close_button_aria_label: "Close project details window" # ARIA label for close (X) icon
 project_modal_github_link_text: "GitHub"
 project_modal_live_demo_link_text: "Live Demo"
-project_modal_tags_title: "Technologies Used:"
+project_modal_tags_title: "Technologies Used:" # Optional, if a title for tags is desired
+
+# General Texts
 read_more: "Read More"
 go_back: "Go Back"
 loading_text: "Loading..."
 error_text: "An error occurred."
-external_link_aria_label: "(opens in a new tab)"
+
+# Accessibility Texts
+external_link_aria_label: "(opens in a new tab)" # For external links
+
 no_projects_found_prefix: "No projects found for this language ("
 no_projects_found_suffix: ")."
