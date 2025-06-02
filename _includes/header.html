@@ -21,18 +21,17 @@
                 {% endfor %}
 
                 <!-- Language Switcher (Desktop) -->
-                <!-- Language Switcher (Desktop) -->
                 {% for lang_code_d in site.languages %}
                     {% if lang_code_d != current_active_lang %}
                         {% assign final_target_url_d = "" %}
                         {% assign current_page_url_on_iteration_d = page.url %}
                         {% assign page_path_to_use_d = current_page_url_on_iteration_d %}
 
-                        {% assign lang_prefix_to_remove_d = nil %}
-                        {% assign default_in_url_setting = site.config.default_lang_in_url %}
-                        <!-- DEBUG D-CONFIG_DEFAULT_IN_URL_RAW: {{ default_in_url_setting | inspect }} -->
+                        {% comment %} Polyglot'un kendi ayarını okumaya çalışıyoruz {% endcomment %}
+                        {% assign polyglot_setting_hide_default = site.polyglot.default_lang_in_url %}
+                        <!-- DEBUG D-POLYGLOT_SETTING_HIDE_DEFAULT: {{ polyglot_setting_hide_default | inspect }} -->
 
-                        {% if current_active_lang != site.default_lang or default_in_url_setting != false and default_in_url_setting != "false" %}
+                        {% if current_active_lang != site.default_lang or polyglot_setting_hide_default != false %}
                             {% assign lang_prefix_to_remove_d = "/" | append: current_active_lang %}
                             {% assign current_path_prefix_check_d = page_path_to_use_d | slice: 0, lang_prefix_to_remove_d.size %}
                             {% if current_path_prefix_check_d == lang_prefix_to_remove_d %}
@@ -50,7 +49,7 @@
                              {% assign page_path_to_use_d = "" %}
                         {% endif %}
 
-                        {% if lang_code_d == site.default_lang and (default_in_url_setting == false or default_in_url_setting == "false") %}
+                        {% if lang_code_d == site.default_lang and polyglot_setting_hide_default == false %}
                             {% assign final_target_url_d = site.baseurl | default: '' | append: page_path_to_use_d %}
                         {% else %}
                             {% assign final_target_url_d = site.baseurl | default: '' | append: '/' | append: lang_code_d | append: page_path_to_use_d %}
@@ -64,7 +63,7 @@
                         {% assign final_target_url_d = final_target_url_d | replace: '//', '/' %}
                         {% if final_target_url_d == (site.baseurl | default: '') and (site.baseurl | default: '') != "" %}
                              {% assign final_target_url_d = final_target_url_d | append: '/' %}
-                        {% elsif final_target_url_d == "" and (site.baseurl | default: '') == "" %} {# baseurl boşsa ve sonuç boşsa / yap #}
+                        {% elsif final_target_url_d == "" and (site.baseurl | default: '') == "" %}
                              {% assign final_target_url_d = "/" %}
                         {% endif %}
 
@@ -89,10 +88,10 @@
                         {% assign current_page_url_on_iteration_m = page.url %}
                         {% assign page_path_to_use_m = current_page_url_on_iteration_m %}
 
-                        {% assign default_in_url_setting_m = site.config.default_lang_in_url %}
-                        <!-- DEBUG M-CONFIG_DEFAULT_IN_URL_RAW: {{ default_in_url_setting_m | inspect }} -->
+                        {% assign polyglot_setting_hide_default_m = site.polyglot.default_lang_in_url %}
+                        <!-- DEBUG M-POLYGLOT_SETTING_HIDE_DEFAULT: {{ polyglot_setting_hide_default_m | inspect }} -->
 
-                        {% if current_active_lang != site.default_lang or default_in_url_setting_m != false and default_in_url_setting_m != "false" %}
+                        {% if current_active_lang != site.default_lang or polyglot_setting_hide_default_m != false %}
                             {% assign lang_prefix_to_remove_m = "/" | append: current_active_lang %}
                             {% assign current_path_prefix_check_m = page_path_to_use_m | slice: 0, lang_prefix_to_remove_m.size %}
                              {% if current_path_prefix_check_m == lang_prefix_to_remove_m %}
@@ -110,7 +109,7 @@
                             {% assign page_path_to_use_m = "" %}
                         {% endif %}
 
-                        {% if lang_code_m == site.default_lang and (default_in_url_setting_m == false or default_in_url_setting_m == "false") %}
+                        {% if lang_code_m == site.default_lang and polyglot_setting_hide_default_m == false %}
                             {% assign final_target_url_m = site.baseurl | default: '' | append: page_path_to_use_m %}
                         {% else %}
                             {% assign final_target_url_m = site.baseurl | default: '' | append: '/' | append: lang_code_m | append: page_path_to_use_m %}
