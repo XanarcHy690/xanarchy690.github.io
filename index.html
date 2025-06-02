@@ -1,9 +1,10 @@
 ---
 layout: default
+lang: tr
 ---
-{% assign current_page_lang = site.active_lang | default: site.default_lang %}
-{% assign profile_for_current_page = site.data.profile[current_page_lang] %}
-{% assign strings_for_current_page = site.data.strings[current_page_lang] %}
+{% assign current_lang = page.lang | default: site.default_lang %}
+{% assign profile_for_current_page = site.data.profile[current_lang] %}
+{% assign strings_for_current_page = site.data.strings[current_lang] %}
 {% assign global_site_profile = site.data.profile %}
 
 <!-- Hero Section -->
