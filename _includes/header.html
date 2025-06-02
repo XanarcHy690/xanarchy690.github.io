@@ -23,49 +23,37 @@
                 <!-- Language Switcher (Desktop) -->
                 {% for lang_code_d in site.languages %}
                     {% if lang_code_d != current_active_lang %}
-                        {% assign final_target_url_d = "" %}
-                        {% assign current_page_url_on_iteration_d = page.url %}
-                        {% assign page_path_to_use_d = current_page_url_on_iteration_d %}
+                        {% assign final_target_url_d = site.baseurl | default: '' %}
+                        
+                        {% comment %} 
+                            Polyglot'un o dildeki mevcut sayfanın tam göreceli URL'sini vermesini bekliyoruz.
+                            Eğer default_lang_in_url:false ise ve lang_code_d varsayılan dil ise,
+                            bu URL'de dil kodu olmamalıdır.
+                        {% endcomment %}
+                        {% assign relative_page_url_for_lang_d = site.active_lang_options[lang_code_d].url %}
+                        <!-- DEBUG D: lang_code_d={{lang_code_d}}, relative_page_url_for_lang_d={{relative_page_url_for_lang_d | inspect}} -->
 
-                        {% comment %} Polyglot'un kendi ayarını okumaya çalışıyoruz {% endcomment %}
-                        {% assign polyglot_setting_hide_default = site.polyglot.default_lang_in_url %}
-                        <!-- DEBUG D-POLYGLOT_SETTING_HIDE_DEFAULT: {{ polyglot_setting_hide_default | inspect }} -->
-
-                        {% if current_active_lang != site.default_lang or polyglot_setting_hide_default != false %}
-                            {% assign lang_prefix_to_remove_d = "/" | append: current_active_lang %}
-                            {% assign current_path_prefix_check_d = page_path_to_use_d | slice: 0, lang_prefix_to_remove_d.size %}
-                            {% if current_path_prefix_check_d == lang_prefix_to_remove_d %}
-                                {% assign temp_path_d = page_path_to_use_d | remove_first: lang_prefix_to_remove_d %}
-                                {% if temp_path_d == "" or temp_path_d == "/" %}
-                                    {% assign page_path_to_use_d = "/" %}
-                                {% elsif (temp_path_d | slice: 0,1) != "/" %}
-                                    {% assign page_path_to_use_d = temp_path_d | prepend: "/" %}
-                                {% else %}
-                                    {% assign page_path_to_use_d = temp_path_d %}
-                                {% endif %}
+                        {% if relative_page_url_for_lang_d %}
+                            {% assign final_target_url_d = final_target_url_d | append: relative_page_url_for_lang_d %}
+                        {% else %}
+                            {# Fallback: Hedef dilin ana sayfasına git #}
+                            {% if lang_code_d == site.default_lang and site.config.default_lang_in_url == false %} {# Bu config kontrolü yine de kalsın, belki bir şekilde çalışır #}
+                                {% assign final_target_url_d = final_target_url_d | append: '/' %}
+                            {% else %}
+                                {% assign final_target_url_d = final_target_url_d | append: '/' | append: lang_code_d | append: '/' %}
                             {% endif %}
                         {% endif %}
-                        {% if page_path_to_use_d == "/" %}
-                             {% assign page_path_to_use_d = "" %}
-                        {% endif %}
-
-                        {% if lang_code_d == site.default_lang and polyglot_setting_hide_default == false %}
-                            {% assign final_target_url_d = site.baseurl | default: '' | append: page_path_to_use_d %}
-                        {% else %}
-                            {% assign final_target_url_d = site.baseurl | default: '' | append: '/' | append: lang_code_d | append: page_path_to_use_d %}
-                        {% endif %}
-
+                        
                         {% assign final_target_url_d = final_target_url_d | replace: '//', '/' %}
-                        {% assign last_char_d = final_target_url_d | slice: -1, 1 %}
-                        {% if final_target_url_d != "/" and final_target_url_d != (site.baseurl | default: '') and final_target_url_d != ((site.baseurl | default: '') | append: '/') and last_char_d != '/' and (final_target_url_d contains '.' == false) %}
-                            {% assign final_target_url_d = final_target_url_d | append: '/' %}
-                        {% endif %}
-                        {% assign final_target_url_d = final_target_url_d | replace: '//', '/' %}
+                        {# URL sadece baseurl ise (örn: /portfolio), sonuna / ekle (ana sayfa için) #}
                         {% if final_target_url_d == (site.baseurl | default: '') and (site.baseurl | default: '') != "" %}
                              {% assign final_target_url_d = final_target_url_d | append: '/' %}
-                        {% elsif final_target_url_d == "" and (site.baseurl | default: '') == "" %}
+                        {% endif %}
+                        {% if final_target_url_d == "" %} {# Eğer baseurl de boşsa ve sonuç boşsa / yap #}
                              {% assign final_target_url_d = "/" %}
                         {% endif %}
+
+                        <!-- DEBUG D-FINAL_TARGET_URL: {{ final_target_url_d | inspect }} -->
 
                         <a href="{{ final_target_url_d }}"
                            class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
@@ -84,48 +72,29 @@
                  <!-- Language Switcher (Mobile) -->
                 {% for lang_code_m in site.languages %}
                      {% if lang_code_m != current_active_lang %}
-                        {% assign final_target_url_m = "" %}
-                        {% assign current_page_url_on_iteration_m = page.url %}
-                        {% assign page_path_to_use_m = current_page_url_on_iteration_m %}
+                        {% assign final_target_url_m = site.baseurl | default: '' %}
+                        {% assign relative_page_url_for_lang_m = site.active_lang_options[lang_code_m].url %}
+                        <!-- DEBUG M: lang_code_m={{lang_code_m}}, relative_page_url_for_lang_m={{relative_page_url_for_lang_m | inspect}} -->
 
-                        {% assign polyglot_setting_hide_default_m = site.polyglot.default_lang_in_url %}
-                        <!-- DEBUG M-POLYGLOT_SETTING_HIDE_DEFAULT: {{ polyglot_setting_hide_default_m | inspect }} -->
-
-                        {% if current_active_lang != site.default_lang or polyglot_setting_hide_default_m != false %}
-                            {% assign lang_prefix_to_remove_m = "/" | append: current_active_lang %}
-                            {% assign current_path_prefix_check_m = page_path_to_use_m | slice: 0, lang_prefix_to_remove_m.size %}
-                             {% if current_path_prefix_check_m == lang_prefix_to_remove_m %}
-                                {% assign temp_path_m = page_path_to_use_m | remove_first: lang_prefix_to_remove_m %}
-                                {% if temp_path_m == "" or temp_path_m == "/" %}
-                                    {% assign page_path_to_use_m = "/" %}
-                                {% elsif (temp_path_m | slice: 0,1) != "/" %}
-                                    {% assign page_path_to_use_m = temp_path_m | prepend: "/" %}
-                                {% else %}
-                                    {% assign page_path_to_use_m = temp_path_m %}
-                                {% endif %}
+                        {% if relative_page_url_for_lang_m %}
+                            {% assign final_target_url_m = final_target_url_m | append: relative_page_url_for_lang_m %}
+                        {% else %}
+                            {% if lang_code_m == site.default_lang and site.config.default_lang_in_url == false %}
+                                {% assign final_target_url_m = final_target_url_m | append: '/' %}
+                            {% else %}
+                                {% assign final_target_url_m = final_target_url_m | append: '/' | append: lang_code_m | append: '/' %}
                             {% endif %}
                         {% endif %}
-                        {% if page_path_to_use_m == "/" %}
-                            {% assign page_path_to_use_m = "" %}
-                        {% endif %}
 
-                        {% if lang_code_m == site.default_lang and polyglot_setting_hide_default_m == false %}
-                            {% assign final_target_url_m = site.baseurl | default: '' | append: page_path_to_use_m %}
-                        {% else %}
-                            {% assign final_target_url_m = site.baseurl | default: '' | append: '/' | append: lang_code_m | append: page_path_to_use_m %}
-                        {% endif %}
-
-                        {% assign final_target_url_m = final_target_url_m | replace: '//', '/' %}
-                        {% assign last_char_m = final_target_url_m | slice: -1, 1 %}
-                        {% if final_target_url_m != "/" and final_target_url_m != (site.baseurl | default: '') and final_target_url_m != ((site.baseurl | default: '') | append: '/') and last_char_m != '/' and (final_target_url_m contains '.' == false) %}
-                            {% assign final_target_url_m = final_target_url_m | append: '/' %}
-                        {% endif %}
                         {% assign final_target_url_m = final_target_url_m | replace: '//', '/' %}
                         {% if final_target_url_m == (site.baseurl | default: '') and (site.baseurl | default: '') != "" %}
                              {% assign final_target_url_m = final_target_url_m | append: '/' %}
-                        {% elsif final_target_url_m == "" and (site.baseurl | default: '') == "" %}
+                        {% endif %}
+                         {% if final_target_url_m == "" %}
                              {% assign final_target_url_m = "/" %}
                         {% endif %}
+
+                        <!-- DEBUG M-FINAL_TARGET_URL: {{ final_target_url_m | inspect }} -->
 
                         <a href="{{ final_target_url_m }}"
                            class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
