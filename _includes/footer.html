@@ -13,7 +13,7 @@
 
 {% assign current_active_lang = site.active_lang | default: site.default_lang %}
 {% assign data_profile_for_footer = site.data.profile[current_active_lang] %}
-{% assign s_footer = site.data.translations[current_active_lang] %} {# Eğer footer için ayrı stringleriniz varsa #}
+{% assign s_footer = site.data.translations[current_active_lang] %}
 
 <footer class="bg-ctp-crust py-12">
     <div class="container mx-auto px-6">
@@ -30,7 +30,6 @@
                 <a href="{{ social_link.url }}" target="_blank" rel="noopener noreferrer" 
                    class="text-ctp-overlay1 hover:text-{{ social_link.hover_bg_color | default: 'ctp-blue' }} transition-colors" 
                    aria-label="{{ s_footer.footer_social_aria_label_prefix | default: 'Social: ' | append: social_link.name }}">
-                    {# DÜZELTİLMİŞ KISIM: <i> etiketi eklendi #}
                     <i class="{{ social_link.icon_class }} fa-fw fa-lg"></i> 
                 </a>
                 {% endfor %}
