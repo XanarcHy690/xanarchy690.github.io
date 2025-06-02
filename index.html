@@ -13,9 +13,10 @@ layout: default
 <section id="home" class="gradient-bg min-h-screen flex items-center justify-center pt-20">
     <div class="text-center px-6">
         <div class="relative mb-8">
-            <div class="w-40 h-40 rounded-full mx-auto overflow-hidden border-4 border-ctp-lavender glow-effect floating-animation">
+            <div
+                class="w-40 h-40 rounded-full mx-auto overflow-hidden border-4 border-ctp-lavender glow-effect floating-animation">
                 <img src="{{ site_profile.avatar | relative_url }}"
-                     alt="Profile of {{ site_profile.name }}" class="w-full h-full object-cover">
+                    alt="Profile of {{ site_profile.name }}" class="w-full h-full object-cover">
             </div>
         </div>
         <h1 class="text-5xl md:text-7xl font-bold mb-4">
@@ -30,16 +31,19 @@ layout: default
         <div class="flex flex-wrap justify-center space-x-2 sm:space-x-4 mb-12">
             {% for social in site.data.social.links limit:4 %}
             <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer"
-               class="social-btn bg-{{ social.bg_color }} hover:bg-{{ social.hover_bg_color }} text-ctp-base px-6 py-3 rounded-full font-semibold mb-2 sm:mb-0" aria-label="{{ s.footer_social_aria_label_prefix | append: social.name }}">
+                class="social-btn bg-{{ social.bg_color }} hover:bg-{{ social.hover_bg_color }} text-ctp-base px-6 py-3 rounded-full font-semibold mb-2 sm:mb-0"
+                aria-label="{{ s.footer_social_aria_label_prefix | append: social.name }}">
                 {{ social.name }}
             </a>
             {% endfor %}
         </div>
 
         <div class="animate-bounce">
-            <a href="#about" class="text-ctp-lavender hover:text-ctp-blue transition-colors" aria-label="{{ s.hero_scroll_aria_label }}">
+            <a href="#about" class="text-ctp-lavender hover:text-ctp-blue transition-colors"
+                aria-label="{{ s.hero_scroll_aria_label }}">
                 <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
                 </svg>
             </a>
         </div>
@@ -90,30 +94,31 @@ layout: default
 
         <h2 class="text-4xl font-bold text-center mb-12 text-ctp-lavender">
             {% if s_for_projects and s_for_projects.section_title_projects %}
-                {{ s_for_projects.section_title_projects }}
+            {{ s_for_projects.section_title_projects }}
             {% else %}
-                Projects (Title Missing for {{ lang_for_projects }})
+            Projects (Title Missing for {{ lang_for_projects }})
             {% endif %}
         </h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {% assign base_project_path = '_projects/' | append: lang_for_projects | append: '/' %}
-            {% assign projects_lang = site.projects | where_exp: "item", "item.path contains base_project_path" | sort: "order" %}
+            {% assign projects_lang = site.projects | where_exp: "item", "item.path contains base_project_path" | sort:
+            "order" %}
 
             {% if projects_lang.size > 0 %}
-                {% for project_item in projects_lang %}
-                    <!-- YENİ DEBUG SATIRI BAŞLANGICI -->
-                    <!-- DEBUG in index.html: Passing to project_card - lang_for_projects = {{ lang_for_projects | inspect }} -->
-                    <!-- YENİ DEBUG SATIRI SONU -->
-                    {% include project_card.html project=project_item lang=lang_for_projects s=s_for_projects %}
-                {% endfor %}
+            {% for project_item in projects_lang %}
+            <!-- YENİ DEBUG SATIRI BAŞLANGICI -->
+            <!-- DEBUG in index.html: Passing to project_card - lang_for_projects = {{ lang_for_projects | inspect }} -->
+            <!-- YENİ DEBUG SATIRI SONU -->
+            {% include project_card.html project=project_item lang=lang_for_projects s=s_for_projects %}
+            {% endfor %}
             {% else %}
-                <p class="text-ctp-subtext1 text-center col-span-full">
-                    {% if s_for_projects and s_for_projects.no_projects_found %}
-                        {{ s_for_projects.no_projects_found | replace: "{{ lang }}", lang_for_projects }}
-                    {% else %}
-                        No projects found for this language ({{ lang_for_projects }}).
-                    {% endif %}
-                </p>
+            <p class="text-ctp-subtext1 text-center col-span-full">
+                {% if s_for_projects and s_for_projects.no_projects_found %}
+                {{ s_for_projects.no_projects_found | replace: "{{ lang }}", lang_for_projects }}
+                {% else %}
+                No projects found for this language ({{ lang_for_projects }}).
+                {% endif %}
+            </p>
             {% endif %}
         </div>
     </div>
@@ -128,8 +133,10 @@ layout: default
                 {{ data_profile.contact_intro }}
             </p>
 
-            <div class="mt-12 flex flex-col sm:flex-row justify-center items-center sm:space-x-8 space-y-4 sm:space-y-0">
-                <a href="mailto:{{ site_profile.email }}" class="flex items-center text-ctp-subtext1 hover:text-ctp-lavender transition-colors">
+            <div
+                class="mt-12 flex flex-col sm:flex-row justify-center items-center sm:space-x-8 space-y-4 sm:space-y-0">
+                <a href="mailto:{{ site_profile.email }}"
+                    class="flex items-center text-ctp-subtext1 hover:text-ctp-lavender transition-colors">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
@@ -137,9 +144,11 @@ layout: default
                     {{ site_profile.email }}
                 </a>
                 {% if site_profile.phone %}
-                <a href="tel:{{ site_profile.phone | remove: ' ' }}" class="flex items-center text-ctp-subtext1 hover:text-ctp-lavender transition-colors">
+                <a href="tel:{{ site_profile.phone | remove: ' ' }}"
+                    class="flex items-center text-ctp-subtext1 hover:text-ctp-lavender transition-colors">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                        <path
+                            d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
                     </svg>
                     {{ site_profile.phone }}
                 </a>
@@ -151,13 +160,14 @@ layout: default
 
 <!-- Project Modal Structure (hidden by default) -->
 <div id="projectModal"
-     class="fixed inset-0 bg-ctp-crust/70 backdrop-blur-sm z-[60] flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out opacity-0 pointer-events-none">
-    <div class="bg-ctp-mantle rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 ease-in-out scale-95"
-         id="projectModalContentContainer">
+    class="fixed inset-0 bg-ctp-crust/70 backdrop-blur-sm z-[60] flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out opacity-0 pointer-events-none">
+    <div
+        class="bg-ctp-mantle rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 ease-in-out scale-95"
+        id="projectModalContentContainer">
         <div class="p-6 md:p-8 relative">
             <button onclick="closeProjectModal()"
-                    class="absolute top-4 right-4 text-ctp-overlay1 hover:text-ctp-red transition-colors z-10"
-                    aria-label="{{ s.project_modal_close_button_aria_label | default: 'Close modal' }}">
+                class="absolute top-4 right-4 text-ctp-overlay1 hover:text-ctp-red transition-colors z-10"
+                aria-label="{{ s.project_modal_close_button_aria_label | default: 'Close modal' }}">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
@@ -175,11 +185,11 @@ layout: default
                     </div>
                     <div class="flex space-x-3">
                         <a id="modalGithub" href="#" target="_blank" rel="noopener noreferrer"
-                           class="social-btn bg-ctp-blue hover:bg-ctp-sapphire text-ctp-base px-5 py-2.5 rounded-lg font-semibold transition-colors flex items-center gap-2">
+                            class="social-btn bg-ctp-blue hover:bg-ctp-sapphire text-ctp-base px-5 py-2.5 rounded-lg font-semibold transition-colors flex items-center gap-2">
                             {{ s_global[site.active_lang].project_modal_github_link_text | default: "GitHub" }}
                         </a>
                         <a id="modalLive" href="#" target="_blank" rel="noopener noreferrer"
-                           class="social-btn bg-ctp-green hover:bg-ctp-teal text-ctp-base px-5 py-2.5 rounded-lg font-semibold transition-colors flex items-center gap-2">
+                            class="social-btn bg-ctp-green hover:bg-ctp-teal text-ctp-base px-5 py-2.5 rounded-lg font-semibold transition-colors flex items-center gap-2">
                             {{ s_global[site.active_lang].project_modal_live_demo_link_text | default: "Live Demo" }}
                         </a>
                     </div>

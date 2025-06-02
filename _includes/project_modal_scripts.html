@@ -112,38 +112,54 @@
     }
 }
 function closeProjectModal() {
-    console.log("MODAL SCRIPTS: closeProjectModal function CALLED.");
-    if (projectModal && projectModalContentContainer) {
-        projectModal.classList.add('opacity-0'); // Şeffaflaştır
-        projectModalContentContainer.classList.add('scale-95'); // Küçült
+  console.log("MODAL SCRIPTS: closeProjectModal function CALLED."); // Bu mesajı görmelisiniz
 
-        // Transition bittikten sonra pointer-events'i ayarla ve body scroll'u aç
-        // setTimeout süresi Tailwind'deki duration-300 ile eşleşmeli (300ms)
-        setTimeout(() => {
-            projectModal.classList.add('pointer-events-none');
-            // Eğer modal tamamen gizlenmiyorsa (sadece opacity ile oynuyorsak)
-            // ve hala DOM'da flex ise, display none yapabiliriz.
-            // Ama sadece opacity ve pointer-events ile de yönetilebilir.
-            // projectModal.classList.remove('flex'); // Eğer display'i de yönetmek isterseniz
-            // projectModal.classList.add('hidden'); // Veya tamamen gizlemek için
-            document.body.style.overflow = 'auto';
-        }, 300); // Tailwind transition süresiyle eşleşmeli
-    }
-}
-  
-  if (projectModal) {
-      projectModal.addEventListener('click', (e) => {
-          if (e.target.id === 'projectModal') {
-              closeProjectModal();
-          }
-      });
+  if (projectModal && projectModalContentContainer) {
+      console.log("MODAL SCRIPTS: Closing modal - applying opacity and scale transitions.");
+      projectModal.classList.add('opacity-0'); // Şeffaflaştır
+      projectModalContentContainer.classList.add('scale-95'); // Küçült
+
+      // Transition bittikten sonra pointer-events'i ayarla ve body scroll'u aç
+      // setTimeout süresi Tailwind'deki duration-300 ile eşleşmeli (300ms)
+      setTimeout(() => {
+          console.log("MODAL SCRIPTS: Closing modal - transition ended, setting pointer-events and body overflow.");
+          projectModal.classList.add('pointer-events-none'); // Tıklanamaz yap
+          // Modal'ı DOM'dan kaldırmak veya display:none yapmak yerine,
+          // bir sonraki açılışta animasyonun düzgün çalışması için
+          // sadece opacity ve pointer-events ile yönetmek genellikle daha iyidir.
+          // Eğer `openProjectModal` içinde `flex` ekliyorsanız, burada `remove('flex')` yapabilirsiniz,
+          // ancak `pointer-events-none` ve `opacity-0` zaten onu etkileşim dışı bırakır.
+          // projectModal.classList.remove('flex'); // Eğer display:flex ekliyorsanız ve kaldırmak istiyorsanız
+          document.body.style.overflow = 'auto'; // Sayfa kaydırmayı geri getir
+      }, 300); // Tailwind transition süresiyle (duration-300) eşleşmeli
+  } else {
+      console.error("MODAL SCRIPTS: ERROR in closeProjectModal - projectModal or projectModalContentContainer is null.");
   }
-  
-  document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && projectModal && !projectModal.classList.contains('hidden')) {
+}
+
+// Modal dışına tıklayınca kapat
+if (projectModal) {
+  console.log("MODAL SCRIPTS: Adding click listener to projectModal for closing.");
+  projectModal.addEventListener('click', (e) => {
+      // Sadece modalın kendisine (arka plana) tıklandığında kapat, içindeki content'e değil.
+      if (e.target.id === 'projectModal') {
+          console.log("MODAL SCRIPTS: Click outside modal content detected, closing modal.");
           closeProjectModal();
       }
   });
-  
-  console.log("MODAL SCRIPTS: Event listeners for close attached.");
+} else {
+  console.error("MODAL SCRIPTS: ERROR - projectModal element not found, cannot add click listener for closing.");
+}
+
+// Escape tuşu ile kapat
+console.log("MODAL SCRIPTS: Adding keydown listener to document for Escape key.");
+document.addEventListener('keydown', (e) => {
+  // Modal görünür durumdaysa ve Escape tuşuna basıldıysa kapat
+  if (e.key === 'Escape' && projectModal && !projectModal.classList.contains('opacity-0')) { // opacity-0 değilse görünür kabul edelim
+      console.log("MODAL SCRIPTS: Escape key pressed, closing modal.");
+      closeProjectModal();
+  }
+});
+
+console.log("MODAL SCRIPTS: Event listeners for close should be attached now.");
   </script>
