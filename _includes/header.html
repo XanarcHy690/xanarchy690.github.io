@@ -5,8 +5,7 @@
 <nav class="fixed top-0 w-full bg-ctp-base/95 backdrop-blur-sm border-b border-ctp-surface0 z-50">
     <div class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
-            {# Logo/Site Adı - Her zaman aktif dilin ana sayfasına gider #}
-            {# `relative_url` filtresi, `default_lang_in_url: false` ayarını dikkate alarak doğru URL'yi oluşturur #}
+            
             <a href="{{ '/' | relative_url }}" class="text-2xl font-bold text-ctp-lavender">
                 {{ site.data.profile.name | default: "Site Name" }}
             </a>
@@ -15,11 +14,9 @@
                 {# Ana Navigasyon Linkleri #}
                 {% for item in nav_links %}
                     {% assign item_url_str = item.url | default: "" %}
-                    {% if item_url_str != "" and (item_url_str | startswith: "#") %} {# Parantezlere dikkat #}
-                        {# Sayfa içi anchor link, olduğu gibi kullanılır #}
+                    {% if item_url_str != "" and (item_url_str | startswith: "#") %}
                         <a href="{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
                     {% else %}
-                        {# Diğer sayfalar için, kökten göreceli yol oluşturulur #}
                         <a href="{{ item.url | prepend: '/' | relative_url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
                     {% endif %}
                 {% endfor %}
@@ -31,7 +28,6 @@
                         {% if target_page_rel_url_d %}
                             {% assign final_target_url_d = site.baseurl | default: '' | append: target_page_rel_url_d %}
                         {% else %}
-                            {# Fallback: Hedef dilin ana sayfasına git #}
                             {% if lang_code_d == site.default_lang and site.data.polyglot.default_lang_in_url == false %}
                                 {% assign final_target_url_d = site.baseurl | default: '' | append: '/' %}
                             {% else %}
@@ -90,7 +86,7 @@
         <div class="px-6 py-4 space-y-4">
             {% for item in nav_links %}
                 {% assign item_url_str_mobile = item.url | default: "" %}
-                {% if item_url_str_mobile != "" and (item_url_str_mobile | startswith: "#") %} {# Parantezlere dikkat #}
+                {% if item_url_str_mobile != "" and (item_url_str_mobile | startswith: "#") %}
                     <a href="{{ item.url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{ item.title }}</a>
                 {% else %}
                     <a href="{{ item.url | prepend: '/' | relative_url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{ item.title }}</a>
