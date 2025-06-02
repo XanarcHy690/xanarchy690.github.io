@@ -41,10 +41,17 @@
               {% assign clean_url = page.url %}
               {% comment %} Mevcut dil kodu varsa temizle {% endcomment %}
               {% unless current_active_lang == site.default_lang %}
-                {% assign lang_prefix = '/' | append: current_active_lang %}
-                {% assign clean_url = page.url | replace_first: lang_prefix, '' %}
-                {% if clean_url == '' %}
-                  {% assign clean_url = '/' %}
+                {% comment %} Farklı pattern'lar dene {% endcomment %}
+                {% assign lang_prefix_1 = '/' | append: current_active_lang | append: '/' %}
+                {% assign lang_prefix_2 = '/' | append: current_active_lang %}
+                
+                {% if clean_url contains lang_prefix_1 %}
+                  {% assign clean_url = clean_url | replace_first: lang_prefix_1, '/' %}
+                {% elsif clean_url contains lang_prefix_2 %}
+                  {% assign clean_url = clean_url | replace_first: lang_prefix_2, '' %}
+                  {% if clean_url == '' %}
+                    {% assign clean_url = '/' %}
+                  {% endif %}
                 {% endif %}
               {% endunless %}
               {% assign target_url_d = clean_url | relative_url %}
@@ -53,10 +60,17 @@
               {% assign clean_url = page.url %}
               {% comment %} Eğer şu an default dilde değilsek, mevcut dil kodunu temizle {% endcomment %}
               {% unless current_active_lang == site.default_lang %}
-                {% assign current_lang_prefix = '/' | append: current_active_lang %}
-                {% assign clean_url = page.url | replace_first: current_lang_prefix, '' %}
-                {% if clean_url == '' %}
-                  {% assign clean_url = '/' %}
+                {% comment %} Farklı pattern'lar dene {% endcomment %}
+                {% assign current_lang_prefix_1 = '/' | append: current_active_lang | append: '/' %}
+                {% assign current_lang_prefix_2 = '/' | append: current_active_lang %}
+                
+                {% if clean_url contains current_lang_prefix_1 %}
+                  {% assign clean_url = clean_url | replace_first: current_lang_prefix_1, '/' %}
+                {% elsif clean_url contains current_lang_prefix_2 %}
+                  {% assign clean_url = clean_url | replace_first: current_lang_prefix_2, '' %}
+                  {% if clean_url == '' %}
+                    {% assign clean_url = '/' %}
+                  {% endif %}
                 {% endif %}
               {% endunless %}
               {% comment %} Hedef dil kodunu ekle {% endcomment %}
@@ -92,10 +106,17 @@
               {% assign clean_url = page.url %}
               {% comment %} Mevcut dil kodu varsa temizle {% endcomment %}
               {% unless current_active_lang == site.default_lang %}
-                {% assign lang_prefix = '/' | append: current_active_lang %}
-                {% assign clean_url = page.url | replace_first: lang_prefix, '' %}
-                {% if clean_url == '' %}
-                  {% assign clean_url = '/' %}
+                {% comment %} Farklı pattern'lar dene {% endcomment %}
+                {% assign lang_prefix_1 = '/' | append: current_active_lang | append: '/' %}
+                {% assign lang_prefix_2 = '/' | append: current_active_lang %}
+                
+                {% if clean_url contains lang_prefix_1 %}
+                  {% assign clean_url = clean_url | replace_first: lang_prefix_1, '/' %}
+                {% elsif clean_url contains lang_prefix_2 %}
+                  {% assign clean_url = clean_url | replace_first: lang_prefix_2, '' %}
+                  {% if clean_url == '' %}
+                    {% assign clean_url = '/' %}
+                  {% endif %}
                 {% endif %}
               {% endunless %}
               {% assign target_url_m = clean_url | relative_url %}
@@ -104,10 +125,17 @@
               {% assign clean_url = page.url %}
               {% comment %} Eğer şu an default dilde değilsek, mevcut dil kodunu temizle {% endcomment %}
               {% unless current_active_lang == site.default_lang %}
-                {% assign current_lang_prefix = '/' | append: current_active_lang %}
-                {% assign clean_url = page.url | replace_first: current_lang_prefix, '' %}
-                {% if clean_url == '' %}
-                  {% assign clean_url = '/' %}
+                {% comment %} Farklı pattern'lar dene {% endcomment %}
+                {% assign current_lang_prefix_1 = '/' | append: current_active_lang | append: '/' %}
+                {% assign current_lang_prefix_2 = '/' | append: current_active_lang %}
+                
+                {% if clean_url contains current_lang_prefix_1 %}
+                  {% assign clean_url = clean_url | replace_first: current_lang_prefix_1, '/' %}
+                {% elsif clean_url contains current_lang_prefix_2 %}
+                  {% assign clean_url = clean_url | replace_first: current_lang_prefix_2, '' %}
+                  {% if clean_url == '' %}
+                    {% assign clean_url = '/' %}
+                  {% endif %}
                 {% endif %}
               {% endunless %}
               {% comment %} Hedef dil kodunu ekle {% endcomment %}
