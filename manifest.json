@@ -104,17 +104,12 @@
             "sizes": "144x144",
             "type": "image/png"
         }
-        // Eğer .ico formatında genel bir faviconunuz varsa ve onu da eklemek isterseniz:
-        // {
-        //    "src": "{{ '/assets/images/favicon/favicon.ico' | relative_url }}",
-        //    "sizes": "48x48", // .ico birden fazla boyut içerebilir, temsili bir boyut
-        //    "type": "image/x-icon"
-        // }
+
     ],
     "start_url": "{{ '/' | relative_url }}",
     "display": "standalone",
-    "orientation": "portrait", // veya "landscape", "any"
+    "orientation": "portrait",
     "background_color": "{{ site.background_color | default: '#11111b' }}",
     "theme_color": "{{ site.theme_color | default: '#1e1e2e' }}",
-    "scope": "{{ '/' | relative_url }}" // Genellikle start_url ile aynı veya daha geniş
+    "scope": "{{ '/' | relative_url }}"
 }
