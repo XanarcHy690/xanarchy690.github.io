@@ -29,7 +29,7 @@ Eğer polyglot çalışmıyorsa veya tanımsızsa, varsayılan dile düşer.
 
                 <!-- Language Switcher (Desktop) -->
                 <div class="hidden md:flex items-center">
-                    {% assign current_lang = site.lang %}
+                    {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
                     {% assign languages = site.languages %}
                     {% assign base = site.baseurl %}
                 
@@ -58,7 +58,7 @@ Eğer polyglot çalışmıyorsa veya tanımsızsa, varsayılan dile düşer.
             <div class="md:hidden flex items-center">
                 <!-- Language Switcher (Mobile) -->
                 <div class="md:hidden flex items-center">
-                    {% assign current_lang = site.lang %}
+                    {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
                     {% assign languages = site.languages %}
                     {% assign base = site.baseurl %}
                 
