@@ -1,7 +1,7 @@
 {% assign data_profile = site.data.profile[site.active_lang] | default: site.data.profile[site.default_lang] %}
 {% assign nav_links = site.data.navigation[site.active_lang] | default: site.data.navigation[site.default_lang] %}
 {% assign s = site.data.strings[site.active_lang] | default: site.data.strings[site.default_lang] %}
-
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 <nav class="fixed top-0 w-full bg-ctp-base/95 backdrop-blur-sm border-b border-ctp-surface0 z-50">
     <div class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
