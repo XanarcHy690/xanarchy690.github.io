@@ -1,36 +1,68 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% seo %} <!-- jekyll-seo-tag eklentisi başlık, meta açıklamaları vb. otomatik oluşturur -->
-    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Catppuccin Mocha color palette (Orijinaldeki gibi)
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'ctp-base': '#1e1e2e', 'ctp-mantle': '#181825', 'ctp-crust': '#11111b',
-                        'ctp-surface0': '#313244', 'ctp-surface1': '#45475a', 'ctp-surface2': '#585b70',
-                        'ctp-overlay0': '#6c7086', 'ctp-overlay1': '#7f849c', 'ctp-overlay2': '#9399b2',
-                        'ctp-subtext0': '#a6adc8', 'ctp-subtext1': '#bac2de', 'ctp-text': '#cdd6f4',
-                        'ctp-lavender': '#b4befe', 'ctp-blue': '#89b4fa', 'ctp-sapphire': '#74c7ec',
-                        'ctp-sky': '#89dceb', 'ctp-teal': '#94e2d5', 'ctp-green': '#a6e3a1',
-                        'ctp-yellow': '#f9e2af', 'ctp-peach': '#fab387', 'ctp-maroon': '#eba0ac',
-                        'ctp-red': '#f38ba8', 'ctp-mauve': '#cba6f7', 'ctp-pink': '#f5c2e7',
-                        'ctp-flamingo': '#f2cdcd', 'ctp-rosewater': '#f5e0dc'
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-    {% feed_meta %} <!-- jekyll-feed eklentisi için -->
-    <link rel="canonical" href="{{ page.url | absolute_url | replace:'index.html','' }}">
-    {% for lang in site.languages %}
-        {% if lang != site.active_lang %}
-            <link rel="alternate" hreflang="{{ lang }}" href="{{ site.baseurl_root }}{{ lang }}{{ page.url_ χωρίς_lang }}">
-        {% endif %}
-    {% endfor %}
-</head>
+{% assign data_profile = site.data.profile[site.active_lang] | default: site.data.profile[site.default_lang] %}
+{% assign nav_links = site.data.navigation[site.active_lang] | default: site.data.navigation[site.default_lang] %}
+{% assign s = site.data.strings[site.active_lang] | default: site.data.strings[site.default_lang] %}
+
+<nav class="fixed top-0 w-full bg-ctp-base/95 backdrop-blur-sm border-b border-ctp-surface0 z-50">
+    <div class="container mx-auto px-6 py-4">
+        <div class="flex justify-between items-center">
+            <a href="{{ site.baseurl_root }}{{ site.active_lang }}/" class="text-2xl font-bold text-ctp-lavender">
+                {{ site.data.profile.name }}
+            </a>
+            <div class="hidden md:flex space-x-8 items-center"> {# items-center eklendi #}
+                {% for item in nav_links %}
+                <a href="{{ item.url | relative_url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
+                {% endfor %}
+
+                <!-- Language Switcher (Desktop) -->
+                {% for lang_code in site.languages %}
+                    {% if lang_code != site.active_lang %}
+                        {% comment %}
+                            site.baseurl_root: Sitenizin kök baseurl'i (dil olmadan)
+                            lang_code: Hedef dil kodu (örn: "tr", "en")
+                            page.permalink_without_lang: Mevcut sayfanın URL'si (dil öneki olmadan)
+                        {% endcomment %}
+                        <a href="{{ site.baseurl_root }}{{ lang_code }}{{ page.permalink_without_lang | default: '/' }}"
+                           class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                           aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code }}">
+                            {{ lang_code }}
+                        </a>
+                    {% else %}
+                        {# Aktif dili farklı göstermek isterseniz (opsiyonel) #}
+                        <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
+                            {{ lang_code }}
+                        </span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="md:hidden flex items-center">
+                 <!-- Language Switcher (Mobile) -->
+                {% for lang_code in site.languages %}
+                    {% if lang_code != site.active_lang %}
+                    <a href="{{ site.baseurl_root }}{{ lang_code }}{{ page.permalink_without_lang | default: '/' }}"
+                       class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                       aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code }}">
+                        {{ lang_code }}
+                    </a>
+                    {% else %}
+                        <span class="text-ctp-lavender uppercase text-sm font-bold mr-3 px-2 py-1 rounded-md bg-ctp-surface1">
+                            {{ lang_code }}
+                        </span>
+                    {% endif %}
+                {% endfor %}
+                <button id="mobile-menu-btn" class="text-ctp-text hover:text-ctp-lavender">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-ctp-mantle border-t border-ctp-surface0">
+        <div class="px-6 py-4 space-y-4">
+            {% for item in nav_links %}
+            <a href="{{ item.url | relative_url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{ item.title }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</nav>
