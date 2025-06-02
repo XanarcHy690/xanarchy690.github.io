@@ -18,7 +18,9 @@ lang_switch_label: "Dili değiştir" # Ekran okuyucular için
 hero_scroll_aria_label: "Daha fazla bilgi için aşağı kaydırın" # Ok ikonu için ARIA etiketi
 
 # Bölüm Başlıkları (index.html'de kullanılır)
-section_title_about: "Hakkımda"
+# _data/strings.tr.yml (GEÇİCİ TEST İÇERİĞİ)
+section_title_about: "HAKKIMDA (TR TEST)"
+test_veri: "Bu Türkçe test verisidir."
 section_title_projects: "Projelerim"
 section_title_contact: "Benimle İletişime Geçin"
 
