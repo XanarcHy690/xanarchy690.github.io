@@ -23,20 +23,31 @@
                 <!-- Language Switcher (Desktop) -->
                 {% for lang_code_d in site.languages %}
                     {% if lang_code_d != current_active_lang %}
-                        {% assign temp_final_target_url_d = "" %}
+                        {% assign polyglot_rel_url_d = site.active_lang_options[lang_code_d].url %}
+                        <!-- DEBUG D: lang_code_d={{lang_code_d}}, polyglot_rel_url_d={{polyglot_rel_url_d | inspect}} -->
 
-                        {% if lang_code_d == "tr" %}
-                            {% assign temp_final_target_url_d = site.baseurl | default: '' | append: '/' %}
-                        {% elsif lang_code_d == "en" %}
-                            {% assign temp_final_target_url_d = site.baseurl | default: '' | append: '/en/' %}
-                        {% else %}
-                            {# Fallback for other future languages - their home page #}
-                            {% assign temp_final_target_url_d = site.baseurl | default: '' | append: '/' | append: lang_code_d | append: '/' %}
-                        {% endif %}
-                        {% assign temp_final_target_url_d = temp_final_target_url_d | replace: '//', '/' %}
+                        {% assign final_target_url_d = site.baseurl | default: '' | append: polyglot_rel_url_d %}
+                        {% assign final_target_url_d = final_target_url_d | replace: '//', '/' %}
 
-                        <!-- DEBUG DESKTOP lang_code_d={{lang_code_d}}, temp_final_target_url_d={{temp_final_target_url_d | inspect}} -->
-                        <a href="{{ temp_final_target_url_d }}"
+                        {# Eğer polyglot_rel_url_d "/" ise (varsayılan dil ana sayfası) ve baseurl varsa,
+                           sonuç /portfolio/ olmalı. Eğer baseurl yoksa / olmalı.
+                           Eğer polyglot_rel_url_d /en/ ise, sonuç /portfolio/en/ olmalı. #}
+
+                        {# Ana sayfa linki için özel durum: Eğer polyglot_rel_url_d sadece "/" ise (genellikle varsayılan dilin ana sayfası için olur)
+                           ve baseurl varsa, sonuç baseurl + "/" olmalı. Eğer baseurl yoksa, sadece "/" olmalı.
+                           Eğer polyglot_rel_url_d tanımsızsa (sayfa o dilde yoksa), o dilin ana sayfasına git. #}
+                        {% unless polyglot_rel_url_d %}
+                            {% if lang_code_d == site.default_lang and site.config.default_lang_in_url == false %}
+                                {% assign final_target_url_d = site.baseurl | default: '' | append: '/' %}
+                            {% else %}
+                                {% assign final_target_url_d = site.baseurl | default: '' | append: '/' | append: lang_code_d | append: '/' %}
+                            {% endif %}
+                            {% assign final_target_url_d = final_target_url_d | replace: '//', '/' %}
+                        {% endunless %}
+
+
+                        <!-- DEBUG D-FINAL_TARGET_URL: {{ final_target_url_d | inspect }} -->
+                        <a href="{{ final_target_url_d }}"
                            class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                            aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code_d }}">
                             {{ lang_code_d }}
@@ -53,19 +64,23 @@
                  <!-- Language Switcher (Mobile) -->
                 {% for lang_code_m in site.languages %}
                      {% if lang_code_m != current_active_lang %}
-                        {% assign temp_final_target_url_m = "" %}
+                        {% assign polyglot_rel_url_m = site.active_lang_options[lang_code_m].url %}
+                        <!-- DEBUG M: lang_code_m={{lang_code_m}}, polyglot_rel_url_m={{polyglot_rel_url_m | inspect}} -->
 
-                        {% if lang_code_m == "tr" %}
-                            {% assign temp_final_target_url_m = site.baseurl | default: '' | append: '/' %}
-                        {% elsif lang_code_m == "en" %}
-                            {% assign temp_final_target_url_m = site.baseurl | default: '' | append: '/en/' %}
-                        {% else %}
-                            {% assign temp_final_target_url_m = site.baseurl | default: '' | append: '/' | append: lang_code_m | append: '/' %}
-                        {% endif %}
-                        {% assign temp_final_target_url_m = temp_final_target_url_m | replace: '//', '/' %}
+                        {% assign final_target_url_m = site.baseurl | default: '' | append: polyglot_rel_url_m %}
+                        {% assign final_target_url_m = final_target_url_m | replace: '//', '/' %}
 
-                        <!-- DEBUG MOBILE lang_code_m={{lang_code_m}}, temp_final_target_url_m={{temp_final_target_url_m | inspect}} -->
-                        <a href="{{ temp_final_target_url_m }}"
+                        {% unless polyglot_rel_url_m %}
+                            {% if lang_code_m == site.default_lang and site.config.default_lang_in_url == false %}
+                                {% assign final_target_url_m = site.baseurl | default: '' | append: '/' %}
+                            {% else %}
+                                {% assign final_target_url_m = site.baseurl | default: '' | append: '/' | append: lang_code_m | append: '/' %}
+                            {% endif %}
+                            {% assign final_target_url_m = final_target_url_m | replace: '//', '/' %}
+                        {% endunless %}
+
+                        <!-- DEBUG M-FINAL_TARGET_URL: {{ final_target_url_m | inspect }} -->
+                        <a href="{{ final_target_url_m }}"
                            class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                            aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code_m }}">
                             {{ lang_code_m }}
