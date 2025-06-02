@@ -4,7 +4,8 @@
     {% assign s_global_js = site.data.strings %}
     tr: {
       projects: [
-        {% assign projects_tr_modal_js = site.projects | where_exp: "item", "item.path contains '/_projects/tr/'" %}
+        {% assign base_project_path_tr = '_projects/tr/' %}
+        {% assign projects_tr_modal_js = site.projects | where_exp: "item", "item.path contains base_project_path_tr" %}
         {% for p_tr_modal_js in projects_tr_modal_js %}
         {
           id: "{{ p_tr_modal_js.id | slugify }}",
@@ -19,7 +20,8 @@
     },
     en: {
       projects: [
-        {% assign projects_en_modal_js = site.projects | where_exp: "item", "item.path contains '/_projects/en/'" %}
+        {% assign base_project_path_en = '_projects/en/' %}
+        {% assign projects_en_modal_js = site.projects | where_exp: "item", "item.path contains base_project_path_en" %}
         {% for p_en_modal_js in projects_en_modal_js %}
         {
           id: "{{ p_en_modal_js.id | slugify }}",
@@ -34,7 +36,7 @@
     }
   };
   
-  console.log("MODAL SCRIPTS: allProjectsData object initialized:", JSON.parse(JSON.stringify(allProjectsData))); // Deep copy for clean logging
+  console.log("MODAL SCRIPTS: allProjectsData object initialized:", JSON.parse(JSON.stringify(allProjectsData)));
   
   const projectModal = document.getElementById('projectModal');
   const modalTitleEl = document.getElementById('modalTitle');
