@@ -104,19 +104,18 @@ layout: default
             {% assign projects_lang = site.projects | where_exp: "item", "item.path contains base_project_path" | sort:
             "order" %}
 
+            <!-- Projects Section in index.html -->
             {% if projects_lang.size > 0 %}
             {% for project_item in projects_lang %}
-            <!-- YENİ DEBUG SATIRI BAŞLANGICI -->
-            <!-- DEBUG in index.html: Passing to project_card - lang_for_projects = {{ lang_for_projects | inspect }} -->
-            <!-- YENİ DEBUG SATIRI SONU -->
             {% include project_card.html project=project_item lang=lang_for_projects s=s_for_projects %}
             {% endfor %}
             {% else %}
             <p class="text-ctp-subtext1 text-center col-span-full">
                 {% if s_for_projects and s_for_projects.no_projects_found %}
-                {{ s_for_projects.no_projects_found | replace: "{{ lang }}", lang_for_projects }}
+                {% assign message_template = s_for_projects.no_projects_found %}
+                {{ message_template | replace: "%{lang_placeholder}", lang_for_projects }}
                 {% else %}
-                No projects found for this language ({{ lang_for_projects }}).
+                No projects found for this language ({{ lang_for_projects }}). <!-- Fallback -->
                 {% endif %}
             </p>
             {% endif %}

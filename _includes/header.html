@@ -12,65 +12,62 @@
 
             <div class="hidden md:flex space-x-8 items-center">
                 {% for item in nav_links %}
-                    {% comment %} Eğer URL # ile başlıyorsa, bu bir sayfa içi anchor linktir, relative_url gerekmez {% endcomment %}
-                    {% if item.url startswith '#' %}
-                        <a href="{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
-                    {% else %}
-                        {% comment %} 
-                            Diğer tüm linkler için (örn: /about/, /projects/ vs.)
-                            polyglot'un doğru linki oluşturması için başına / ekleyip relative_url kullanıyoruz.
-                            Eğer navigation.yml'deki item.url zaten / ile başlıyorsa (örn: /about/),
-                            bu yine de çalışır. Eğer başlamıyorsa (örn: about.html),
-                            bu başına / ekleyerek kökten itibaren doğru yolu oluşturur.
-                            Ancak, en güvenlisi navigation.yml'deki URL'lerin / ile başlamasıdır.
-                        {% endcomment %}
-                        <a href="{{ item.url | prepend: '/' | relative_url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
-                    {% endif %}
+                {% assign item_url_string = item.url | downcase %} {# Emin olmak için küçük harfe çevirelim #}
+                {% if item_url_string == "#" or item_url_string startswith "#" %}
+                {# Bu bir sayfa içi bağlantı (anchor link) #}
+                <a href="{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
+                {% else %}
+                <a href="{{ item.url | prepend: '/' | relative_url }}"
+                    class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
+                {% endif %}
                 {% endfor %}
 
                 <!-- Language Switcher (Desktop) -->
                 {% for lang_code_loop in site.languages %}
-                    {% assign target_page_path = page.permalink_without_lang | default: '/' %}
-                    {% assign target_url = site.baseurl_root | append: '/' | append: lang_code_loop | append: target_page_path %}
-                    {# URL'de çift // olmasını engellemek için #}
-                    {% assign target_url = target_url | replace: '//', '/' %}
+                {% assign target_page_path = page.permalink_without_lang | default: '/' %}
+                {% assign target_url = site.baseurl_root | append: '/' | append: lang_code_loop | append:
+                target_page_path %}
+                {# URL'de çift // olmasını engellemek için #}
+                {% assign target_url = target_url | replace: '//', '/' %}
 
-                    {% if lang_code_loop != current_active_lang %}
-                        <a href="{{ target_url }}"
-                           class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                           aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code_loop }}">
-                            {{ lang_code_loop }}
-                        </a>
-                    {% else %}
-                        <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
-                            {{ lang_code_loop }}
-                        </span>
-                    {% endif %}
+                {% if lang_code_loop != current_active_lang %}
+                <a href="{{ target_url }}"
+                    class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                    aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code_loop }}">
+                    {{ lang_code_loop }}
+                </a>
+                {% else %}
+                <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
+                    {{ lang_code_loop }}
+                </span>
+                {% endif %}
                 {% endfor %}
             </div>
 
             <div class="md:hidden flex items-center">
-                 <!-- Language Switcher (Mobile) -->
+                <!-- Language Switcher (Mobile) -->
                 {% for lang_code_loop_mobile in site.languages %}
-                    {% assign target_page_path_mobile = page.permalink_without_lang | default: '/' %}
-                    {% assign target_url_mobile = site.baseurl_root | append: '/' | append: lang_code_loop_mobile | append: target_page_path_mobile %}
-                    {% assign target_url_mobile = target_url_mobile | replace: '//', '/' %}
+                {% assign target_page_path_mobile = page.permalink_without_lang | default: '/' %}
+                {% assign target_url_mobile = site.baseurl_root | append: '/' | append: lang_code_loop_mobile | append:
+                target_page_path_mobile %}
+                {% assign target_url_mobile = target_url_mobile | replace: '//', '/' %}
 
-                    {% if lang_code_loop_mobile != current_active_lang %}
-                    <a href="{{ target_url_mobile }}"
-                       class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                       aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code_loop_mobile }}">
-                        {{ lang_code_loop_mobile }}
-                    </a>
-                    {% else %}
-                        <span class="text-ctp-lavender uppercase text-sm font-bold mr-3 px-2 py-1 rounded-md bg-ctp-surface1">
-                            {{ lang_code_loop_mobile }}
-                        </span>
-                    {% endif %}
+                {% if lang_code_loop_mobile != current_active_lang %}
+                <a href="{{ target_url_mobile }}"
+                    class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                    aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code_loop_mobile }}">
+                    {{ lang_code_loop_mobile }}
+                </a>
+                {% else %}
+                <span class="text-ctp-lavender uppercase text-sm font-bold mr-3 px-2 py-1 rounded-md bg-ctp-surface1">
+                    {{ lang_code_loop_mobile }}
+                </span>
+                {% endif %}
                 {% endfor %}
                 <button id="mobile-menu-btn" class="text-ctp-text hover:text-ctp-lavender">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
             </div>
@@ -79,11 +76,14 @@
     <div id="mobile-menu" class="hidden md:hidden bg-ctp-mantle border-t border-ctp-surface0">
         <div class="px-6 py-4 space-y-4">
             {% for item in nav_links %}
-                 {% if item.url startswith '#' %}
-                    <a href="{{ item.url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{ item.title }}</a>
-                {% else %}
-                    <a href="{{ item.url | prepend: '/' | relative_url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{ item.title }}</a>
-                {% endif %}
+            {% assign item_url_string_mobile = item.url | downcase %}
+            {% if item_url_string_mobile == "#" or item_url_string_mobile startswith "#" %}
+            <a href="{{ item.url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{
+                item.title }}</a>
+            {% else %}
+            <a href="{{ item.url | prepend: '/' | relative_url }}"
+                class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{ item.title }}</a>
+            {% endif %}
             {% endfor %}
         </div>
     </div>
