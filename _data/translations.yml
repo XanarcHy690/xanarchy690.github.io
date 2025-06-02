@@ -20,8 +20,7 @@ tr:
 
   # Bölüm Başlıkları (index.html'de kullanılır)
   # _data/strings.tr.yml (GEÇİCİ TEST İÇERİĞİ)
-  section_title_about: "HAKKIMDA (TR TEST)"
-  test_veri: "Bu Türkçe test verisidir."
+  section_title_about: "Hakkımda"
   section_title_projects: "Projelerim"
   section_title_contact: "Benimle İletişime Geçin"
 

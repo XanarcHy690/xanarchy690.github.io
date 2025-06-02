@@ -95,11 +95,7 @@ layout: default
         {% assign lang_for_projects = site.active_lang | default: site.default_lang | default: "tr" %}
         {% assign s_for_projects_debug = site.data.strings[lang_for_projects] %}
         <h2 class="text-4xl font-bold text-center mb-12 text-ctp-lavender">
-            {% if s_for_projects_debug and s_for_projects_debug.section_title_projects %}
-                {{ s_for_projects_debug.section_title_projects }}
-            {% else %}
-                Projects (Title Missing for {{ lang_for_projects }})
-            {% endif %}
+            {{ strings_for_current_page.section_title_projects }}
         </h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {% assign base_project_path = '_projects/' | append: lang_for_projects | append: '/' %}
