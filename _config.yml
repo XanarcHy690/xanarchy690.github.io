@@ -49,6 +49,6 @@ exclude:
   - .github
   - .vscode
   
-# _config.yml
-ms_tile_color: "#2b5797"  # İstediğiniz bir renk
-theme_color: "#11111b"    # İstediğiniz bir renk (örneğin Catppuccin Crust)
+theme_color: "#1e1e2e"       # PWA ve tarayıcı UI için ana tema rengi (Catppuccin Base)
+background_color: "#11111b"  # PWA splash screen için arka plan rengi (Catppuccin Crust)
+ms_tile_color: "#b4befe"     # Windows Metro karo rengi (Catppuccin Lavender)
