@@ -35,51 +35,27 @@
             </span>
           {% else %}
             {# Diğer diller için link oluştur #}
-            {% comment %} Polyglot'un kendi link generation mantığını kullan {% endcomment %}
+            {% assign target_url_d = "" %}
+            
+            {% comment %} Basit yaklaşım: Manual URL oluşturma {% endcomment %}
             {% if lang_code_d == site.default_lang %}
-              {% comment %} Default dile geçiş: URL'den dil kodunu kaldır {% endcomment %}
-              {% assign clean_url = page.url %}
-              {% comment %} Mevcut dil kodu varsa temizle {% endcomment %}
-              {% unless current_active_lang == site.default_lang %}
-                {% comment %} Farklı pattern'lar dene {% endcomment %}
-                {% assign lang_prefix_1 = '/' | append: current_active_lang | append: '/' %}
-                {% assign lang_prefix_2 = '/' | append: current_active_lang %}
-                
-                {% if clean_url contains lang_prefix_1 %}
-                  {% assign clean_url = clean_url | replace_first: lang_prefix_1, '/' %}
-                {% elsif clean_url contains lang_prefix_2 %}
-                  {% assign clean_url = clean_url | replace_first: lang_prefix_2, '' %}
-                  {% if clean_url == '' %}
-                    {% assign clean_url = '/' %}
-                  {% endif %}
-                {% endif %}
-              {% endunless %}
-              {% assign target_url_d = clean_url | relative_url %}
-            {% else %}
-              {% comment %} Non-default dile geçiş: dil kodunu ekle {% endcomment %}
-              {% assign clean_url = page.url %}
-              {% comment %} Eğer şu an default dilde değilsek, mevcut dil kodunu temizle {% endcomment %}
-              {% unless current_active_lang == site.default_lang %}
-                {% comment %} Farklı pattern'lar dene {% endcomment %}
-                {% assign current_lang_prefix_1 = '/' | append: current_active_lang | append: '/' %}
-                {% assign current_lang_prefix_2 = '/' | append: current_active_lang %}
-                
-                {% if clean_url contains current_lang_prefix_1 %}
-                  {% assign clean_url = clean_url | replace_first: current_lang_prefix_1, '/' %}
-                {% elsif clean_url contains current_lang_prefix_2 %}
-                  {% assign clean_url = clean_url | replace_first: current_lang_prefix_2, '' %}
-                  {% if clean_url == '' %}
-                    {% assign clean_url = '/' %}
-                  {% endif %}
-                {% endif %}
-              {% endunless %}
-              {% comment %} Hedef dil kodunu ekle {% endcomment %}
-              {% if clean_url == '/' %}
-                {% assign target_url_d = '/' | append: lang_code_d | append: '/' %}
-              {% else %}
-                {% assign target_url_d = '/' | append: lang_code_d | append: clean_url %}
+              {% comment %} Default dile (TR) geçiş {% endcomment %}
+              {% assign current_path = page.url | remove_first: '/en' | remove_first: '/tr' %}
+              {% if current_path == '' %}
+                {% assign current_path = '/' %}
               {% endif %}
-              {% assign target_url_d = target_url_d | relative_url %}
+              {% assign target_url_d = current_path | relative_url %}
+            {% else %}
+              {% comment %} Non-default dile (EN) geçiş {% endcomment %}
+              {% assign current_path = page.url | remove_first: '/en' | remove_first: '/tr' %}
+              {% if current_path == '' %}
+                {% assign current_path = '/' %}
+              {% endif %}
+              {% if current_path == '/' %}
+                {% assign target_url_d = '/' | append: lang_code_d | append: '/' | relative_url %}
+              {% else %}
+                {% assign target_url_d = '/' | append: lang_code_d | append: current_path | relative_url %}
+              {% endif %}
             {% endif %}
 
             <a href="{{ target_url_d }}"
@@ -100,55 +76,31 @@
               {{ lang_code_m }}
             </span>
           {% else %}
-            {% comment %} Polyglot'un kendi link generation mantığını kullan {% endcomment %}
+            {% assign target_url_m = "" %}
+            
+            {% comment %} Basit yaklaşım: Manual URL oluşturma {% endcomment %}
             {% if lang_code_m == site.default_lang %}
-              {% comment %} Default dile geçiş: URL'den dil kodunu kaldır {% endcomment %}
-              {% assign clean_url = page.url %}
-              {% comment %} Mevcut dil kodu varsa temizle {% endcomment %}
-              {% unless current_active_lang == site.default_lang %}
-                {% comment %} Farklı pattern'lar dene {% endcomment %}
-                {% assign lang_prefix_1 = '/' | append: current_active_lang | append: '/' %}
-                {% assign lang_prefix_2 = '/' | append: current_active_lang %}
-                
-                {% if clean_url contains lang_prefix_1 %}
-                  {% assign clean_url = clean_url | replace_first: lang_prefix_1, '/' %}
-                {% elsif clean_url contains lang_prefix_2 %}
-                  {% assign clean_url = clean_url | replace_first: lang_prefix_2, '' %}
-                  {% if clean_url == '' %}
-                    {% assign clean_url = '/' %}
-                  {% endif %}
-                {% endif %}
-              {% endunless %}
-              {% assign target_url_m = clean_url | relative_url %}
-            {% else %}
-              {% comment %} Non-default dile geçiş: dil kodunu ekle {% endcomment %}
-              {% assign clean_url = page.url %}
-              {% comment %} Eğer şu an default dilde değilsek, mevcut dil kodunu temizle {% endcomment %}
-              {% unless current_active_lang == site.default_lang %}
-                {% comment %} Farklı pattern'lar dene {% endcomment %}
-                {% assign current_lang_prefix_1 = '/' | append: current_active_lang | append: '/' %}
-                {% assign current_lang_prefix_2 = '/' | append: current_active_lang %}
-                
-                {% if clean_url contains current_lang_prefix_1 %}
-                  {% assign clean_url = clean_url | replace_first: current_lang_prefix_1, '/' %}
-                {% elsif clean_url contains current_lang_prefix_2 %}
-                  {% assign clean_url = clean_url | replace_first: current_lang_prefix_2, '' %}
-                  {% if clean_url == '' %}
-                    {% assign clean_url = '/' %}
-                  {% endif %}
-                {% endif %}
-              {% endunless %}
-              {% comment %} Hedef dil kodunu ekle {% endcomment %}
-              {% if clean_url == '/' %}
-                {% assign target_url_m = '/' | append: lang_code_m | append: '/' %}
-              {% else %}
-                {% assign target_url_m = '/' | append: lang_code_m | append: clean_url %}
+              {% comment %} Default dile (TR) geçiş {% endcomment %}
+              {% assign current_path = page.url | remove_first: '/en' | remove_first: '/tr' %}
+              {% if current_path == '' %}
+                {% assign current_path = '/' %}
               {% endif %}
-              {% assign target_url_m = target_url_m | relative_url %}
+              {% assign target_url_m = current_path | relative_url %}
+            {% else %}
+              {% comment %} Non-default dile (EN) geçiş {% endcomment %}
+              {% assign current_path = page.url | remove_first: '/en' | remove_first: '/tr' %}
+              {% if current_path == '' %}
+                {% assign current_path = '/' %}
+              {% endif %}
+              {% if current_path == '/' %}
+                {% assign target_url_m = '/' | append: lang_code_m | append: '/' | relative_url %}
+              {% else %}
+                {% assign target_url_m = '/' | append: lang_code_m | append: current_path | relative_url %}
+              {% endif %}
             {% endif %}
 
             <a href="{{ target_url_m }}"
-               class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+               class="hover:text-ctp-lavener transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_code_m }}">
               {{ lang_code_m }}
             </a>
