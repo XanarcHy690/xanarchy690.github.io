@@ -150,34 +150,24 @@ layout: default
 </section>
 
 <!-- Project Modal Structure (hidden by default) -->
-<div id="projectModal" class="fixed inset-0 bg-ctp-crust/70 backdrop-blur-sm z-[60] hidden items-center justify-center p-4 transition-opacity duration-300 ease-in-out opacity-0">
-    <div class="bg-ctp-mantle rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 ease-in-out scale-95 opacity-0" id="projectModalContentContainer">
+<div id="projectModal" class="fixed inset-0 bg-ctp-crust/70 backdrop-blur-sm z-[60] hidden items-center justify-center p-4">
+    <div class="bg-ctp-mantle rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto" id="projectModalContentContainer">
         <div class="p-6 md:p-8 relative">
-            <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-ctp-overlay1 hover:text-ctp-red transition-colors z-10" aria-label="{{ s.project_modal_close_button_aria_label | default: 'Close modal' }}">
+            <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-ctp-overlay1 hover:text-ctp-red transition-colors z-10" aria-label="Close modal">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
             <h3 id="modalTitle" class="text-3xl font-bold text-ctp-mauve mb-6 pr-10"></h3>
-
             <div id="modalContent" class="prose prose-invert max-w-none text-ctp-subtext0 leading-relaxed">
                 <!-- Proje içeriği buraya JS tarafından yüklenecek -->
             </div>
-
             <div class="mt-8 pt-6 border-t border-ctp-surface1">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <div id="modalTags" class="flex flex-wrap gap-2">
-                        <!-- Etiketler buraya JS tarafından yüklenecek -->
-                    </div>
+                    <div id="modalTags" class="flex flex-wrap gap-2"></div>
                     <div class="flex space-x-3">
-                        <a id="modalGithub" href="#" target="_blank" rel="noopener noreferrer" class="social-btn bg-ctp-blue hover:bg-ctp-sapphire text-ctp-base px-5 py-2.5 rounded-lg font-semibold transition-colors flex items-center gap-2">
-                            <!-- GitHub SVG ikonu eklenebilir -->
-                            {{ s_global[site.active_lang].project_modal_github_link_text | default: "GitHub" }}
-                        </a>
-                        <a id="modalLive" href="#" target="_blank" rel="noopener noreferrer" class="social-btn bg-ctp-green hover:bg-ctp-teal text-ctp-base px-5 py-2.5 rounded-lg font-semibold transition-colors flex items-center gap-2">
-                            <!-- Canlı Demo SVG ikonu eklenebilir -->
-                            {{ s_global[site.active_lang].project_modal_live_demo_link_text | default: "Live Demo" }}
-                        </a>
+                        <a id="modalGithub" href="#" target="_blank" rel="noopener noreferrer" class="social-btn bg-ctp-blue hover:bg-ctp-sapphire text-ctp-base px-5 py-2.5 rounded-lg font-semibold transition-colors flex items-center gap-2">GitHub</a>
+                        <a id="modalLive" href="#" target="_blank" rel="noopener noreferrer" class="social-btn bg-ctp-green hover:bg-ctp-teal text-ctp-base px-5 py-2.5 rounded-lg font-semibold transition-colors flex items-center gap-2">Live Demo</a>
                     </div>
                 </div>
             </div>

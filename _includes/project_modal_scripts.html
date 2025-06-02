@@ -95,9 +95,11 @@
           console.log("MODAL SCRIPTS: GitHub link display:", modalGithubEl.style.display, " Live link display:", modalLiveEl.style.display);
   
           projectModal.classList.remove('hidden');
-          projectModal.classList.add('flex');
-          document.body.style.overflow = 'hidden';
-          console.log("MODAL SCRIPTS: Modal should be visible now.");
+            projectModal.classList.add('flex'); // Bu, display: flex; uygular
+            document.body.style.overflow = 'hidden';
+            console.log("MODAL SCRIPTS: Modal classes after update:", projectModal.className); // Modalın sınıflarını kontrol et
+            console.log("MODAL SCRIPTS: Modal should be visible now.");
+
       } else {
           console.error("MODAL SCRIPTS: ERROR - Project data for ID '"+ projectId +"' found BUT some modal HTML elements are missing OR project object is incomplete.");
           console.error("MODAL SCRIPTS: Details - project:", project, "modalTitleEl:", modalTitleEl, "modalContentEl:", modalContentEl, "modalTagsEl:", modalTagsEl, "modalGithubEl:", modalGithubEl, "modalLiveEl:", modalLiveEl);
