@@ -24,28 +24,28 @@
                 {% assign path_parts = page.url | split: '/' %}
                 {% assign current_active_lang = path_parts[1] %}
                 {% if current_active_lang != 'en' and current_active_lang != 'tr' %}
-                    {% assign current_active_lang = site.default_lang %}
+                  {% assign current_active_lang = site.default_lang %}
                 {% endif %}
-                {% for lang_code_d in site.languages %}
+                
                 {% for lang_code in site.languages %}
-                    {% assign is_current_lang = (lang_code == current_active_lang) %}
-                    {% if is_current_lang %}
-                        <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
-                            {{ lang_code }}
-                        </span>
+                  {% assign is_current_lang = (lang_code == current_active_lang) %}
+                  {% if is_current_lang %}
+                    <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
+                      {{ lang_code }}
+                    </span>
+                  {% else %}
+                    {% assign target_url = site.baseurl | default: '' %}
+                    {% if lang_code != site.default_lang %}
+                      {% assign target_url = target_url | append: '/' | append: lang_code | append: '/' %}
                     {% else %}
-                        {% assign target_url = site.baseurl | default: '' %}
-                        {% if lang_code != site.default_lang %}
-                            {% assign target_url = target_url | append: '/' | append: lang_code | append: '/' %}
-                        {% else %}
-                            {% assign target_url = target_url | append: '/' %}
-                        {% endif %}
-                        <a href="{{ target_url | replace: '//', '/' }}"
-                        class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                        aria-label="Switch language to {{ lang_code }}">
-                            {{ lang_code }}
-                        </a>
+                      {% assign target_url = target_url | append: '/' %}
                     {% endif %}
+                    <a href="{{ target_url | replace: '//', '/' }}"
+                       class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                       aria-label="Switch language to {{ lang_code }}">
+                      {{ lang_code }}
+                    </a>
+                  {% endif %}
                 {% endfor %}
             </div>
 
