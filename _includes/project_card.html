@@ -10,7 +10,7 @@
 
 <!-- DEBUG: Project Card Data - ID: {{ p.id | slugify | inspect }}, Lang (from card_lang variable): {{ card_lang | inspect }} -->
 <div class="card-hover bg-ctp-surface0 rounded-2xl overflow-hidden glow-effect cursor-pointer"
-    onclick="alert('Kart tıklandı! ID: {{ p.id | slugify }}, Lang: {{ card_lang }}'); openProjectModal('{{ p.id | slugify }}', '{{ card_lang }}');">
+    onclick="openProjectModal('{{ p.id | slugify }}', '{{ card_lang }}');">
     <div
         class="h-48 bg-gradient-to-br from-{{ p.image_gradient_from | default: 'ctp-blue' }} to-{{ p.image_gradient_to | default: 'ctp-sapphire' }} relative overflow-hidden">
         <div class="absolute inset-0 bg-black/20"></div>
