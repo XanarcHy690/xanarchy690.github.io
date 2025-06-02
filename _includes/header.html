@@ -5,16 +5,14 @@
 <nav class="fixed top-0 w-full bg-ctp-base/95 backdrop-blur-sm border-b border-ctp-surface0 z-50">
     <div class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
-            {# Aktif dilin ana sayfasına gitmek için #}
             <a href="{{ site.baseurl_root }}/{{ current_active_lang }}/" class="text-2xl font-bold text-ctp-lavender">
                 {{ site.data.profile.name | default: "Site Name" }}
             </a>
 
             <div class="hidden md:flex space-x-8 items-center">
                 {% for item in nav_links %}
-                {% assign item_url_string = item.url | downcase %} {# Emin olmak için küçük harfe çevirelim #}
+                {% assign item_url_string = item.url | downcase %} 
                 {% if item_url_string == "#" or item_url_string startswith "#" %}
-                {# Bu bir sayfa içi bağlantı (anchor link) #}
                 <a href="{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
                 {% else %}
                 <a href="{{ item.url | prepend: '/' | relative_url }}"
@@ -27,7 +25,6 @@
                 {% assign target_page_path = page.permalink_without_lang | default: '/' %}
                 {% assign target_url = site.baseurl_root | append: '/' | append: lang_code_loop | append:
                 target_page_path %}
-                {# URL'de çift // olmasını engellemek için #}
                 {% assign target_url = target_url | replace: '//', '/' %}
 
                 {% if lang_code_loop != current_active_lang %}
