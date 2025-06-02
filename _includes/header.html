@@ -5,7 +5,6 @@ Eğer polyglot çalışmıyorsa veya tanımsızsa, varsayılan dile düşer.
 {% assign current_active_lang = site.active_lang | default: site.default_lang %}
 
 {% assign nav_links = site.data.navigation[current_active_lang] %}
-{% assign s = site.data.strings[current_active_lang] %}
 
 <nav class="fixed top-0 w-full bg-ctp-base/95 backdrop-blur-sm border-b border-ctp-surface0 z-50">
     <div class="container mx-auto px-6 py-4">
