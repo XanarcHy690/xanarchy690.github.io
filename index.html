@@ -1,49 +1,40 @@
 ---
 layout: default
-# SEO için title ve description buraya eklenebilir, _config.yml'den alır veya override eder.
-# title: Ana Sayfa
-# description: Ahmet Yılmaz'ın portfolyo ana sayfası.
 ---
-{% assign lang = site.active_lang | default: site.default_lang %}
-{% assign data_profile = site.data.profile[lang] %}
-{% assign s = site.data.strings[lang] %}
-{% assign site_profile = site.data.profile %}
+{% assign current_page_lang = site.active_lang | default: site.default_lang %}
+{% assign profile_for_current_page = site.data.profile[current_page_lang] %}
+{% assign strings_for_current_page = site.data.strings[current_page_lang] %}
+{% assign global_site_profile = site.data.profile %}
 
 <!-- Hero Section -->
 <section id="home" class="gradient-bg min-h-screen flex items-center justify-center pt-20">
     <div class="text-center px-6">
         <div class="relative mb-8">
-            <div
-                class="w-40 h-40 rounded-full mx-auto overflow-hidden border-4 border-ctp-lavender glow-effect floating-animation">
-                <img src="{{ site_profile.avatar | relative_url }}"
-                    alt="Profile of {{ site_profile.name }}" class="w-full h-full object-cover">
+            <div class="w-40 h-40 rounded-full mx-auto overflow-hidden border-4 border-ctp-lavender glow-effect floating-animation">
+                <img src="{{ global_site_profile.avatar | relative_url }}" alt="Profile of {{ global_site_profile.name }}" class="w-full h-full object-cover">
             </div>
         </div>
         <h1 class="text-5xl md:text-7xl font-bold mb-4">
-            <span class="text-ctp-text">{{ data_profile.greeting_intro }}</span>
+            <span class="text-ctp-text">{{ profile_for_current_page.greeting_intro }}</span>
             <br>
-            <span class="text-ctp-lavender">{{ site_profile.name }}</span>
+            <span class="text-ctp-lavender">{{ global_site_profile.name }}</span>
         </h1>
         <p class="text-xl md:text-2xl text-ctp-subtext1 mb-8">
-            {{ data_profile.tagline }}
+            {{ profile_for_current_page.tagline }}
         </p>
-
         <div class="flex flex-wrap justify-center space-x-2 sm:space-x-4 mb-12">
             {% for social in site.data.social.links limit:4 %}
             <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer"
                 class="social-btn bg-{{ social.bg_color }} hover:bg-{{ social.hover_bg_color }} text-ctp-base px-6 py-3 rounded-full font-semibold mb-2 sm:mb-0"
-                aria-label="{{ s.footer_social_aria_label_prefix | append: social.name }}">
+                aria-label="{{ strings_for_current_page.footer_social_aria_label_prefix | append: social.name }}">
                 {{ social.name }}
             </a>
             {% endfor %}
         </div>
-
         <div class="animate-bounce">
-            <a href="#about" class="text-ctp-lavender hover:text-ctp-blue transition-colors"
-                aria-label="{{ s.hero_scroll_aria_label }}">
+            <a href="#about" class="text-ctp-lavender hover:text-ctp-blue transition-colors" aria-label="{{ strings_for_current_page.hero_scroll_aria_label }}">
                 <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
                 </svg>
             </a>
         </div>
@@ -54,30 +45,31 @@ layout: default
 <section id="about" class="py-20 bg-ctp-mantle">
     <div class="container mx-auto px-6">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-12 text-ctp-lavender">{{ s.section_title_about }}</h2>
+            <!-- DEBUG BEFORE H2 (ABOUT): strings_for_current_page.section_title_about = {{ strings_for_current_page.section_title_about | inspect }} -->
+            <h2 class="text-4xl font-bold text-center mb-12 text-ctp-lavender">{{ strings_for_current_page.section_title_about }}</h2>
             <div class="bg-ctp-surface0 rounded-2xl p-8 md:p-12">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div>
-                        <h3 class="text-2xl font-semibold mb-4 text-ctp-blue">{{ data_profile.about_title }}</h3>
+                        <h3 class="text-2xl font-semibold mb-4 text-ctp-blue">{{ profile_for_current_page.about_title }}</h3>
                         <p class="text-ctp-subtext1 mb-6 leading-relaxed">
-                            {{ data_profile.about_bio_1 }}
+                            {{ profile_for_current_page.about_bio_1 }}
                         </p>
                         <p class="text-ctp-subtext1 leading-relaxed">
-                            {{ data_profile.about_bio_2 }}
+                            {{ profile_for_current_page.about_bio_2 }}
                         </p>
                     </div>
                     <div class="space-y-4">
                         <div class="bg-ctp-surface1 rounded-lg p-4">
-                            <h4 class="font-semibold text-ctp-green mb-2">{{ data_profile.skills.frontend.title }}</h4>
-                            <p class="text-sm text-ctp-subtext1">{{ data_profile.skills.frontend.items }}</p>
+                            <h4 class="font-semibold text-ctp-green mb-2">{{ profile_for_current_page.skills.frontend.title }}</h4>
+                            <p class="text-sm text-ctp-subtext1">{{ profile_for_current_page.skills.frontend.items }}</p>
                         </div>
                         <div class="bg-ctp-surface1 rounded-lg p-4">
-                            <h4 class="font-semibold text-ctp-blue mb-2">{{ data_profile.skills.backend.title }}</h4>
-                            <p class="text-sm text-ctp-subtext1">{{ data_profile.skills.backend.items }}</p>
+                            <h4 class="font-semibold text-ctp-blue mb-2">{{ profile_for_current_page.skills.backend.title }}</h4>
+                            <p class="text-sm text-ctp-subtext1">{{ profile_for_current_page.skills.backend.items }}</p>
                         </div>
                         <div class="bg-ctp-surface1 rounded-lg p-4">
-                            <h4 class="font-semibold text-ctp-mauve mb-2">{{ data_profile.skills.database.title }}</h4>
-                            <p class="text-sm text-ctp-subtext1">{{ data_profile.skills.database.items }}</p>
+                            <h4 class="font-semibold text-ctp-mauve mb-2">{{ profile_for_current_page.skills.database.title }}</h4>
+                            <p class="text-sm text-ctp-subtext1">{{ profile_for_current_page.skills.database.items }}</p>
                         </div>
                     </div>
                 </div>
@@ -89,12 +81,13 @@ layout: default
 <!-- Projects Section -->
 <section id="projects" class="py-20 bg-ctp-base">
     <div class="container mx-auto px-6">
+        {# Projeler için zaten lang_for_projects ve s_for_projects kullanıyorsunuz, bu iyi #}
         {% assign lang_for_projects = site.active_lang | default: site.default_lang | default: "tr" %}
-        {% assign s_for_projects = site.data.strings[lang_for_projects] %}
-
+        {% assign s_for_projects_debug = site.data.strings[lang_for_projects] %}
+         <!-- DEBUG BEFORE H2 (PROJECTS): s_for_projects_debug.section_title_projects = {{ s_for_projects_debug.section_title_projects | inspect }} -->
         <h2 class="text-4xl font-bold text-center mb-12 text-ctp-lavender">
-            {% if s_for_projects and s_for_projects.section_title_projects %}
-                {{ s_for_projects.section_title_projects }}
+            {% if s_for_projects_debug and s_for_projects_debug.section_title_projects %}
+                {{ s_for_projects_debug.section_title_projects }}
             {% else %}
                 Projects (Title Missing for {{ lang_for_projects }})
             {% endif %}
@@ -105,12 +98,12 @@ layout: default
 
             {% if projects_lang.size > 0 %}
                 {% for project_item in projects_lang %}
-                    {% include project_card.html project=project_item lang=lang_for_projects s=s_for_projects %}
+                    {% include project_card.html project=project_item lang=lang_for_projects s=s_for_projects_debug %}
                 {% endfor %}
             {% else %}
                 <p class="text-ctp-subtext1 text-center col-span-full">
-                    {% if s_for_projects and s_for_projects.no_projects_found_prefix %}
-                        {{ s_for_projects.no_projects_found_prefix }}{{ lang_for_projects }}{{ s_for_projects.no_projects_found_suffix }}
+                    {% if s_for_projects_debug and s_for_projects_debug.no_projects_found_prefix %}
+                        {{ s_for_projects_debug.no_projects_found_prefix }}{{ lang_for_projects }}{{ s_for_projects_debug.no_projects_found_suffix }}
                     {% else %}
                         No projects found for this language ({{ lang_for_projects }}). 
                     {% endif %}
@@ -124,29 +117,26 @@ layout: default
 <section id="contact" class="py-20 bg-ctp-mantle">
     <div class="container mx-auto px-6">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl font-bold mb-8 text-ctp-lavender">{{ s.section_title_contact }}</h2>
+             <!-- DEBUG BEFORE H2 (CONTACT): strings_for_current_page.section_title_contact = {{ strings_for_current_page.section_title_contact | inspect }} -->
+            <h2 class="text-4xl font-bold mb-8 text-ctp-lavender">{{ strings_for_current_page.section_title_contact }}</h2>
             <p class="text-xl text-ctp-subtext1 mb-12">
-                {{ data_profile.contact_intro }}
+                {{ profile_for_current_page.contact_intro }}
             </p>
-
-            <div
-                class="mt-12 flex flex-col sm:flex-row justify-center items-center sm:space-x-8 space-y-4 sm:space-y-0">
-                <a href="mailto:{{ site_profile.email }}"
-                    class="flex items-center text-ctp-subtext1 hover:text-ctp-lavender transition-colors">
+            {# ... İletişim Formu HTML'i (varsa) ... #}
+            <div class="mt-12 flex flex-col sm:flex-row justify-center items-center sm:space-x-8 space-y-4 sm:space-y-0">
+                <a href="mailto:{{ global_site_profile.email }}" class="flex items-center text-ctp-subtext1 hover:text-ctp-lavender transition-colors">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                     </svg>
-                    {{ site_profile.email }}
+                    {{ global_site_profile.email }}
                 </a>
-                {% if site_profile.phone %}
-                <a href="tel:{{ site_profile.phone | remove: ' ' }}"
-                    class="flex items-center text-ctp-subtext1 hover:text-ctp-lavender transition-colors">
+                {% if global_site_profile.phone %}
+                <a href="tel:{{ global_site_profile.phone | remove: ' ' }}" class="flex items-center text-ctp-subtext1 hover:text-ctp-lavender transition-colors">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
                     </svg>
-                    {{ site_profile.phone }}
+                    {{ global_site_profile.phone }}
                 </a>
                 {% endif %}
             </div>
