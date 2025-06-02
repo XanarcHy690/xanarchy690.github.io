@@ -24,7 +24,9 @@ collections:
 
 # Jekyll Polyglot Ayarları
 default_lang: "tr"
-languages: ["tr", "en"]
+languages: 
+  - "tr"
+  - "en"
 exclude_from_localization: ["assets/", "admin/"] # Çevrilmeyecek dosyalar/klasörler
 parallel_localization: false # Hata ayıklama için false, performans için true
 default_lang_in_url: false   # YENİ EKLENEN SATIR
