@@ -27,6 +27,7 @@ languages: ["tr", "en"]
 default_lang: "tr"
 exclude_from_localization: ["assets/", "admin/"] # Çevrilmeyecek dosyalar/klasörler
 parallel_localization: false # Hata ayıklama için false, performans için true
+default_lang_in_url: false   # YENİ EKLENEN SATIR
 
 # Sass ayarları (Eğer SASS kullanacaksanız)
 # sass:
