@@ -9,6 +9,7 @@
                 {{ site.data.profile.name | default: "Site Name" }}
             </a>
 
+            <!-- Desktop Menu -->
             <div class="hidden md:flex space-x-8 items-center">
                 {% for item in nav_links %}
                 {% assign item_url_str = item.url | default: "" %}
@@ -21,40 +22,47 @@
                 {% endif %}
                 {% endfor %}
 
+                <!-- Language Switcher (Desktop) -->
                 <div class="hidden md:flex items-center">
                     {% assign base = site.baseurl %}
-                    {% assign path_parts = page.url | split: '/' %}
-                    {% assign active_url_lang = path_parts[1] %}
-                    {% assign current_lang = active_url_lang %}
-                    {% if current_lang == "" or current_lang == nil %}
-                      {% assign current_lang = site.default_lang %}
+                    {% assign url_parts = page.url | split: '/' %}
+                    {% assign languages = site.languages %}
+                    {% assign first_part = url_parts[1] %}
+                    
+                    {% if languages contains first_part %}
+                        {% assign current_lang = first_part %}
+                        {% assign url_without_lang = page.url | remove_first: '/' | remove_first: current_lang %}
+                    {% else %}
+                        {% assign current_lang = site.default_lang %}
+                        {% assign url_without_lang = page.url %}
                     {% endif %}
-                    
-                    {% assign current_path_without_lang = page.url | remove_first: '/' | remove_first: current_lang %}
-                    
+
+                
                     {% for lang in site.languages %}
-                      {% if lang == current_lang %}
-                        <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
-                          {{ lang }}
-                        </span>
-                      {% else %}
-                        {% assign target_path = base %}
-                        {% if lang != site.default_lang %}
-                          {% assign target_path = target_path | append: "/" | append: lang %}
+                        {% if lang == current_lang %}
+                            <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
+                            {{ lang }}
+                            </span>
+                        {% else %}
+                            {% assign target_url = base %}
+                            {% if lang != site.default_lang %}
+                                {% assign target_url = target_url | append: "/" | append: lang %}
+                            {% endif %}
+                            {% assign full_path = url_without_lang | prepend: "/" %}
+                            {% assign full_url = target_url | append: full_path %}
+                            <a href="{{ full_url | replace: '//', '/' | relative_url }}"
+                            class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                            aria-label="Switch language to {{ lang }}">
+                            {{ lang }}
+                            </a>
                         {% endif %}
-                        {% assign full_url = target_path | append: "/" | append: current_path_without_lang %}
-                        <a href="{{ full_url | replace: '//', '/' | relative_url }}"
-                          class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                          aria-label="Switch language to {{ lang }}">
-                          {{ lang }}
-                        </a>
-                      {% endif %}
                     {% endfor %}
-                    
                 </div>
             </div>
 
+            <!-- Mobile Menu Button + Language Switcher (Aynı mantık mobil için de uygulanacak) -->
             <div class="md:hidden flex items-center">
+                <!-- Language Switcher (Mobile) -->
                 <div class="md:hidden flex items-center">
                     {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
                     {% assign languages = site.languages %}
@@ -90,6 +98,7 @@
         </div>
     </div>
 
+    <!-- Mobile Menu Dropdown -->
     <div id="mobile-menu" class="hidden md:hidden bg-ctp-mantle border-t border-ctp-surface0">
         <div class="px-6 py-4 space-y-4">
             {% for item in nav_links %}
