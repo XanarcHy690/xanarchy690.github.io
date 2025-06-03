@@ -66,8 +66,8 @@ collections:
 # -----------------------------------------------------------------------------
 # Jekyll Polyglot Ayarları / Jekyll Polyglot Settings
 # -----------------------------------------------------------------------------
-# TR: Sitenizde desteklenecek dillerin listesi.
-# EN: A list of languages your site will support.
+# TR: Sitenizde desteklenecek dillerin listesi. En fazla iki dilde istikrarlı bir şekilde çalışır.
+# EN: A list of languages your site will support. Works stably in at most two languages
 languages: ["en", "tr"]
 
 # TR: Sitenizin varsayılan dili. URL'de dil kodu olmadan erişilen dildir.

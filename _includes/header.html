@@ -9,7 +9,6 @@
                 {{ site.data.profile.name | default: "Site Name" }}
             </a>
 
-            <!-- Desktop Menu -->
             <div class="hidden md:flex space-x-8 items-center">
                 {% for item in nav_links %}
                 {% assign item_url_str = item.url | default: "" %}
@@ -22,7 +21,6 @@
                 {% endif %}
                 {% endfor %}
 
-                <!-- Language Switcher (Desktop) -->
                 <div class="hidden md:flex items-center">
                     {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
                     {% assign languages = site.languages %}
@@ -30,7 +28,6 @@
                 
                     {% for lang in languages %}
                     {% if lang == current_lang %}
-                        <!-- Aktif dil -->
                         <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
                         {{ lang }}
                         </span>
@@ -49,9 +46,7 @@
                 </div>
             </div>
 
-            <!-- Mobile Menu Button + Language Switcher (Aynı mantık mobil için de uygulanacak) -->
             <div class="md:hidden flex items-center">
-                <!-- Language Switcher (Mobile) -->
                 <div class="md:hidden flex items-center">
                     {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
                     {% assign languages = site.languages %}
@@ -87,7 +82,6 @@
         </div>
     </div>
 
-    <!-- Mobile Menu Dropdown -->
     <div id="mobile-menu" class="hidden md:hidden bg-ctp-mantle border-t border-ctp-surface0">
         <div class="px-6 py-4 space-y-4">
             {% for item in nav_links %}
