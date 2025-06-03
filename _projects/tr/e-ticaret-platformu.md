@@ -1,31 +1,72 @@
 ---
-id: e-ticaret-platformu # Türkçe dosyadaki ile aynı ID
+# BENZERSİZ PROJE KİMLİĞİ (İngilizce dosyadaki ile AYNI OLMALI):
+id: e-commerce-platform 
+
+# SIRALAMA (İngilizce dosyadaki ile AYNI OLMALI):
 order: 1
 
+# BAŞLIK (Dil Spesifik):
 title: "E-Ticaret Platformu"
-short_description: "A full-featured e-commerce platform developed with modern React and Node.js technologies."
-tags: ["React", "Node.js", "MongoDB", "TypeScript", "Redux"]
 
+# KISA AÇIKLAMA (Dil Spesifik):
+short_description: "Modern React ve Node.js teknolojileri ile geliştirilmiş, kesintisiz bir kullanıcı deneyimi sunan tam özellikli bir online alışveriş platformu."
+
+# ETİKETLER (İngilizce ile aynı veya Türkçe karşılıkları olabilir):
+tags: ["React", "Node.js", "MongoDB", "TypeScript", "Express.js", "Stripe"]
+
+# PROJE KARTI GÖRSEL AYARLARI (Aynı kalabilir veya dile göre değişebilir):
 image_gradient_from: "ctp-blue"
 image_gradient_to: "ctp-sapphire"
+
+# PROJE KARTI İKONU (Aynı kalabilir):
 icon_class: "fas fa-shopping-cart"
 
-github_url: "https://github.com/username/ecommerce-platform"
-live_url: "https://ecommerce-demo.com"
+# KAPAK GÖRSELİ (Aynı kalabilir veya dile göre farklı bir görsel olabilir):
+cover_image: "/assets/images/projects/ecommerce-cover.jpg" 
+
+# LİNKLER (Genellikle aynı kalır):
+github_url: "https://github.com/yourusername/ecommerce-project"
+live_url: "https://your-ecommerce-demo.com"
 ---
 
-<h4 class="text-xl font-semibold mb-4 text-ctp-lavender">About The Project</h4>
-<p class="mb-4">A full-featured online shopping platform offering a modern e-commerce experience. It comes with a user-friendly interface and a powerful admin panel.</p>
+## Proje Hakkında
 
-<h5 class="text-lg font-semibold mb-3 text-ctp-blue">Features:</h5>
-<ul class="list-disc list-inside mb-4 space-y-1">
-    <li>deneme Responsive design and mobile-first approach</li>
-    <li>Secure payment system integration</li>
-    <li>Real-time inventory tracking</li>
-    <li>Comprehensive admin panel</li>
-    <li>SEO optimized structure</li>
-    <li>Multi-language support</li>
-</ul>
+Bu kısımda projenizin **detaylı Türkçe açıklamasını** yapacaksınız. Standart Markdown formatını kullanabilirsiniz.
 
-<h5 class="text-lg font-semibold mb-3 text-ctp-green">Technical Details:</h5>
-<p class="mb-4">The frontend was developed using React.js and TypeScript. Redux Toolkit was used for state management. The backend was built with Node.js and Express.js, using a MongoDB database.</p>
+E-ticaret platformumuz, kesintisiz ve modern bir online alışveriş deneyimi sunmak üzere tasarlandı. Temel hedefler arasında kullanıcı dostu bir arayüz, güçlü bir arka plan altyapısı ve güvenli işlem süreçleri yer alıyordu. Büyüyen ürün kataloglarını ve kullanıcı tabanlarını desteklemek için ölçeklenebilirliğe odaklandık.
+
+![Ana Sayfa Ekran Görüntüsü]({{ '/assets/images/projects/ecommerce-main-tr.jpg' | relative_url }})
+*<center><small>Şek. 1: Öne çıkan ürünleri gösteren ana giriş sayfası.</small></center>*
+
+Platform kullanıcılara şunları sağlar:
+- Ürün kategorilerine ve tekil ürünlere göz atma.
+- Resimler, açıklamalar ve yorumlar dahil olmak üzere detaylı ürün bilgilerini görüntüleme.
+- Ürünleri alışveriş sepetine ekleme ve sepet içeriğini yönetme.
+- Güvenli, çok adımlı bir ödeme sürecinden geçme.
+- Kullanıcı hesabını, sipariş geçmişini ve kayıtlı adreslerini yönetme.
+
+### Özellikler
+
+*   **Duyarlı Tasarım:** Masaüstü, tablet ve mobil cihazlarda tam erişilebilirlik.
+*   **Kullanıcı Doğrulama:** Güvenli kayıt ve giriş işlevselliği.
+*   **Ürün Yönetimi:** Ürün ekleme, düzenleme ve silme için yönetici arayüzü.
+*   **Arama ve Filtreleme:** Fiyat, kategori vb. için filtrelerle gelişmiş arama yetenekleri.
+*   **Alışveriş Sepeti ve Ödeme:** Sezgisel sepet yönetimi ve ödemeler için Stripe entegrasyonu.
+*   **Sipariş Yönetimi:** Kullanıcılar sipariş geçmişlerini görüntüleyebilir; yöneticiler siparişleri yönetebilir.
+*   **İstek Listesi İşlevselliği:** Kullanıcılar ürünleri daha sonra için kaydedebilir.
+
+![Yönetici Paneli Ekran Görüntüsü]({{ '/assets/images/projects/ecommerce-admin-tr.jpg' | relative_url }})
+*<center><small>Şek. 2: Site istatistiklerini ve siparişleri yönetmek için yönetici paneli.</small></center>*
+
+### Teknik Detaylar
+
+Proje, bazı varyasyonlarla MERN yığını kullanılarak oluşturuldu:
+
+*   **Ön Yüz (Frontend):** React.js (Vite ile), TypeScript, stil için Tailwind CSS ve durum yönetimi için Redux Toolkit.
+*   **Arka Yüz (Backend):** Node.js ve Express.js framework'ü, RESTful API uygulanarak.
+*   **Veritabanı:** Ürün, kullanıcı ve sipariş verileri için MongoDB Atlas (bulut tabanlı).
+*   **Doğrulama (Authentication):** Güvenli API erişimi için JWT (JSON Web Tokens).
+*   **Ödeme Entegrasyonu:** Kredi kartı ödemelerini işlemek için Stripe API.
+*   **Dağıtım (Deployment):** Ön yüz Vercel'de, Arka yüz Render'da (veya Heroku).
+
+Bu proje, tam yığın web geliştirme, API tasarımı ve e-ticaret en iyi uygulamaları konularındaki yeterliliği göstermektedir.
