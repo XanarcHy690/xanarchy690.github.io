@@ -41,7 +41,7 @@ cover_image: "/assets/images/projects/ecommerce-cover.jpg"
 github_url: "https://github.com/yourusername/ecommerce-project" # Projenin GitHub deposu (varsa)
 # live_url: "https://your-ecommerce-demo.com" # Projenin canlı demo adresi (varsa)
 layout: default
-lang: tr
+lang: fr
 ---
 # Test
 ## Proje Hakkında

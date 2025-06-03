@@ -22,27 +22,35 @@
                 {% endfor %}
 
                 <div class="hidden md:flex items-center">
-                    {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
-                    {% assign languages = site.languages %}
                     {% assign base = site.baseurl %}
-                
-                    {% for lang in languages %}
-                    {% if lang == current_lang %}
+                    {% assign path_parts = page.url | split: '/' %}
+                    {% assign active_url_lang = path_parts[1] %}
+                    {% assign current_lang = active_url_lang %}
+                    {% if current_lang == "" or current_lang == nil %}
+                      {% assign current_lang = site.default_lang %}
+                    {% endif %}
+                    
+                    {% assign current_path_without_lang = page.url | remove_first: '/' | remove_first: current_lang %}
+                    
+                    {% for lang in site.languages %}
+                      {% if lang == current_lang %}
                         <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
-                        {{ lang }}
+                          {{ lang }}
                         </span>
-                    {% else %}
-                        {% assign target_url = base | append: "/" | append: lang %}
-                        {% if lang == site.default_lang %}
-                        {% assign target_url = base %}
+                      {% else %}
+                        {% assign target_path = base %}
+                        {% if lang != site.default_lang %}
+                          {% assign target_path = target_path | append: "/" | append: lang %}
                         {% endif %}
-                        <a href="{{ target_url }}"
-                        class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                        aria-label="Switch language to {{ lang }}">
-                        {{ lang }}
+                        {% assign full_url = target_path | append: "/" | append: current_path_without_lang %}
+                        <a href="{{ full_url | replace: '//', '/' | relative_url }}"
+                          class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                          aria-label="Switch language to {{ lang }}">
+                          {{ lang }}
                         </a>
-                    {% endif %} 
+                      {% endif %}
                     {% endfor %}
+                    
                 </div>
             </div>
 

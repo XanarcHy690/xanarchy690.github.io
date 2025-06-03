@@ -40,6 +40,9 @@ cover_image: "/assets/images/projects/ecommerce-cover.jpg"
 # LINKS:
 github_url: "https://github.com/yourusername/ecommerce-project" # GitHub repository of the project (if any)
 # live_url: "https://your-ecommerce-demo.com" # Live demo address of the project (if any) - Uncomment if you have one
+
+layout: default
+lang: en
 ---
 
 ## About The Project
