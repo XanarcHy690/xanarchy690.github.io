@@ -24,70 +24,88 @@
 
                 <!-- Language Switcher (Desktop) -->
                 <div class="hidden md:flex items-center">
-                    {% assign base = site.baseurl %}
-                    {% assign url_parts = page.url | split: '/' %}
-                    {% assign languages = site.languages %}
-                    {% assign first_part = url_parts[1] %}
-                    
-                    {% if languages contains first_part %}
-                        {% assign current_lang = first_part %}
-                        {% assign url_without_lang = page.url | remove_first: '/' | remove_first: current_lang %}
-                    {% else %}
-                        {% assign current_lang = site.default_lang %}
-                        {% assign url_without_lang = page.url %}
-                    {% endif %}
-
-                
-                    {% for lang in site.languages %}
-                        {% if lang == current_lang %}
-                            <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
-                            {{ lang }}
-                            </span>
+                    {% assign current_lang_switcher = site.active_lang | default: site.default_lang %}
+                    {% assign languages_switcher = site.languages %}
+                    {% assign base_switcher = site.baseurl | default: '' %}
+        
+                    {% for lang_loop_d in languages_switcher %}
+                      {% if lang_loop_d == current_lang_switcher %}
+                        <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
+                          {{ lang_loop_d }}
+                        </span>
+                      {% else %}
+                        {% assign final_target_url_d = "" %}
+                        {% assign page_path_no_lang_d = page.permalink_without_lang | default: '/' %}
+                        {# page.permalink_without_lang /about/ veya / gibi bir şey döndürür #}
+        
+                        {% if lang_loop_d == site.default_lang and site.config.default_lang_in_url == false %}
+                          {# Hedef dil, varsayılan dil VE URL'de dil kodu olmasın ayarı aktifse #}
+                          {% assign final_target_url_d = base_switcher | append: page_path_no_lang_d %}
                         {% else %}
-                            {% assign target_url = base %}
-                            {% if lang != site.default_lang %}
-                                {% assign target_url = target_url | append: "/" | append: lang %}
-                            {% endif %}
-                            {% assign full_path = url_without_lang | prepend: "/" %}
-                            {% assign full_url = target_url | append: full_path %}
-                            <a href="{{ full_url | replace: '//', '/' | relative_url }}"
-                            class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                            aria-label="Switch language to {{ lang }}">
-                            {{ lang }}
-                            </a>
+                          {# Diğer tüm durumlar için (hedef dil varsayılan değil VEYA varsayılan dil URL'de gösterilsin) #}
+                          {% assign final_target_url_d = base_switcher | append: '/' | append: lang_loop_d | append: page_path_no_lang_d %}
                         {% endif %}
+        
+                        {% assign final_target_url_d = final_target_url_d | replace: '//', '/' %}
+                        {# Eğer URL sadece baseurl ise (örn: /portfolio) ve bu ana sayfa ise, sonuna / ekle. #}
+                        {% if final_target_url_d == base_switcher and base_switcher != "" and final_target_url_d != "/" %}
+                             {% assign final_target_url_d = final_target_url_d | append: '/' %}
+                        {% elsif final_target_url_d == "" and base_switcher == "" %}
+                             {% assign final_target_url_d = "/" %}
+                        {% endif %}
+                        {% assign final_target_url_d = final_target_url_d | replace: '//', '/' %} {# Son bir temizlik #}
+        
+        
+                        <a href="{{ final_target_url_d }}"
+                           class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                           aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_loop_d }}">
+                          {{ lang_loop_d }}
+                        </a>
+                      {% endif %}
                     {% endfor %}
                 </div>
-            </div>
-
+              </div>
+        
             <!-- Mobile Menu Button + Language Switcher (Aynı mantık mobil için de uygulanacak) -->
             <div class="md:hidden flex items-center">
                 <!-- Language Switcher (Mobile) -->
                 <div class="md:hidden flex items-center">
-                    {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
-                    {% assign languages = site.languages %}
-                    {% assign base = site.baseurl %}
-                
-                    {% for lang in languages %}
-                    {% if lang == current_lang %}
+                    {% assign current_lang_switcher_m = site.active_lang | default: site.default_lang %}
+                    {% assign languages_switcher_m = site.languages %}
+                    {% assign base_switcher_m = site.baseurl | default: '' %}
+        
+                    {% for lang_loop_m in languages_switcher_m %}
+                      {% if lang_loop_m == current_lang_switcher_m %}
                         <span class="text-ctp-lavender uppercase text-sm font-bold mr-3 px-2 py-1 rounded-md bg-ctp-surface1">
-                        {{ lang }}
+                          {{ lang_loop_m }}
                         </span>
-                    {% else %}
-                        {% assign target_url = base | append: "/" | append: lang %}
-                        {% if lang == site.default_lang %}
-                        {% assign target_url = base %}
+                      {% else %}
+                        {% assign final_target_url_m = "" %}
+                        {% assign page_path_no_lang_m = page.permalink_without_lang | default: '/' %}
+        
+                        {% if lang_loop_m == site.default_lang and site.config.default_lang_in_url == false %}
+                          {% assign final_target_url_m = base_switcher_m | append: page_path_no_lang_m %}
+                        {% else %}
+                          {% assign final_target_url_m = base_switcher_m | append: '/' | append: lang_loop_m | append: page_path_no_lang_m %}
                         {% endif %}
-                        <a href="{{ target_url }}"
-                        class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                        aria-label="Switch language to {{ lang }}">
-                        {{ lang }}
+        
+                        {% assign final_target_url_m = final_target_url_m | replace: '//', '/' %}
+                        {% if final_target_url_m == base_switcher_m and base_switcher_m != "" and final_target_url_m != "/" %}
+                             {% assign final_target_url_m = final_target_url_m | append: '/' %}
+                        {% elsif final_target_url_m == "" and base_switcher_m == "" %}
+                             {% assign final_target_url_m = "/" %}
+                        {% endif %}
+                        {% assign final_target_url_m = final_target_url_m | replace: '//', '/' %}
+        
+                        <a href="{{ final_target_url_m }}"
+                           class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                           aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_loop_m }}">
+                          {{ lang_loop_m }}
                         </a>
-                    {% endif %}
+                      {% endif %}
                     {% endfor %}
                 </div>
-                
-
+        
                 <button id="mobile-menu-btn" class="text-ctp-text hover:text-ctp-lavender">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
