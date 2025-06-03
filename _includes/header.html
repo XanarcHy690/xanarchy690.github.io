@@ -30,6 +30,7 @@ Eğer polyglot çalışmıyorsa veya tanımsızsa, varsayılan dile düşer.
                 <div class="hidden md:flex items-center">
                     {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
                     {% assign languages = site.languages %}
+                    {% assign base = site.baseurl %}
                     
                     {% for lang in languages %}
                       {% if lang == current_lang %}
@@ -37,12 +38,11 @@ Eğer polyglot çalışmıyorsa veya tanımsızsa, varsayılan dile düşer.
                           {{ lang }}
                         </span>
                       {% else %}
-                        {% if lang == site.default_lang %}
-                          {% assign target_url = site.baseurl %}
-                        {% else %}
-                          {% assign target_url = site.baseurl | append: '/' | append: lang %}
+                        {%- assign path = '' -%}
+                        {% if lang != site.default_lang %}
+                          {% assign path = '/' | append: lang %}
                         {% endif %}
-                        <a href="{{ target_url }}"
+                        <a href="{{ path | relative_url }}"
                            class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                            aria-label="Switch language to {{ lang }}">
                           {{ lang }}
