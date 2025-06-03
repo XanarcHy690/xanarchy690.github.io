@@ -1,6 +1,6 @@
 ---
 id: e-commerce-platform
-order: 1
+order: 2
 title: "E-Commerce Platform"
 short_description: "A full-featured e-commerce platform..."
 tags: ["React", "Node.js", "MongoDB"]
