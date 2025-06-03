@@ -1,7 +1,3 @@
-{% comment %}
-Aktif dili doğrudan jekyll-polyglot'tan alıyoruz.
-Eğer polyglot çalışmıyorsa veya tanımsızsa, varsayılan dile düşer.
-{% endcomment %}
 {% assign current_active_lang = site.active_lang | default: site.default_lang %}
 
 {% assign nav_links = site.data.navigation[current_active_lang] %}
@@ -29,34 +25,27 @@ Eğer polyglot çalışmıyorsa veya tanımsızsa, varsayılan dile düşer.
                 <!-- Language Switcher (Desktop) -->
                 <div class="hidden md:flex items-center">
                     {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
-                    {% assign base = site.baseurl | default: '' %}
                     {% assign languages = site.languages %}
-                    
+                    {% assign base = site.baseurl %}
+                
                     {% for lang in languages %}
-                        {% if lang == current_lang %}
-                            <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
-                                {{ lang }}
-                            </span>
-                        {% else %}
-                            {% comment %}
-                            Varsayılan dile geçiliyorsa (örneğin en), sadece baseurl ver (dil kodu verme)
-                            Diğer dillere geçiliyorsa baseurl + /dil
-                            {% endcomment %}
-                    
-                            {% if lang == site.default_lang %}
-                                {% assign target_url = base %}
-                            {% else %}
-                                {% assign target_url = base | append: "/" | append: lang %}
-                            {% endif %}
-                    
-                            <a href="{{ target_url | relative_url }}"
-                               class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                               aria-label="Switch language to {{ lang }}">
-                                {{ lang }}
-                            </a>
+                    {% if lang == current_lang %}
+                        <!-- Aktif dil -->
+                        <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
+                        {{ lang }}
+                        </span>
+                    {% else %}
+                        {% assign target_url = base | append: "/" | append: lang %}
+                        {% if lang == site.default_lang %}
+                        {% assign target_url = base %}
                         {% endif %}
+                        <a href="{{ target_url }}"
+                        class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                        aria-label="Switch language to {{ lang }}">
+                        {{ lang }}
+                        </a>
+                    {% endif %} 
                     {% endfor %}
-                                        
                 </div>
             </div>
 
