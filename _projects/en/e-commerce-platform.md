@@ -18,7 +18,7 @@ cover_image: "/assets/images/projects/ecommerce-cover.jpg"
 
 ---
 
-#### About The Project
+## About The Project
 A full-featured online shopping platform offering a modern e-commerce experience. It comes with a user-friendly interface and a powerful admin panel.
 
 ![E-commerce screenshot 1]({{ '/assets/images/projects/ecommerce-screenshot1.jpg' | relative_url }})
@@ -35,7 +35,7 @@ Aşağıda projenin farklı bölümlerinden bazı görseller yer almaktadır:
 *<center><small>Admin panel for order management.</small></center>*
 
 
-##### Features:
+### Features:
 *   Responsive design and mobile-first approach
 *   Secure payment system integration
 *   Real-time inventory tracking
@@ -43,5 +43,5 @@ Aşağıda projenin farklı bölümlerinden bazı görseller yer almaktadır:
 *   SEO optimized structure
 *   Multi-language support
 
-##### Technical Details:
+### Technical Details:
 The frontend was developed using React.js and TypeScript. Redux Toolkit was used for state management. The backend was built with Node.js and Express.js, using a MongoDB database.
