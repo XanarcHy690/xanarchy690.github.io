@@ -26,36 +26,27 @@
                 <div class="hidden md:flex items-center">
                     {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
                     {% assign languages = site.languages %}
-                    {% assign base = site.baseurl | default: "" %}
-                    {% assign default_lang = site.default_lang %}
-                    {% assign url = site.url %}
-
+                    {% assign base = site.baseurl %}
+                
                     {% for lang in languages %}
                     {% if lang == current_lang %}
+                        <!-- Aktif dil -->
                         <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
                         {{ lang }}
                         </span>
                     {% else %}
-                        {% if lang == default_lang %}
-                            {% if base != nil %}
-                                {% assign target_url = url | append: "/" | append: base | append: "/" %}
-                            {% endif %}
-
-                            {% if base == nil %}
-                                {% assign target_url = url | remove: "/" | append: base | append: "/" %}
-                            {% endif %}
-                        {% else %}
-                        {% assign target_url = base | append: "/" | append: lang | append: "/" %}
+                        {% assign target_url = base | append: "/" | append: lang %}
+                        {% if lang == site.default_lang %}
+                        {% assign target_url = base %}
                         {% endif %}
                         <a href="{{ target_url }}"
                         class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                         aria-label="Switch language to {{ lang }}">
                         {{ lang }}
                         </a>
-                    {% endif %}
+                    {% endif %} 
                     {% endfor %}
                 </div>
-  
             </div>
 
             <!-- Mobile Menu Button + Language Switcher (Aynı mantık mobil için de uygulanacak) -->
