@@ -5,7 +5,6 @@
 <div class="card-hover bg-ctp-surface0 rounded-2xl overflow-hidden glow-effect cursor-pointer"
     onclick="openProjectModal('{{ p.id | slugify }}', '{{ card_lang }}');">
     
-    {% comment %} Kapak Görseli veya Renkli Arka Plan {% endcomment %}
     <div class="h-48 w-full relative overflow-hidden group">
         {% if p.cover_image and p.cover_image != "" %}
             <img src="{{ p.cover_image | relative_url }}" alt="{{ p.title | escape }} cover image" 
@@ -18,13 +17,13 @@
         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300"></div>
         <div class="absolute bottom-4 left-4 text-white">
             <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
-                {% if p.icon_svg_path %}
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="{{ p.icon_svg_path }}"></path>
-                </svg>
+                {% comment %} icon_class kontrolü ve Font Awesome ikonu {% endcomment %}
+                {% if p.icon_class and p.icon_class != "" %}
+                    <i class="{{ p.icon_class }} fa-fw text-lg"></i> {# text-lg veya istediğiniz boyut #}
                 {% else %}
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path
-                        d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path></svg>
+                    {# Varsayılan ikon (eğer icon_class belirtilmemişse) #}
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path
+                            d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path></svg>
                 {% endif %}
             </div>
         </div>

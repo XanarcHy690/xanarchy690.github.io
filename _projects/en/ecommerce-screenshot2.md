@@ -7,7 +7,7 @@ tags: ["React", "Node.js", "MongoDB"]
 
 image_gradient_from: "ctp-blue"   # Renkli arka plan için (görsel yoksa kullanılır)
 image_gradient_to: "ctp-sapphire" # Renkli arka plan için
-icon_svg_path: "M3 4a1..."
+icon_class: "fas fa-shopping-cart"
 
 cover_image: "/assets/images/projects/ecommerce-cover.jpg" # YENİ ALAN (yol projenize göre değişir)
 # Eğer bu proje için kapak görseli yoksa, bu satırı silin veya boş bırakın.
