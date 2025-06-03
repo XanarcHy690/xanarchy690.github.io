@@ -37,3 +37,124 @@ html {
 .prose ul { @apply list-disc list-inside mb-4 space-y-1 text-ctp-subtext1; }
 .prose li { @apply mb-1; }
 .prose a { @apply text-ctp-blue hover:text-ctp-sapphire; }
+
+/* Modal içindeki Markdown içeriği için temel stiller */
+.modal-markdown-content h1,
+.modal-markdown-content h2,
+.modal-markdown-content h3,
+.modal-markdown-content h4,
+.modal-markdown-content h5,
+.modal-markdown-content h6 {
+    color: #b4befe; /* ctp-lavender - Varsayılan başlık rengi */
+    margin-top: 1.25em;
+    margin-bottom: 0.5em;
+    font-weight: 600; /* font-semibold */
+    line-height: 1.3;
+}
+
+.modal-markdown-content h1 {
+    font-size: 2.25rem; /* text-4xl gibi */
+    color: #cba6f7; /* ctp-mauve - H1 için özel renk */
+}
+.modal-markdown-content h2 {
+    font-size: 1.875rem; /* text-3xl gibi */
+    color: #f38ba8; /* ctp-red - H2 için özel renk */
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #45475a; /* ctp-surface1 - H2 altına çizgi */
+    margin-bottom: 0.8em;
+}
+.modal-markdown-content h3 {
+    font-size: 1.5rem; /* text-2xl gibi */
+    color: #fab387; /* ctp-peach - H3 için özel renk */
+}
+.modal-markdown-content h4 {
+    font-size: 1.25rem; /* text-xl gibi */
+    color: #a6e3a1; /* ctp-green - H4 için özel renk */
+}
+.modal-markdown-content h5 {
+    font-size: 1.125rem; /* text-lg gibi */
+    color: #89b4fa; /* ctp-blue - H5 için özel renk */
+}
+
+.modal-markdown-content p {
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+    line-height: 1.65;
+    color: #bac2de; /* ctp-subtext1 */
+}
+
+.modal-markdown-content a {
+    color: #89b4fa; /* ctp-blue */
+    text-decoration: none;
+}
+.modal-markdown-content a:hover {
+    text-decoration: underline;
+}
+
+.modal-markdown-content ul,
+.modal-markdown-content ol {
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+    padding-left: 1.75em;
+    color: #bac2de; /* ctp-subtext1 */
+}
+.modal-markdown-content ul {
+    list-style-type: disc;
+}
+.modal-markdown-content ol {
+    list-style-type: decimal;
+}
+.modal-markdown-content li {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+.modal-markdown-content li > p { /* Liste elemanı içindeki paragraflar için ekstra boşluğu kaldır */
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.modal-markdown-content strong {
+    color: #cdd6f4; /* ctp-text */
+    font-weight: 600;
+}
+
+.modal-markdown-content code {
+    background-color: #313244; /* ctp-surface0 */
+    color: #f5e0dc; /* ctp-rosewater */
+    padding: 0.2em 0.4em;
+    font-size: 0.875em;
+    border-radius: 0.25rem;
+}
+
+.modal-markdown-content pre {
+    background-color: #181825; /* ctp-mantle */
+    color: #cdd6f4; /* ctp-text */
+    padding: 1em;
+    overflow-x: auto;
+    border-radius: 0.375rem;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.modal-markdown-content pre code {
+    background-color: transparent;
+    padding: 0;
+    font-size: inherit;
+}
+
+.modal-markdown-content blockquote {
+    border-left: 0.25em solid #94e2d5; /* ctp-teal */
+    padding-left: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-style: italic;
+    color: #a6adc8; /* ctp-subtext0 */
+}
+
+.modal-markdown-content img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); /* shadow-md */
+}
