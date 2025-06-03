@@ -1,5 +1,4 @@
 <script>
-  // Proje verilerini Jekyll'dan alıp JS'e aktarmak için
   const allProjectsData = {
     {% assign s_global_js = site.data.strings %}
     tr: {
@@ -43,7 +42,7 @@
   const modalGithubEl = document.getElementById('modalGithub');
   const modalLiveEl = document.getElementById('modalLive');
   const projectModal = document.getElementById('projectModal');
-  const projectModalContentContainer = document.getElementById('projectModalContentContainer'); // İç container'ı da seçelim
+  const projectModalContentContainer = document.getElementById('projectModalContentContainer');
   const modalTitleEl = document.getElementById('modalTitle');
 
   console.log("MODAL SCRIPTS: Modal HTML elements obtained:",
@@ -53,10 +52,9 @@
   function openProjectModal(projectId, lang) {
     console.log("MODAL SCRIPTS: openProjectModal function CALLED with projectId:", projectId, " lang:", lang);
 
-    // Öncelikle tüm gerekli HTML elementlerinin DOM'da var olduğundan emin olalım.
     if (!projectModal || !projectModalContentContainer || !modalTitleEl || !modalContentEl || !modalTagsEl || !modalGithubEl || !modalLiveEl) {
         console.error("MODAL SCRIPTS: ERROR - One or more essential modal HTML elements are missing from the DOM. Cannot open modal.");
-        return; // Elementler eksikse fonksiyondan çık.
+        return;
     }
 
     const currentLangProjectData = allProjectsData[lang];
@@ -64,7 +62,6 @@
 
     if (!currentLangProjectData || !currentLangProjectData.projects) {
         console.error("MODAL SCRIPTS: ERROR - Project data for language '" + lang + "' not found or invalid in allProjectsData.");
-        // Hata durumunda modalın gizli kaldığından emin ol
         projectModal.classList.add('opacity-0', 'pointer-events-none', 'hidden');
         if (projectModalContentContainer) projectModalContentContainer.classList.add('scale-95');
         return;
@@ -73,12 +70,12 @@
     const project = currentLangProjectData.projects.find(p => p.id === projectId);
     console.log("MODAL SCRIPTS: Project found by ID '" + projectId + "':", project);
 
-    if (project) { // Proje bulunduysa devam et
+    if (project) {
         console.log("MODAL SCRIPTS: Project object is valid. Populating modal content.");
         modalTitleEl.textContent = project.title || "Title Not Available";
         modalContentEl.innerHTML = project.content || "<p>Content Not Available.</p>";
 
-        modalTagsEl.innerHTML = ''; // Önceki etiketleri temizle
+        modalTagsEl.innerHTML = '';
         if (project.tags && project.tags.length > 0) {
             console.log("MODAL SCRIPTS: Populating tags:", project.tags);
             project.tags.forEach(tag => {
@@ -98,20 +95,17 @@
         modalLiveEl.style.display = project.live ? 'inline-flex' : 'none';
         console.log("MODAL SCRIPTS: GitHub link display:", modalGithubEl.style.display, " Live link display:", modalLiveEl.style.display);
 
-        // ---- MODALI GÖRÜNÜR YAPMA VE ANİMASYON KISMI (ÖNCEKİ CEVAPTAKİ KISIM BURADA) ----
         console.log("MODAL SCRIPTS: Preparing to show modal. Removing hidden/opacity classes.");
-        projectModal.classList.remove('hidden'); // Eğer kapatırken 'hidden' eklenmişse kaldır
+        projectModal.classList.remove('hidden');
         projectModal.classList.remove('opacity-0', 'pointer-events-none');
         if (projectModalContentContainer) {
              projectModalContentContainer.classList.remove('scale-95');
         }
 
-        // Tarayıcının stilleri uygulaması için bir sonraki frame'i bekle
         requestAnimationFrame(() => {
             console.log("MODAL SCRIPTS: First rAF - adding 'flex' to projectModal.");
-            projectModal.classList.add('flex'); // Modalın ortalanması ve görünür olması için display:flex
+            projectModal.classList.add('flex');
 
-            // İkinci bir frame, opacity ve scale transition'larının başlaması için
             requestAnimationFrame(() => {
                 console.log("MODAL SCRIPTS: Second rAF - adding 'opacity-100' and 'scale-100'.");
                 projectModal.classList.add('opacity-100');
@@ -120,14 +114,12 @@
                 }
             });
         });
-        // ---- MODALI GÖRÜNÜR YAPMA VE ANİMASYON KISMI BİTİŞİ ----
 
-        document.body.style.overflow = 'hidden'; // Arka plan kaydırmasını engelle
+        document.body.style.overflow = 'hidden';
         console.log("MODAL SCRIPTS: Modal display initiated. It should be visible and animated.");
 
     } else {
         console.error("MODAL SCRIPTS: ERROR - Project with ID '"+ projectId +"' NOT FOUND in language '" + lang + "'. Modal will not open.");
-        // Hata durumunda modalın gizli kaldığından emin ol
         projectModal.classList.add('opacity-0', 'pointer-events-none', 'hidden');
         if (projectModalContentContainer) projectModalContentContainer.classList.add('scale-95');
     }
@@ -138,33 +130,28 @@ function closeProjectModal() {
 
   if (projectModal && projectModalContentContainer) {
       console.log("MODAL SCRIPTS: Closing modal - Applying initial close classes (opacity-0, scale-95).");
-      projectModal.classList.add('opacity-0'); // Modalın kendisini şeffaflaştır
-      projectModalContentContainer.classList.add('scale-95'); // İçeriği küçült
+      projectModal.classList.add('opacity-0');
+      projectModalContentContainer.classList.add('scale-95');
 
-      // Transition (animasyon) bittikten sonra modalı DOM'dan gizle ve diğer işlemleri yap.
-      // setTimeout süresi (300ms), Tailwind CSS'deki transition duration (duration-300) ile eşleşmelidir.
       setTimeout(() => {
           console.log("MODAL SCRIPTS: Closing modal - Transition finished. Applying final hidden state.");
 
-          projectModal.classList.add('pointer-events-none'); // Modalın arkasındaki elementlere tıklanabilmesini sağla
-          projectModal.classList.remove('flex'); // Modalın `display: flex` özelliğini kaldır (artık ortalamasına gerek yok)
-          projectModal.classList.add('hidden');   // Modalın `display: none` özelliğini ekle (tamamen gizle)
+          projectModal.classList.add('pointer-events-none');
+          projectModal.classList.remove('flex');
+          projectModal.classList.add('hidden');
 
-          // Sayfa kaydırmayı geri getir
           document.body.style.overflow = 'auto';
           console.log("MODAL SCRIPTS: Modal is now fully hidden and body scroll restored.");
 
-      }, 300); // Tailwind transition süresi (ms cinsinden)
+      }, 300);
   } else {
       console.error("MODAL SCRIPTS: ERROR in closeProjectModal - projectModal or projectModalContentContainer is null.");
   }
 }
 
-// Modal dışına tıklayınca kapat
 if (projectModal) {
   console.log("MODAL SCRIPTS: Adding click listener to projectModal for closing.");
   projectModal.addEventListener('click', (e) => {
-      // Sadece modalın kendisine (arka plana) tıklandığında kapat, içindeki content'e değil.
       if (e.target.id === 'projectModal') {
           console.log("MODAL SCRIPTS: Click outside modal content detected, closing modal.");
           closeProjectModal();
@@ -174,11 +161,9 @@ if (projectModal) {
   console.error("MODAL SCRIPTS: ERROR - projectModal element not found, cannot add click listener for closing.");
 }
 
-// Escape tuşu ile kapat
 console.log("MODAL SCRIPTS: Adding keydown listener to document for Escape key.");
 document.addEventListener('keydown', (e) => {
-  // Modal görünür durumdaysa ve Escape tuşuna basıldıysa kapat
-  if (e.key === 'Escape' && projectModal && !projectModal.classList.contains('opacity-0')) { // opacity-0 değilse görünür kabul edelim
+  if (e.key === 'Escape' && projectModal && !projectModal.classList.contains('opacity-0')) {
       console.log("MODAL SCRIPTS: Escape key pressed, closing modal.");
       closeProjectModal();
   }

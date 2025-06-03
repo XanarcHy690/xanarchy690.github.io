@@ -3,7 +3,6 @@ avatar: "/assets/images/profile.png"
 email: "m.sahinabdullah@gmail.com"
 phone: # "+90 555 555 55 55"
 
-# Dil bazlı metinler
 tr:
   tagline: "Full Stack Developer & UI/UX Designer"
   greeting_intro: "Merhaba, Ben"

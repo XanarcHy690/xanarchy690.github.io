@@ -48,7 +48,7 @@ This is where you provide a **detailed description** of your project in English.
 
 Our e-commerce platform was designed to provide a seamless and modern online shopping experience. Key goals included a user-friendly interface, robust backend capabilities, and secure transaction processing. We focused on scalability to accommodate growing product catalogs and user bases.
 
-![Main Page Screenshot]({{ '/assets/images/projects/ecommerce-main-en.jpg' | relative_url }})
+![Main Page Screenshot]({{ '/assets/images/projects/ecommerce-cover.jpg' | relative_url }})
 *<center><small>Fig. 1: The main landing page showcasing featured products.</small></center>*
 
 The platform allows users to:
@@ -68,7 +68,7 @@ The platform allows users to:
 *   **Order Management:** Users can view their order history; admins can manage orders.
 *   **Wishlist Functionality:** Users can save products for later.
 
-![Admin Dashboard Screenshot]({{ '/assets/images/projects/ecommerce-admin-en.jpg' | relative_url }})
+![Admin Dashboard Screenshot]({{ '/assets/images/projects/ecommerce-cover.jpg' | relative_url }})
 *<center><small>Fig. 2: Admin dashboard for managing site statistics and orders.</small></center>*
 
 ### Technical Details

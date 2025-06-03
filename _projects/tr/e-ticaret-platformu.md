@@ -28,14 +28,14 @@ cover_image: "/assets/images/projects/ecommerce-cover.jpg"
 github_url: "https://github.com/yourusername/ecommerce-project"
 live_url: "https://your-ecommerce-demo.com"
 ---
-
+# Test
 ## Proje Hakkında
 
 Bu kısımda projenizin **detaylı Türkçe açıklamasını** yapacaksınız. Standart Markdown formatını kullanabilirsiniz.
 
 E-ticaret platformumuz, kesintisiz ve modern bir online alışveriş deneyimi sunmak üzere tasarlandı. Temel hedefler arasında kullanıcı dostu bir arayüz, güçlü bir arka plan altyapısı ve güvenli işlem süreçleri yer alıyordu. Büyüyen ürün kataloglarını ve kullanıcı tabanlarını desteklemek için ölçeklenebilirliğe odaklandık.
 
-![Ana Sayfa Ekran Görüntüsü]({{ '/assets/images/projects/ecommerce-main-tr.jpg' | relative_url }})
+![Ana Sayfa Ekran Görüntüsü]({{ '/assets/images/projects/ecommerce-cover.jpg' | relative_url }})
 *<center><small>Şek. 1: Öne çıkan ürünleri gösteren ana giriş sayfası.</small></center>*
 
 Platform kullanıcılara şunları sağlar:
@@ -55,10 +55,10 @@ Platform kullanıcılara şunları sağlar:
 *   **Sipariş Yönetimi:** Kullanıcılar sipariş geçmişlerini görüntüleyebilir; yöneticiler siparişleri yönetebilir.
 *   **İstek Listesi İşlevselliği:** Kullanıcılar ürünleri daha sonra için kaydedebilir.
 
-![Yönetici Paneli Ekran Görüntüsü]({{ '/assets/images/projects/ecommerce-admin-tr.jpg' | relative_url }})
+![Yönetici Paneli Ekran Görüntüsü]({{ '/assets/images/projects/ecommerce-cover.jpg' | relative_url }})
 *<center><small>Şek. 2: Site istatistiklerini ve siparişleri yönetmek için yönetici paneli.</small></center>*
 
-### Teknik Detaylar
+#### Teknik Detaylar
 
 Proje, bazı varyasyonlarla MERN yığını kullanılarak oluşturuldu:
 
@@ -70,3 +70,6 @@ Proje, bazı varyasyonlarla MERN yığını kullanılarak oluşturuldu:
 *   **Dağıtım (Deployment):** Ön yüz Vercel'de, Arka yüz Render'da (veya Heroku).
 
 Bu proje, tam yığın web geliştirme, API tasarımı ve e-ticaret en iyi uygulamaları konularındaki yeterliliği göstermektedir.
+
+##### deneme
+###### deneme

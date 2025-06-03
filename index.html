@@ -1,24 +1,11 @@
 ---
 layout: default
 ---
-<!-- DEBUG PAGE START -->
 {% assign current_page_lang = site.active_lang | default: site.default_lang %}
 {% assign strings_for_current_page = site.data.translations[current_page_lang] %}
-<!-- DEBUG: current_page_lang = {{ current_page_lang | inspect }} -->
-<!-- DEBUG: site.data.translations IS NIL? = {% if site.data.translations == nil %}YES{% else %}NO{% endif %} -->
-<!-- DEBUG: strings_for_current_page (from translations.yml) IS NIL? = {% if strings_for_current_page == nil %}YES{% else %}NO{% endif %} -->
-<!-- DEBUG: strings_for_current_page.section_title_about = {{ strings_for_current_page.section_title_about | inspect }} -->
-
 {% assign profile_for_current_page = site.data.profile[current_page_lang] %}
 {% assign global_site_profile = site.data.profile %}
 
-<!-- DEBUG BEFORE H2 (ABOUT): strings_for_current_page.section_title_about = {{ strings_for_current_page.section_title_about | inspect }} -->
-<!-- DEBUG BEFORE H2 (PROJECTS): s_for_projects_debug.section_title_projects = {{ s_for_projects_debug.section_title_projects | inspect }} -->
-<!-- DEBUG BEFORE H2 (CONTACT): strings_for_current_page.section_title_contact = {{ strings_for_current_page.section_title_contact | inspect }} -->
-
-<!-- DEBUG PAGE DEBUG END -->
-
-<!-- Hero Section -->
 <section id="home" class="gradient-bg min-h-screen flex items-center justify-center pt-20">
     <div class="text-center px-6">
         <div class="relative mb-8">
@@ -53,7 +40,6 @@ layout: default
     </div>
 </section>
 
-<!-- About Section -->
 <section id="about" class="py-20 bg-ctp-mantle">
     <div class="container mx-auto px-6">
         <div class="max-w-4xl mx-auto">
@@ -89,7 +75,6 @@ layout: default
     </div>
 </section>
 
-<!-- Projects Section -->
 <section id="projects" class="py-20 bg-ctp-base">
     <div class="container mx-auto px-6">
         {% assign lang_for_projects = site.active_lang | default: site.default_lang | default: "tr" %}
@@ -118,7 +103,6 @@ layout: default
     </div>
 </section>
 
-<!-- Contact Section -->
 <section id="contact" class="py-20 bg-ctp-mantle">
     <div class="container mx-auto px-6">
         <div class="max-w-4xl mx-auto text-center">
@@ -147,7 +131,6 @@ layout: default
     </div>
 </section>
 
-<!-- Project Modal Structure (hidden by default) -->
 <div id="projectModal"
     class="fixed inset-0 bg-ctp-crust/70 backdrop-blur-sm z-[60] flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out opacity-0 pointer-events-none">
     <div
@@ -165,13 +148,11 @@ layout: default
 
             <div id="modalContent" 
                 class="modal-markdown-content max-w-none text-ctp-subtext0 leading-relaxed">
-                <!-- Proje içeriği buraya JS tarafından yüklenecek -->
             </div>
 
             <div class="mt-8 pt-6 border-t border-ctp-surface1">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div id="modalTags" class="flex flex-wrap gap-2">
-                        <!-- Etiketler buraya JS tarafından yüklenecek -->
                     </div>
                     <div class="flex space-x-3">
                         <a id="modalGithub" href="#" target="_blank" rel="noopener noreferrer"
