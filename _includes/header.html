@@ -40,15 +40,18 @@ Eğer polyglot çalışmıyorsa veya tanımsızsa, varsayılan dile düşer.
                     Örn: /tr/about → ['', 'tr', 'about']
                     {% endcomment %}
                     {% assign first_segment = current_path_parts[1] %}
-                    {% if first_segment = side.languages %}
+                    
+                    {% if site.languages contains first_segment %}
                       {% assign trimmed_path_parts = current_path_parts | slice: 2 %}
                     {% else %}
                       {% assign trimmed_path_parts = current_path_parts | slice: 1 %}
                     {% endif %}
+                    
                     {% assign trimmed_path = trimmed_path_parts | join: '/' %}
                     {% if trimmed_path != '' %}
                       {% assign trimmed_path = '/' | append: trimmed_path %}
                     {% endif %}
+                    
                     
                     {% for lang in languages %}
                       {% if lang == current_lang %}
