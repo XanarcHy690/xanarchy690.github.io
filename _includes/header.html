@@ -29,49 +29,34 @@ Eğer polyglot çalışmıyorsa veya tanımsızsa, varsayılan dile düşer.
                 <!-- Language Switcher (Desktop) -->
                 <div class="hidden md:flex items-center">
                     {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
+                    {% assign base = site.baseurl | default: '' %}
                     {% assign languages = site.languages %}
-                    {% assign base = site.baseurl %}
-                    
-                    {% assign current_path = page.url %}
-                    {% assign current_path_parts = current_path | split: '/' %}
-                    
-                    {% comment %}
-                    Dil kodu ilk segmentte mi? Evetse çıkart.
-                    Örn: /tr/about → ['', 'tr', 'about']
-                    {% endcomment %}
-                    {% assign first_segment = current_path_parts[1] %}
-                    
-                    {% if site.languages contains first_segment %}
-                      {% assign trimmed_path_parts = current_path_parts | slice: 2 %}
-                    {% else %}
-                      {% assign trimmed_path_parts = current_path_parts | slice: 1 %}
-                    {% endif %}
-                    
-                    {% assign trimmed_path = trimmed_path_parts | join: '/' %}
-                    {% if trimmed_path != '' %}
-                      {% assign trimmed_path = '/' | append: trimmed_path %}
-                    {% endif %}
-                    
                     
                     {% for lang in languages %}
-                      {% if lang == current_lang %}
-                        <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
-                          {{ lang }}
-                        </span>
-                      {% else %}
-                        {% if lang == site.default_lang %}
-                          {% assign lang_path = trimmed_path %}
+                        {% if lang == current_lang %}
+                            <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
+                                {{ lang }}
+                            </span>
                         {% else %}
-                          {% assign lang_path = '/' | append: lang | append: trimmed_path %}
-                        {% endif %}
-                        <a href="{{ lang_path | relative_url }}"
-                           class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                           aria-label="Switch language to {{ lang }}">
-                          {{ lang }}
-                        </a>
-                      {% endif %}
-                    {% endfor %}
+                            {% comment %}
+                            Varsayılan dile geçiliyorsa (örneğin en), sadece baseurl ver (dil kodu verme)
+                            Diğer dillere geçiliyorsa baseurl + /dil
+                            {% endcomment %}
                     
+                            {% if lang == site.default_lang %}
+                                {% assign target_url = base %}
+                            {% else %}
+                                {% assign target_url = base | append: "/" | append: lang %}
+                            {% endif %}
+                    
+                            <a href="{{ target_url | relative_url }}"
+                               class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                               aria-label="Switch language to {{ lang }}">
+                                {{ lang }}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                                        
                 </div>
             </div>
 
