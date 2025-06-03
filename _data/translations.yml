@@ -60,6 +60,13 @@ tr:
 
   no_projects_found_prefix: "Bu dilde ("
   no_projects_found_suffix: ") gösterilecek proje bulunamadı."
+  
+  footer_built_with: "ile oluşturuldu"         # tr için
+  footer_and: "ve"                           # tr için
+  footer_design_by: "Tasarım"                # tr için
+  footer_licensed_under: "Lisanslıdır"      # tr için
+  footer_view_source: "Kaynağı Görüntüle"     # tr için
+
 
 
 en:
@@ -123,3 +130,9 @@ en:
 
   no_projects_found_prefix: "No projects found for this language ("
   no_projects_found_suffix: ")."
+
+  footer_built_with: "Built with"
+  footer_and: "and"
+  footer_design_by: "Design by"
+  footer_licensed_under: "Licensed under"
+  footer_view_source: "View Source"

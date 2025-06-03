@@ -1,12 +1,14 @@
+email: m.sahinabdullah@gmail.com
 title: Muhammet Abdullah Şahin
-email: hello@ahmetyilmaz.dev
-description: >- # this means to ignore newlines until "baseurl:"
-  Ahmet Yılmaz'ın Full Stack Developer ve UI/UX Designer olarak projelerini
+author: Muhammet Abdullah Şahin # Veya sitenin genel sahibi
+description: >-
+  Muhammet Abdullah Şahin'in Full Stack Developer ve UI/UX Designer olarak projelerini
   ve deneyimlerini içeren kişisel portfolyo sitesi.
 
-baseurl: "/portfolio" # Depo adınız, eğer site "kullaniciadi.github.io/depo-adi/" altında ise "/depo-adi"
-url: "https://sahinmuhammetabdullah.github.io" # GitHub Pages ana URL'niz
-github_username:  kullaniciadi # GitHub kullanıcı adınız
+baseurl: "/portfolio"
+url: "https://sahinmuhammetabdullah.github.io"
+
+github_username:  SahinMuhammetAbdullah # GitHub kullanıcı adınız
 
 # Build settings
 markdown: kramdown
@@ -53,3 +55,19 @@ theme_color: "#1e1e2e"       # PWA ve tarayıcı UI için ana tema rengi (Catppu
 background_color: "#11111b"  # PWA splash screen için arka plan rengi (Catppuccin Crust)
 ms_tile_color: "#b4befe"     # Windows Metro karo rengi (Catppuccin Lavender)
 favicon: /assets/images/favicon/favicon-96x96.png
+
+technologies_used:
+  - name: "Jekyll"
+    url: "https://jekyllrb.com/"
+  - name: "Tailwind CSS"
+    url: "https://tailwindcss.com/"
+  - name: "Font Awesome"
+    url: "https://fontawesome.com/"
+  - name: "Catppuccin Theme"
+    url: "https://github.com/catppuccin/catppuccin"
+
+license_name: "MIT License" # Kullandığınız lisansın adı
+license_url: "https://opensource.org/licenses/MIT" # Lisans metnine link (veya projenizdeki LISENCE dosyasına)
+repository_url: "https://github.com/SahinMuhammetAbdullah/portfolio" # Projenizin GitHub depo URL'si
+designer_name: "Muhammet Abdullah Şahin"
+designer_url: "https://sahinmuhammetabdullah.github.io/portfolio/" # Tasarımcının web sitesi veya portfolyosu

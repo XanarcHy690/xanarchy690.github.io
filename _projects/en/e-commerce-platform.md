@@ -5,12 +5,11 @@ title: "E-Commerce Platform"
 short_description: "A full-featured e-commerce platform..."
 tags: ["React", "Node.js", "MongoDB"]
 
-image_gradient_from: "ctp-blue"   # Renkli arka plan için (görsel yoksa kullanılır)
-image_gradient_to: "ctp-sapphire" # Renkli arka plan için
+image_gradient_from: "ctp-blue"
+image_gradient_to: "ctp-sapphire"
 icon_class: "fas fa-shopping-cart"
 
-cover_image: "/assets/images/projects/ecommerce-cover.jpg" # YENİ ALAN (yol projenize göre değişir)
-# Eğer bu proje için kapak görseli yoksa, bu satırı silin veya boş bırakın.
+cover_image: "/assets/images/projects/ecommerce-cover.jpg" 
 
 github_url: "https://github.com/..."
 live_url: "https://ecommerce-demo.com"
