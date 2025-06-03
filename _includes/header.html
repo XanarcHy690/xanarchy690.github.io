@@ -9,6 +9,7 @@
                 {{ site.data.profile.name | default: "Site Name" }}
             </a>
 
+            <!-- Desktop Menu -->
             <div class="hidden md:flex space-x-8 items-center">
                 {% for item in nav_links %}
                 {% assign item_url_str = item.url | default: "" %}
@@ -21,32 +22,45 @@
                 {% endif %}
                 {% endfor %}
 
+                <!-- Language Switcher (Desktop) -->
                 <div class="hidden md:flex items-center">
                     {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
                     {% assign languages = site.languages %}
-                    {% assign base = site.baseurl %}
-                
+                    {% assign base = site.baseurl | default: "" %}
+                    {% assign default_lang = site.default_lang %}
+                    {% assign url = site.url %}
+
                     {% for lang in languages %}
                     {% if lang == current_lang %}
                         <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
                         {{ lang }}
                         </span>
                     {% else %}
-                        {% assign target_url = base | append: "/" | append: lang %}
-                        {% if lang == site.default_lang %}
-                        {% assign target_url = base %}
+                        {% if lang == default_lang %}
+                            {% if base != nil %}
+                                {% assign target_url = url | append: "/" | append: base | append: "/" %}
+                            {% endif %}
+
+                            {% if base == nil %}
+                                {% assign target_url = url | remove: "/" | append: base | append: "/" %}
+                            {% endif %}
+                        {% else %}
+                        {% assign target_url = base | append: "/" | append: lang | append: "/" %}
                         {% endif %}
                         <a href="{{ target_url }}"
                         class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                         aria-label="Switch language to {{ lang }}">
                         {{ lang }}
                         </a>
-                    {% endif %} 
+                    {% endif %}
                     {% endfor %}
                 </div>
+  
             </div>
 
+            <!-- Mobile Menu Button + Language Switcher (Aynı mantık mobil için de uygulanacak) -->
             <div class="md:hidden flex items-center">
+                <!-- Language Switcher (Mobile) -->
                 <div class="md:hidden flex items-center">
                     {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
                     {% assign languages = site.languages %}
@@ -82,6 +96,7 @@
         </div>
     </div>
 
+    <!-- Mobile Menu Dropdown -->
     <div id="mobile-menu" class="hidden md:hidden bg-ctp-mantle border-t border-ctp-surface0">
         <div class="px-6 py-4 space-y-4">
             {% for item in nav_links %}
