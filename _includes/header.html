@@ -32,17 +32,36 @@ Eğer polyglot çalışmıyorsa veya tanımsızsa, varsayılan dile düşer.
                     {% assign languages = site.languages %}
                     {% assign base = site.baseurl %}
                     
+                    {% assign current_path = page.url %}
+                    {% assign current_path_parts = current_path | split: '/' %}
+                    
+                    {% comment %}
+                    Dil kodu ilk segmentte mi? Evetse çıkart.
+                    Örn: /tr/about → ['', 'tr', 'about']
+                    {% endcomment %}
+                    {% assign first_segment = current_path_parts[1] %}
+                    {% if first_segment in languages %}
+                      {% assign trimmed_path_parts = current_path_parts | slice: 2 %}
+                    {% else %}
+                      {% assign trimmed_path_parts = current_path_parts | slice: 1 %}
+                    {% endif %}
+                    {% assign trimmed_path = trimmed_path_parts | join: '/' %}
+                    {% if trimmed_path != '' %}
+                      {% assign trimmed_path = '/' | append: trimmed_path %}
+                    {% endif %}
+                    
                     {% for lang in languages %}
                       {% if lang == current_lang %}
                         <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
                           {{ lang }}
                         </span>
                       {% else %}
-                        {%- assign path = '' -%}
-                        {% if lang != site.default_lang %}
-                          {% assign path = '/' | append: lang %}
+                        {% if lang == site.default_lang %}
+                          {% assign lang_path = trimmed_path %}
+                        {% else %}
+                          {% assign lang_path = '/' | append: lang | append: trimmed_path %}
                         {% endif %}
-                        <a href="{{ path | relative_url }}"
+                        <a href="{{ lang_path | relative_url }}"
                            class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                            aria-label="Switch language to {{ lang }}">
                           {{ lang }}
