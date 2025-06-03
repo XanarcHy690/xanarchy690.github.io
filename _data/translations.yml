@@ -61,11 +61,11 @@ tr:
   no_projects_found_prefix: "Bu dilde ("
   no_projects_found_suffix: ") gösterilecek proje bulunamadı."
   
-  footer_built_with: "ile oluşturuldu"         # tr için
-  footer_and: "ve"                           # tr için
-  footer_design_by: "Tasarım"                # tr için
-  footer_licensed_under: "Lisanslıdır"      # tr için
-  footer_view_source: "Kaynağı Görüntüle"     # tr için
+  footer_built_with: "Teknolojiler"
+  footer_and: "ve"            
+  footer_design_by: "Tasarım"   
+  footer_licensed_under: "Lisanslıdır"
+  footer_view_source: "Kaynağı Görüntüle"
 
 
 
