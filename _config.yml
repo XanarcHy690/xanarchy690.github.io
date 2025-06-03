@@ -1,44 +1,154 @@
-email: m.sahinabdullah@gmail.com
+# -----------------------------------------------------------------------------
+# Site Ayarları / Site Settings
+# -----------------------------------------------------------------------------
+# TR: Sitenizin genel başlığı, tarayıcı sekmelerinde ve arama sonuçlarında görünür.
+# EN: The main title of your site, appears in browser tabs and search results.
 title: Muhammet Abdullah Şahin
-author: Muhammet Abdullah Şahin # Veya sitenin genel sahibi
+
+# TR: Sitenin yazarının/sahibinin adı. Meta etiketlerinde ve tema içinde kullanılabilir.
+# EN: The name of the site author/owner. Can be used in meta tags and within the theme.
+author: Muhammet Abdullah Şahin
+
+# TR: Sitenizin e-posta adresi (isteğe bağlı, iletişim veya meta için kullanılabilir).
+# EN: Your site's email address (optional, can be used for contact or meta).
+email: m.sahinabdullah@gmail.com
+
+# TR: Sitenizin kısa açıklaması. Arama motorları ve sosyal medya paylaşımları için önemlidir.
+# EN: A short description of your site. Important for search engines and social media sharing.
 description: >-
   Muhammet Abdullah Şahin'in Full Stack Developer ve UI/UX Designer olarak projelerini
   ve deneyimlerini içeren kişisel portfolyo sitesi.
 
-baseurl: "/portfolio"
+# TR: Sitenizin yayınlanacağı ana URL. GitHub Pages için kullanıcıadınız.github.io şeklindedir.
+# EN: The base hostname & protocol for your site. For GitHub Pages, it's username.github.io.
 url: "https://sahinmuhammetabdullah.github.io"
 
-github_username:  SahinMuhammetAbdullah # GitHub kullanıcı adınız
+# TR: Eğer siteniz bir alt dizinde yayınlanıyorsa (örn: kullaniciadi.github.io/DEPO_ADI/), buraya /DEPO_ADI yazın.
+#     Eğer kök dizinde yayınlanıyorsa (örn: kullaniciadi.github.io), boş bırakın ("").
+# EN: If your site is published in a subdirectory (e.g., username.github.io/REPO_NAME/), put /REPO_NAME here.
+#     If published at the root (e.g., username.github.io), leave it blank ("").
+baseurl: "/portfolio"
 
-# Build settings
+# TR: GitHub kullanıcı adınız (isteğe bağlı, sosyal linkler veya meta için).
+# EN: Your GitHub username (optional, for social links or meta).
+github_username: SahinMuhammetAbdullah
+
+# -----------------------------------------------------------------------------
+# Build Ayarları / Build Settings
+# -----------------------------------------------------------------------------
+# TR: Markdown yorumlayıcısı. kramdown varsayılan ve önerilendir.
+# EN: Markdown processor. kramdown is the default and recommended.
 markdown: kramdown
-theme: null # Kendi temamızı kullanıyoruz
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-  - jekyll-sitemap
-  - jekyll-polyglot
 
-# Collections (Projeler için)
+# TR: Eğer bir Jekyll teması kullanmıyorsanız (kendi tasarımınızsa) null olarak bırakın.
+# EN: Set to null if you are not using a Jekyll theme (custom design).
+theme: null
+
+# TR: Jekyll eklentileri. Projenizin ihtiyaç duyduğu eklentileri buraya ekleyin.
+# EN: Jekyll plugins. Add the plugins your project requires here.
+plugins:
+  - jekyll-feed           # TR: RSS beslemesi oluşturur. / EN: Creates an RSS feed.
+  - jekyll-seo-tag        # TR: SEO için meta etiketleri ekler. / EN: Adds meta tags for SEO.
+  - jekyll-sitemap          # TR: site haritası oluşturur. / EN: Generates a sitemap.
+  - jekyll-polyglot       # TR: Çoklu dil desteği sağlar. / EN: Provides multi-language support.
+
+# -----------------------------------------------------------------------------
+# Koleksiyonlar / Collections
+# -----------------------------------------------------------------------------
+# TR: Projeler gibi özel içerik türlerini gruplamak için kullanılır.
+# EN: Used to group custom content types, like projects.
 collections:
   projects:
-    output: false # Projeler için ayrı sayfa oluşturmayacağız, modal kullanacağız
-    # Eğer ayrı proje sayfaları isterseniz true yapın ve permalink ekleyin
+    # TR: true ise her proje için ayrı bir sayfa oluşturulur. Modal kullandığımız için false.
+    # EN: If true, a separate page is generated for each project. False as we are using a modal.
+    output: false
 
-# Jekyll Polyglot Ayarları
-languages: ["tr", "en"]
-default_lang: "tr"
-exclude_from_localization: ["assets/", "admin/"] # Çevrilmeyecek dosyalar/klasörler
-parallel_localization: false # Hata ayıklama için false, performans için true
-default_lang_in_url: false   # YENİ EKLENEN SATIR
+# -----------------------------------------------------------------------------
+# Jekyll Polyglot Ayarları / Jekyll Polyglot Settings
+# -----------------------------------------------------------------------------
+# TR: Sitenizde desteklenecek dillerin listesi.
+# EN: A list of languages your site will support.
+languages: ["en", "tr"]
 
+# TR: Sitenizin varsayılan dili. URL'de dil kodu olmadan erişilen dildir.
+# EN: The default language of your site. This is the language accessed without a language code in the URL.
+default_lang: "en"
 
-# Sass ayarları (Eğer SASS kullanacaksanız)
-# sass:
-#   sass_dir: _sass
-#   style: compressed
+# TR: URL'de varsayılan dilin önekinin (örn: /tr/) gösterilip gösterilmeyeceği.
+#     false ise, varsayılan dil için URL'de dil kodu olmaz (örn: /portfolio/ yerine /portfolio/tr/ olmaz).
+# EN: Whether to show the default language prefix (e.g., /tr/) in the URL.
+#     If false, the default language will not have a language code in the URL (e.g., /portfolio/ instead of /portfolio/tr/).
+default_lang_in_url: false
 
-# Exclude from processing.
+# TR: Çeviriden hariç tutulacak dosya ve klasörler.
+# EN: Files and folders to be excluded from localization.
+exclude_from_localization: ["assets/", "admin/"]
+
+# TR: true ise diller paralel olarak build edilir (daha hızlı olabilir), false ise sıralı. Hata ayıklama için false önerilir.
+# EN: If true, languages are built in parallel (can be faster), if false, sequentially. False is recommended for debugging.
+parallel_localization: false
+
+# -----------------------------------------------------------------------------
+# Favicon ve PWA Tema Ayarları / Favicon & PWA Theme Settings
+# -----------------------------------------------------------------------------
+# TR: Tarayıcı sekmesi ve mobil cihazlarda adres çubuğu için tema rengi.
+# EN: Theme color for the browser UI, especially on mobile devices.
+theme_color: "#1e1e2e"       # Catppuccin Base
+
+# TR: PWA (Progressive Web App) splash screen için arka plan rengi.
+# EN: Background color for the PWA splash screen.
+background_color: "#11111b"  # Catppuccin Crust
+
+# TR: Windows Metro arayüzünde siteniz sabitlendiğinde kullanılacak karo rengi.
+# EN: Tile color for when your site is pinned on the Windows Metro UI.
+ms_tile_color: "#b4befe"     # Catppuccin Lavender
+
+# TR: Varsayılan favicon yolu (jekyll-seo-tag gibi bazı eklentiler tarafından kullanılabilir, ancak ana favicon yönetimi head.html'dedir).
+# EN: Default favicon path (can be used by some plugins like jekyll-seo-tag, but main favicon management is in head.html).
+favicon: /assets/images/favicons/favicon-96x96.png # Kullandığınız bir favicon dosyasına işaret etmeli
+
+# -----------------------------------------------------------------------------
+# Footer ve Lisans Bilgileri / Footer & License Information
+# -----------------------------------------------------------------------------
+# TR: Kullandığınız lisansın adı.
+# EN: The name of the license you are using.
+license_name: "MIT License"
+
+# TR: Lisans metnine veya projenizdeki LICENSE dosyasına link.
+# EN: Link to the license text or the LICENSE file in your project.
+license_url: "https://opensource.org/licenses/MIT" # Veya {{ '/LICENSE' | relative_url }}
+
+# TR: Projenizin GitHub (veya başka bir platformdaki) depo URL'si.
+# EN: The URL of your project's repository on GitHub (or other platform).
+repository_url: "https://github.com/SahinMuhammetAbdullah/portfolio"
+
+# TR: Sitenin veya temanın tasarımcısının adı.
+# EN: The name of the site or theme designer.
+designer_name: "Muhammet Abdullah Şahin"
+
+# TR: Tasarımcının web sitesi, portfolyosu veya sosyal medya linki.
+# EN: The designer's website, portfolio, or social media link.
+designer_url: "https://sahinmuhammetabdullah.github.io/portfolio/"
+
+# TR: Footer'da listelenecek, projede kullanılan ana teknolojiler.
+# EN: Main technologies used in the project, to be listed in the footer.
+technologies_used:
+  - name: "Jekyll"
+    url: "https://jekyllrb.com/"
+  - name: "Tailwind CSS"
+    url: "https://tailwindcss.com/"
+  - name: "Font Awesome"
+    url: "https://fontawesome.com/"
+  - name: "Catppuccin Theme" # (Eğer renk paletini bu temadan aldıysanız)
+    url: "https://github.com/catppuccin/catppuccin"
+  # - name: "GitHub Pages"
+  #   url: "https://pages.github.com/"
+
+# -----------------------------------------------------------------------------
+# Build Dışı Bırakılacaklar / Exclude from Processing
+# -----------------------------------------------------------------------------
+# TR: Jekyll'ın build sürecinde işlemesini istemediğiniz dosya ve klasörler.
+# EN: Files and folders that Jekyll should not process during the build.
 exclude:
   - Gemfile
   - Gemfile.lock
@@ -48,26 +158,7 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - README.md
-  - .github
-  - .vscode
-  
-theme_color: "#1e1e2e"       # PWA ve tarayıcı UI için ana tema rengi (Catppuccin Base)
-background_color: "#11111b"  # PWA splash screen için arka plan rengi (Catppuccin Crust)
-ms_tile_color: "#b4befe"     # Windows Metro karo rengi (Catppuccin Lavender)
-favicon: /assets/images/favicon/favicon-96x96.png
-
-technologies_used:
-  - name: "Jekyll"
-    url: "https://jekyllrb.com/"
-  - name: "Tailwind CSS"
-    url: "https://tailwindcss.com/"
-  - name: "Font Awesome"
-    url: "https://fontawesome.com/"
-  - name: "Catppuccin Theme"
-    url: "https://github.com/catppuccin/catppuccin"
-
-license_name: "MIT License" # Kullandığınız lisansın adı
-license_url: "https://opensource.org/licenses/MIT" # Lisans metnine link (veya projenizdeki LISENCE dosyasına)
-repository_url: "https://github.com/SahinMuhammetAbdullah/portfolio" # Projenizin GitHub depo URL'si
-designer_name: "Muhammet Abdullah Şahin"
-designer_url: "https://sahinmuhammetabdullah.github.io/portfolio/" # Tasarımcının web sitesi veya portfolyosu
+  - .github/
+  - .vscode/
+  # - "*.log" # Örnek
+  # - "tmp/"  # Örnek

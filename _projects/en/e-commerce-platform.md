@@ -1,45 +1,45 @@
 ---
-# BENZERSİZ PROJE KİMLİĞİ: 
-# Bu ID, projenin farklı dillerdeki versiyonlarını birbirine bağlar.
-# Her iki dildeki .md dosyasında da AYNI olmalıdır.
-# Küçük harf, rakam ve tire (-) kullanın. Boşluk veya özel karakter kullanmaktan kaçının.
+# UNIQUE PROJECT IDENTIFIER: 
+# This ID links versions of the project in different languages.
+# It MUST be THE SAME in the .md file for both languages.
+# Use lowercase, numbers, and hyphens (-). Avoid spaces or special characters.
 id: e-commerce-platform 
 
-# SIRALAMA:
-# Projelerin ana sayfada hangi sırada görüneceğini belirler (isteğe bağlı).
-# Küçük sayılar daha önce gelir.
+# ORDER:
+# Determines the order in which projects appear on the main page (optional).
+# Lower numbers come first.
 order: 1
 
-# BAŞLIK (Dil Spesifik):
-# Projenin bu dildeki başlığı. Modal penceresinde ve proje kartında görünür.
+# TITLE (Language Specific):
+# The title of the project in this language. Appears in the modal window and project card.
 title: "E-Commerce Platform"
 
-# KISA AÇIKLAMA (Dil Spesifik):
-# Proje kartında görünecek kısa, bir veya iki cümlelik özet.
+# SHORT DESCRIPTION (Language Specific):
+# A short, one or two-sentence summary that will appear on the project card.
 short_description: "A full-featured online shopping platform developed with modern React and Node.js technologies, offering a seamless user experience."
 
-# ETİKETLER (Dil Spesifik olabilir veya ortak tutulabilir):
-# Projede kullanılan ana teknolojiler veya anahtar kelimeler. 
-# Proje kartında ve modalda gösterilebilir.
+# TAGS (Can be Language Specific or common):
+# Main technologies used or keywords for the project.
+# Can be displayed on the project card and in the modal.
 tags: ["React", "Node.js", "MongoDB", "TypeScript", "Express.js", "Stripe"]
 
-# PROJE KARTI GÖRSEL AYARLARI (Kapak resmi yoksa kullanılır):
-image_gradient_from: "ctp-blue"   # Renk geçişinin başlangıç rengi (Tailwind renk sınıfı)
-image_gradient_to: "ctp-sapphire" # Renk geçişinin bitiş rengi
+# PROJECT CARD VISUAL SETTINGS (Used if no cover image):
+image_gradient_from: "ctp-blue"   # Start color of the gradient (Tailwind color class)
+image_gradient_to: "ctp-sapphire" # End color of the gradient
 
-# PROJE KARTI İKONU:
-# Kapak resmi yoksa veya kapak resminin üzerinde küçük bir ikon olarak gösterilir.
-# Font Awesome sınıfını kullanın.
+# PROJECT CARD ICON:
+# Displayed if no cover image, or as a small icon убийствоthe cover image.
+# Use a Font Awesome class.
 icon_class: "fas fa-shopping-cart"
 
-# KAPAK GÖRSELİ (İsteğe Bağlı):
-# Proje kartında gösterilecek ana görsel. Eğer bu alan varsa, image_gradient_* alanları kullanılmaz.
-# Yol, projenizin kök dizinine göre olmalı ve başında / olmalı.
+# COVER IMAGE (Optional):
+# Main visual to be displayed on the project card. If this field exists, image_gradient_* fields are not used.
+# The path should be relative to your project's root directory and start with /.
 cover_image: "/assets/images/projects/ecommerce-cover.jpg" 
 
-# LİNKLER:
-github_url: "https://github.com/yourusername/ecommerce-project" # Projenin GitHub deposu (varsa)
-# live_url: "https://your-ecommerce-demo.com" # Projenin canlı demo adresi (varsa)
+# LINKS:
+github_url: "https://github.com/yourusername/ecommerce-project" # GitHub repository of the project (if any)
+# live_url: "https://your-ecommerce-demo.com" # Live demo address of the project (if any) - Uncomment if you have one
 ---
 
 ## About The Project

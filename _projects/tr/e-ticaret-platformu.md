@@ -1,32 +1,45 @@
 ---
-# BENZERSİZ PROJE KİMLİĞİ (İngilizce dosyadaki ile AYNI OLMALI):
+# BENZERSİZ PROJE KİMLİĞİ: 
+# Bu ID, projenin farklı dillerdeki versiyonlarını birbirine bağlar.
+# Her iki dildeki .md dosyasında da AYNI olmalıdır.
+# Küçük harf, rakam ve tire (-) kullanın. Boşluk veya özel karakter kullanmaktan kaçının.
 id: e-commerce-platform 
 
-# SIRALAMA (İngilizce dosyadaki ile AYNI OLMALI):
+# SIRALAMA:
+# Projelerin ana sayfada hangi sırada görüneceğini belirler (isteğe bağlı).
+# Küçük sayılar daha önce gelir.
 order: 1
 
 # BAŞLIK (Dil Spesifik):
-title: "E-Ticaret Platformu"
+# Projenin bu dildeki başlığı. Modal penceresinde ve proje kartında görünür.
+title: "E-Commerce Platform"
 
 # KISA AÇIKLAMA (Dil Spesifik):
-short_description: "Modern React ve Node.js teknolojileri ile geliştirilmiş, kesintisiz bir kullanıcı deneyimi sunan tam özellikli bir online alışveriş platformu."
+# Proje kartında görünecek kısa, bir veya iki cümlelik özet.
+short_description: "A full-featured online shopping platform developed with modern React and Node.js technologies, offering a seamless user experience."
 
-# ETİKETLER (İngilizce ile aynı veya Türkçe karşılıkları olabilir):
+# ETİKETLER (Dil Spesifik olabilir veya ortak tutulabilir):
+# Projede kullanılan ana teknolojiler veya anahtar kelimeler. 
+# Proje kartında ve modalda gösterilebilir.
 tags: ["React", "Node.js", "MongoDB", "TypeScript", "Express.js", "Stripe"]
 
-# PROJE KARTI GÖRSEL AYARLARI (Aynı kalabilir veya dile göre değişebilir):
-image_gradient_from: "ctp-blue"
-image_gradient_to: "ctp-sapphire"
+# PROJE KARTI GÖRSEL AYARLARI (Kapak resmi yoksa kullanılır):
+image_gradient_from: "ctp-blue"   # Renk geçişinin başlangıç rengi (Tailwind renk sınıfı)
+image_gradient_to: "ctp-sapphire" # Renk geçişinin bitiş rengi
 
-# PROJE KARTI İKONU (Aynı kalabilir):
+# PROJE KARTI İKONU:
+# Kapak resmi yoksa veya kapak resminin üzerinde küçük bir ikon olarak gösterilir.
+# Font Awesome sınıfını kullanın.
 icon_class: "fas fa-shopping-cart"
 
-# KAPAK GÖRSELİ (Aynı kalabilir veya dile göre farklı bir görsel olabilir):
+# KAPAK GÖRSELİ (İsteğe Bağlı):
+# Proje kartında gösterilecek ana görsel. Eğer bu alan varsa, image_gradient_* alanları kullanılmaz.
+# Yol, projenizin kök dizinine göre olmalı ve başında / olmalı.
 cover_image: "/assets/images/projects/ecommerce-cover.jpg" 
 
-# LİNKLER (Genellikle aynı kalır):
-github_url: "https://github.com/yourusername/ecommerce-project"
-live_url: "https://your-ecommerce-demo.com"
+# LİNKLER:
+github_url: "https://github.com/yourusername/ecommerce-project" # Projenin GitHub deposu (varsa)
+# live_url: "https://your-ecommerce-demo.com" # Projenin canlı demo adresi (varsa)
 ---
 # Test
 ## Proje Hakkında
