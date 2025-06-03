@@ -1,21 +1,23 @@
 {% assign p = include.project %}
-
-<!-- YENİ DEBUG SATIRI BAŞLANGICI -->
-<!-- DEBUG in project_card.html: Received include.lang = {{ include.lang | inspect }} -->
 {% assign card_lang = include.lang %}
-<!-- DEBUG in project_card.html: Assigned card_lang = {{ card_lang | inspect }} -->
-<!-- YENİ DEBUG SATIRI SONU -->
-
 {% assign card_s = include.s %}
 
-<!-- DEBUG: Project Card Data - ID: {{ p.id | slugify | inspect }}, Lang (from card_lang variable): {{ card_lang | inspect }} -->
 <div class="card-hover bg-ctp-surface0 rounded-2xl overflow-hidden glow-effect cursor-pointer"
     onclick="openProjectModal('{{ p.id | slugify }}', '{{ card_lang }}');">
-    <div
-        class="h-48 bg-gradient-to-br from-{{ p.image_gradient_from | default: 'ctp-blue' }} to-{{ p.image_gradient_to | default: 'ctp-sapphire' }} relative overflow-hidden">
-        <div class="absolute inset-0 bg-black/20"></div>
+    
+    {% comment %} Kapak Görseli veya Renkli Arka Plan {% endcomment %}
+    <div class="h-48 w-full relative overflow-hidden group">
+        {% if p.cover_image and p.cover_image != "" %}
+            <img src="{{ p.cover_image | relative_url }}" alt="{{ p.title | escape }} cover image" 
+                 class="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105">
+        {% else %}
+            <div class="w-full h-full bg-gradient-to-br from-{{ p.image_gradient_from | default: 'ctp-blue' }} to-{{ p.image_gradient_to | default: 'ctp-sapphire' }}">
+            </div>
+        {% endif %}
+        
+        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300"></div>
         <div class="absolute bottom-4 left-4 text-white">
-            <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+            <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
                 {% if p.icon_svg_path %}
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path d="{{ p.icon_svg_path }}"></path>
@@ -27,6 +29,7 @@
             </div>
         </div>
     </div>
+
     <div class="p-6">
         <h3 class="text-xl font-semibold mb-2 text-ctp-text">{{ p.title | default: "Proje Başlığı Eksik" }}</h3>
         <p class="text-ctp-subtext1 mb-4 text-sm">
