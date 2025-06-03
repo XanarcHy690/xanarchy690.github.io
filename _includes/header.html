@@ -37,11 +37,12 @@ Eğer polyglot çalışmıyorsa veya tanımsızsa, varsayılan dile düşer.
                           {{ lang }}
                         </span>
                       {% else %}
-                        {% assign target_url = "/" %}
-                        {% unless lang == site.default_lang %}
-                          {% assign target_url = "/" | append: lang | append: "/" %}
-                        {% endunless %}
-                        <a href="{{ target_url | relative_url }}"
+                        {% if lang == site.default_lang %}
+                          {% assign target_url = site.baseurl %}
+                        {% else %}
+                          {% assign target_url = site.baseurl | append: '/' | append: lang %}
+                        {% endif %}
+                        <a href="{{ target_url }}"
                            class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
                            aria-label="Switch language to {{ lang }}">
                           {{ lang }}
