@@ -1,127 +1,121 @@
 {% assign current_active_lang = site.active_lang | default: site.default_lang %}
-
 {% assign nav_links = site.data.navigation[current_active_lang] %}
+{% assign s = site.data.translations[current_active_lang] %} {# translations.yml kullandığımızı varsayıyorum #}
 
 <nav class="fixed top-0 w-full bg-ctp-base/95 backdrop-blur-sm border-b border-ctp-surface0 z-50">
-    <div class="container mx-auto px-6 py-4">
-        <div class="flex justify-between items-center">
-            <a href="{{ '/' | relative_url }}" class="text-2xl font-bold text-ctp-lavender">
-                {{ site.data.profile.name | default: "Site Name" }}
-            </a>
+  <div class="container mx-auto px-6 py-4">
+    <div class="flex justify-between items-center">
+      <a href="{{ '/' | relative_url }}" class="text-2xl font-bold text-ctp-lavender">
+        {{ site.data.profile.name | default: "Site Name" }}
+      </a>
 
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-8 items-center">
-                {% for item in nav_links %}
-                {% assign item_url_str = item.url | default: "" %}
-                {% assign first_char_item = item_url_str | slice: 0, 1 %}
-                {% if first_char_item == "#" %}
-                <a href="{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
-                {% else %}
-                <a href="{{ item.url | prepend: '/' | relative_url }}"
-                    class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
-                {% endif %}
-                {% endfor %}
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex space-x-8 items-center">
+        {% for item in nav_links %}
+          {% assign item_url_str = item.url | default: "" %}
+          {% assign first_char_item = item_url_str | slice: 0, 1 %}
+          {% if first_char_item == "#" %}
+            <a href="{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
+          {% else %}
+            <a href="{{ item.url | prepend: '/' | relative_url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
+          {% endif %}
+        {% endfor %}
 
-                <!-- Language Switcher (Desktop) -->
-                <div class="hidden md:flex items-center">
-                    {% assign current_lang_for_switcher = site.active_lang | default: site.default_lang %}
-                    {% assign base_url_for_switcher = site.baseurl | default: '' %}
-        
-                    {% for lang_to_switch_to_d in site.languages %}
-                      {% if lang_to_switch_to_d == current_lang_for_switcher %}
-                        <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
-                          {{ lang_to_switch_to_d }}
-                        </span>
-                      {% else %}
-                        {% assign target_href_d = "" %}
-                        {% if lang_to_switch_to_d == site.default_lang %}
-                          {# Varsayılan dile (EN) geçiş: Sadece baseurl + / #}
-                          {% assign target_href_d = base_url_for_switcher | append: '/' %}
-                        {% else %}
-                          {# Diğer dillere (TR, FR) geçiş: baseurl + / + dil_kodu + / #}
-                          {% assign target_href_d = base_url_for_switcher | append: '/' | append: lang_to_switch_to_d | append: '/' %}
-                        {% endif %}
-                        {% assign target_href_d = target_href_d | replace: '//', '/' %}
-                        {# Eğer baseurl boşsa ve sonuç boşsa, "/" yap #}
-                        {% if target_href_d == "" and base_url_for_switcher == "" %}
-                            {% assign target_href_d = "/" %}
-                        {% endif %}
-        
-                        <!-- DEBUG DESKTOP: Target Lang={{lang_to_switch_to_d}}, Href={{target_href_d | inspect}} -->
-                        <a href="{{ target_href_d }}"
-                           class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                           aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_to_switch_to_d }}">
-                          {{ lang_to_switch_to_d }}
-                        </a>
-                      {% endif %}
-                    {% endfor %}
-                </div>
-              </div>
-        
-            <!-- Mobile Menu Button + Language Switcher (Aynı mantık mobil için de uygulanacak) -->
-            <div class="md:hidden flex items-center">
-                <!-- Language Switcher (Mobile) -->
-                <div class="md:hidden flex items-center">
-                    {% assign current_lang_switcher_m = site.active_lang | default: site.default_lang %}
-                    {% assign languages_switcher_m = site.languages %}
-                    {% assign base_switcher_m = site.baseurl | default: '' %}
-        
-                    {% for lang_loop_m in languages_switcher_m %}
-                      {% if lang_loop_m == current_lang_switcher_m %}
-                        <span class="text-ctp-lavender uppercase text-sm font-bold mr-3 px-2 py-1 rounded-md bg-ctp-surface1">
-                          {{ lang_loop_m }}
-                        </span>
-                      {% else %}
-                        {% assign final_target_url_m = "" %}
-                        {% assign page_path_no_lang_m = page.permalink_without_lang | default: '/' %}
-        
-                        {% if lang_loop_m == site.default_lang and site.config.default_lang_in_url == false %}
-                          {% assign final_target_url_m = base_switcher_m | append: page_path_no_lang_m %}
-                        {% else %}
-                          {% assign final_target_url_m = base_switcher_m | append: '/' | append: lang_loop_m | append: page_path_no_lang_m %}
-                        {% endif %}
-        
-                        {% assign final_target_url_m = final_target_url_m | replace: '//', '/' %}
-                        {% if final_target_url_m == base_switcher_m and base_switcher_m != "" and final_target_url_m != "/" %}
-                             {% assign final_target_url_m = final_target_url_m | append: '/' %}
-                        {% elsif final_target_url_m == "" and base_switcher_m == "" %}
-                             {% assign final_target_url_m = "/" %}
-                        {% endif %}
-                        {% assign final_target_url_m = final_target_url_m | replace: '//', '/' %}
-        
-                        <a href="{{ final_target_url_m }}"
-                           class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                           aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_loop_m }}">
-                          {{ lang_loop_m }}
-                        </a>
-                      {% endif %}
-                    {% endfor %}
-                </div>
-        
-                <button id="mobile-menu-btn" class="text-ctp-text hover:text-ctp-lavender">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
+        <!-- Language Switcher (Desktop) -->
+        {% for lang_target_d in site.languages %}
+          {% if lang_target_d == current_active_lang %}
+            <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
+              {{ lang_target_d }}
+            </span>
+          {% else %}
+            {% assign page_path_core = page.permalink_without_lang | default: '/' %}
+            {# page.permalink_without_lang, /about/ veya ana sayfa için / gibi bir şey döndürür #}
+            {% assign final_target_url_d = "" %}
 
-    <!-- Mobile Menu Dropdown -->
-    <div id="mobile-menu" class="hidden md:hidden bg-ctp-mantle border-t border-ctp-surface0">
-        <div class="px-6 py-4 space-y-4">
-            {% for item in nav_links %}
-            {% assign item_url_str_mobile = item.url | default: "" %}
-            {% assign first_char_mobile = item_url_str_mobile | slice: 0, 1 %}
-            {% if first_char_mobile == "#" %}
-            <a href="{{ item.url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{
-                item.title }}</a>
+            {% if lang_target_d == site.default_lang %}
+              {# Hedef dil, varsayılan dil (EN). URL'de dil kodu OLMAYACAK. #}
+              {% assign final_target_url_d = site.baseurl | default: '' | append: page_path_core %}
             {% else %}
-            <a href="{{ item.url | prepend: '/' | relative_url }}"
-                class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{ item.title }}</a>
+              {# Hedef dil, varsayılan dil DEĞİL (TR, FR). URL'de dil kodu OLACAK. #}
+              {% assign final_target_url_d = site.baseurl | default: '' | append: '/' | append: lang_target_d | append: page_path_core %}
             {% endif %}
-            {% endfor %}
-        </div>
+            
+            {% assign final_target_url_d = final_target_url_d | replace: '//', '/' %}
+            {# Eğer URL sadece baseurl ise (örn: /portfolio) ve bu ana sayfa ise (page_path_core == '/'), sonuna / ekle. #}
+            {% if final_target_url_d == (site.baseurl | default: '') and page_path_core == '/' %}
+                 {% if (site.baseurl | default: '') != "" %} {# Eğer baseurl boş değilse / ekle #}
+                    {% assign final_target_url_d = final_target_url_d | append: '/' %}
+                 {% elsif final_target_url_d == "" %} {# Eğer baseurl boşsa ve sonuç boşsa / yap #}
+                    {% assign final_target_url_d = "/" %}
+                 {% endif %}
+            {% endif %}
+            {% assign final_target_url_d = final_target_url_d | replace: '//', '/' %}
+
+            <a href="{{ final_target_url_d }}"
+               class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+               aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_target_d }}">
+              {{ lang_target_d }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Mobile Menu Button + Language Switcher (Aynı mantık) -->
+      <div class="md:hidden flex items-center">
+        {% for lang_target_m in site.languages %}
+          {% if lang_target_m == current_active_lang %}
+            <span class="text-ctp-lavender uppercase text-sm font-bold mr-3 px-2 py-1 rounded-md bg-ctp-surface1">
+              {{ lang_target_m }}
+            </span>
+          {% else %}
+            {% assign page_path_core_m = page.permalink_without_lang | default: '/' %}
+            {% assign final_target_url_m = "" %}
+
+            {% if lang_target_m == site.default_lang %}
+              {% assign final_target_url_m = site.baseurl | default: '' | append: page_path_core_m %}
+            {% else %}
+              {% assign final_target_url_m = site.baseurl | default: '' | append: '/' | append: lang_target_m | append: page_path_core_m %}
+            {% endif %}
+
+            {% assign final_target_url_m = final_target_url_m | replace: '//', '/' %}
+            {% if final_target_url_m == (site.baseurl | default: '') and page_path_core_m == '/' %}
+                 {% if (site.baseurl | default: '') != "" %}
+                    {% assign final_target_url_m = final_target_url_m | append: '/' %}
+                 {% elsif final_target_url_m == "" %}
+                    {% assign final_target_url_m = "/" %}
+                 {% endif %}
+            {% endif %}
+            {% assign final_target_url_m = final_target_url_m | replace: '//', '/' %}
+
+            <a href="{{ final_target_url_m }}"
+               class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+               aria-label="{{ s.lang_switch_label | default: 'Switch language' }} to {{ lang_target_m }}">
+              {{ lang_target_m }}
+            </a>
+          {% endif %}
+        {% endfor %}
+        <button id="mobile-menu-btn" class="text-ctp-text hover:text-ctp-lavender">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
     </div>
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div id="mobile-menu" class="hidden md:hidden bg-ctp-mantle border-t border-ctp-surface0">
+    <div class="px-6 py-4 space-y-4">
+      {% for item in nav_links %}
+        {% assign item_url_str_mobile = item.url | default: "" %}
+        {% assign first_char_mobile = item_url_str_mobile | slice: 0, 1 %}
+        {% if first_char_mobile == "#" %}
+          <a href="{{ item.url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{ item.title }}</a>
+        {% else %}
+          <a href="{{ item.url | prepend: '/' | relative_url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{ item.title }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
 </nav>
