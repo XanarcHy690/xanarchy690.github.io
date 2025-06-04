@@ -1,6 +1,6 @@
 {% assign current_active_lang = site.active_lang | default: site.default_lang %}
 {% assign nav_links = site.data.navigation[current_active_lang] %}
-{% assign s = site.data.translations[current_active_lang] %} {# translations.yml kullandığımızı varsayıyorum #}
+{% assign s = site.data.translations[current_active_lang] %}
 
 <nav class="fixed top-0 w-full bg-ctp-base/95 backdrop-blur-sm border-b border-ctp-surface0 z-50">
   <div class="container mx-auto px-6 py-4">
@@ -17,17 +17,13 @@
           {% if first_char_item == "#" %}
             <a href="{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
           {% else %}
-            <a href="{{ item.url | prepend: '/' | relative_url }}" class="hover:text-ctp-lavender transition-colors">
-              {{ item.title }}
-            </a>
+            <a href="{{ item.url | prepend: '/' | relative_url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
           {% endif %}
         {% endfor %}
 
         <!-- Language Switcher (Desktop) -->
         <div class="hidden md:flex items-center">
-          {% assign base_switcher = site.baseurl | default: '' %}
-          {% assign page_path_core = page.permalink_without_lang | default: '/' %}
-          {# page.permalink_without_lang: /about/ veya ana sayfa için / gibi bir şey döndürür #}
+          {% assign base_url_switcher = site.baseurl | default: '' %}
 
           {% for lang_target_d in site.languages %}
             {% if lang_target_d == current_active_lang %}
@@ -35,35 +31,19 @@
                 {{ lang_target_d }}
               </span>
             {% else %}
-              {% assign lang_route_data = site.data.language_routes[lang_target_d] %}
-              {% assign lang_root_path = lang_route_data.url %} {# Örn: "/", "/tr", "/de" #}
-              
-              {% assign final_target_url_d = base_switcher %}
-
-              {# lang_root_path'i page_path_core ile birleştir #}
-              {# Eğer page_path_core ana sayfa ise ("/"), sadece lang_root_path yeterli #}
-              {% if page_path_core == "/" %}
-                {% assign final_target_url_d = final_target_url_d | append: lang_root_path %}
+              {% assign final_target_url_d = base_url_switcher %}
+              {% if lang_target_d == site.default_lang %}
+                {# Varsayılan dile geçiş: Sadece baseurl + / #}
+                {% assign final_target_url_d = final_target_url_d | append: '/' %}
               {% else %}
-                {% assign final_target_url_d = final_target_url_d | append: lang_root_path | append: page_path_core %}
-              {% endif %}
-              
-              {% assign final_target_url_d = final_target_url_d | replace: '//', '/' %}
-              {# Eğer URL sadece baseurl ise ve ana sayfaya gidiyorsak, sonuna / ekle (eğer baseurl boş değilse) #}
-              {% if final_target_url_d == base_switcher and base_switcher != "" and page_path_core == '/' %}
-                   {% assign final_target_url_d = final_target_url_d | append: '/' %}
-              {% endif %}
-              {# Eğer baseurl boşsa ve sonuç boşsa (ana sayfa için), "/" yap #}
-              {% if final_target_url_d == "" and base_switcher == "" %}
-                   {% assign final_target_url_d = "/" %}
-              {% endif %}
-               {# URL'nin sonunda / olduğundan emin olalım (eğer bir dosya değilse ve zaten / ile bitmiyorsa) #}
-              {% assign last_char_d = final_target_url_d | slice: -1 %}
-              {% if final_target_url_d != "/" and last_char_d != '/' and (final_target_url_d contains '.' == false) %}
-                  {% assign final_target_url_d = final_target_url_d | append: '/' %}
+                {# Diğer dillere geçiş: baseurl + / + dil_kodu + / #}
+                {% assign final_target_url_d = final_target_url_d | append: '/' | append: lang_target_d | append: '/' %}
               {% endif %}
               {% assign final_target_url_d = final_target_url_d | replace: '//', '/' %}
-
+              {# Eğer baseurl boşsa ve sonuç sadece "/" ise veya boş kalmışsa, "/" yap #}
+              {% if final_target_url_d == "" and base_url_switcher == "" %}
+                  {% assign final_target_url_d = "/" %}
+              {% endif %}
 
               <a href="{{ final_target_url_d }}"
                  class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
@@ -78,37 +58,23 @@
       <!-- Mobile Menu Button + Language Switcher (Aynı mantık) -->
       <div class="md:hidden flex items-center">
         <div class="md:hidden flex items-center mr-4">
-          {% assign base_switcher_m = site.baseurl | default: '' %}
-          {% assign page_path_core_m = page.permalink_without_lang | default: '/' %}
-
+          {% assign base_url_switcher_m = site.baseurl | default: '' %}
           {% for lang_target_m in site.languages %}
             {% if lang_target_m == current_active_lang %}
               <span class="text-ctp-lavender uppercase text-sm font-bold mr-2 px-2 py-1 rounded-md bg-ctp-surface1">
                 {{ lang_target_m }}
               </span>
             {% else %}
-              {% assign lang_route_data_m = site.data.language_routes[lang_target_m] %}
-              {% assign lang_root_path_m = lang_route_data_m.url %}
-              {% assign final_target_url_m = base_switcher_m %}
-
-              {% if page_path_core_m == "/" %}
-                {% assign final_target_url_m = final_target_url_m | append: lang_root_path_m %}
+              {% assign final_target_url_m = base_url_switcher_m %}
+              {% if lang_target_m == site.default_lang %}
+                {% assign final_target_url_m = final_target_url_m | append: '/' %}
               {% else %}
-                {% assign final_target_url_m = final_target_url_m | append: lang_root_path_m | append: page_path_core_m %}
-              {% endif %}
-              
-              {% assign final_target_url_m = final_target_url_m | replace: '//', '/' %}
-              {% if final_target_url_m == base_switcher_m and base_switcher_m != "" and page_path_core_m == '/' %}
-                   {% assign final_target_url_m = final_target_url_m | append: '/' %}
-              {% endif %}
-              {% if final_target_url_m == "" and base_switcher_m == "" %}
-                   {% assign final_target_url_m = "/" %}
-              {% endif %}
-              {% assign last_char_m = final_target_url_m | slice: -1 %}
-              {% if final_target_url_m != "/" and last_char_m != '/' and (final_target_url_m contains '.' == false) %}
-                  {% assign final_target_url_m = final_target_url_m | append: '/' %}
+                {% assign final_target_url_m = final_target_url_m | append: '/' | append: lang_target_m | append: '/' %}
               {% endif %}
               {% assign final_target_url_m = final_target_url_m | replace: '//', '/' %}
+              {% if final_target_url_m == "" and base_url_switcher_m == "" %}
+                  {% assign final_target_url_m = "/" %}
+              {% endif %}
 
               <a href="{{ final_target_url_m }}"
                  class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-2 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
@@ -118,10 +84,16 @@
             {% endif %}
           {% endfor %}
         </div>
-        <button id="mobile-menu-btn" ...>...</button>
+        <button id="mobile-menu-btn" class="text-ctp-text hover:text-ctp-lavender">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
       </div>
     </div>
   </div>
+
 
   <!-- Mobile Menu Dropdown -->
   <div id="mobile-menu" class="hidden md:hidden bg-ctp-mantle border-t border-ctp-surface0">
