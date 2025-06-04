@@ -1,99 +1,98 @@
-{% assign current_active_lang = site.active_lang | default: site.default_lang %}
-
-{% assign nav_links = site.data.navigation[current_active_lang] %}
+{% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
+{% assign nav_links = site.data.navigation[current_lang] %}
+{% assign lang_routes = site.data.language_routes %}
+{% assign languages = site.languages %}
+{% assign default_lang = site.default_lang %}
 
 <nav class="fixed top-0 w-full bg-ctp-base/95 backdrop-blur-sm border-b border-ctp-surface0 z-50">
-    <div class="container mx-auto px-6 py-4">
-        <div class="flex justify-between items-center">
-            <a href="{{ '/' | relative_url }}" class="text-2xl font-bold text-ctp-lavender">
-                {{ site.data.profile.name | default: "Site Name" }}
+  <div class="container mx-auto px-6 py-4">
+    <div class="flex justify-between items-center">
+      <!-- Logo -->
+      <a href="{{ '/' | relative_url }}" class="text-2xl font-bold text-ctp-lavender">
+        {{ site.data.profile.name | default: "Site Name" }}
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex space-x-8 items-center">
+        {% for item in nav_links %}
+          {% assign first_char = item.url | slice: 0, 1 %}
+          {% if first_char == "#" %}
+            <a href="{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
+          {% else %}
+            <a href="{{ item.url | prepend: '/' | relative_url }}" class="hover:text-ctp-lavender transition-colors">
+              {{ item.title }}
             </a>
+          {% endif %}
+        {% endfor %}
 
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-8 items-center">
-                {% for item in nav_links %}
-                {% assign item_url_str = item.url | default: "" %}
-                {% assign first_char_item = item_url_str | slice: 0, 1 %}
-                {% if first_char_item == "#" %}
-                <a href="{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
-                {% else %}
-                <a href="{{ item.url | prepend: '/' | relative_url }}"
-                    class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
-                {% endif %}
-                {% endfor %}
-
-                <!-- Language Switcher (Desktop) -->
-                <div class="hidden md:flex items-center">
-                    {% assign languages = site.languages %}
-                    {% assign default_lang = site.default_lang %}
-                    {% assign current_lang = page.lang | default: default_lang %}
-                    {% assign lang_routes = site.data.language_routes %}
-                    
-                    {% for lang in languages %}
-                        {% assign route = lang_routes[lang] %}
-                        {% if lang == current_lang %}
-                        <span class="active-lang">{{ lang | upcase }}</span>
-                        {% else %}
-                        <a href="{{ route.url | relative_url }}" class="lang-switcher">
-                            {{ lang | upcase }}
-                        </a>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- Mobile Menu Button + Language Switcher (Aynı mantık mobil için de uygulanacak) -->
-            <div class="md:hidden flex items-center">
-                <!-- Language Switcher (Mobile) -->
-                <div class="md:hidden flex items-center">
-                    {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
-                    {% assign languages = site.languages %}
-                    {% assign base = site.baseurl %}
-                
-                    {% for lang in languages %}
-                    {% if lang == current_lang %}
-                        <span class="text-ctp-lavender uppercase text-sm font-bold mr-3 px-2 py-1 rounded-md bg-ctp-surface1">
-                        {{ lang }}
-                        </span>
-                    {% else %}
-                        {% assign target_url = base | append: "/" | append: lang %}
-                        {% if lang == site.default_lang %}
-                        {% assign target_url = base %}
-                        {% endif %}
-                        <a href="{{ target_url }}"
-                        class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-3 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                        aria-label="Switch language to {{ lang }}">
-                        {{ lang }}
-                        </a>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-                
-
-                <button id="mobile-menu-btn" class="text-ctp-text hover:text-ctp-lavender">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mobile Menu Dropdown -->
-    <div id="mobile-menu" class="hidden md:hidden bg-ctp-mantle border-t border-ctp-surface0">
-        <div class="px-6 py-4 space-y-4">
-            {% for item in nav_links %}
-            {% assign item_url_str_mobile = item.url | default: "" %}
-            {% assign first_char_mobile = item_url_str_mobile | slice: 0, 1 %}
-            {% if first_char_mobile == "#" %}
-            <a href="{{ item.url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{
-                item.title }}</a>
+        <!-- Language Switcher (Desktop) -->
+        <div class="hidden md:flex items-center">
+          {% for lang in languages %}
+            {% assign lang_data = lang_routes[lang] %}
+            {% assign lang_url = lang_data.url | relative_url %}
+            {% if lang == current_lang %}
+              <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
+                {{ lang }}
+              </span>
             {% else %}
-            <a href="{{ item.url | prepend: '/' | relative_url }}"
-                class="block hover:text-ctp-lavender transition-colors mobile-nav-link">{{ item.title }}</a>
+              <a href="{{ lang_url }}"
+                 class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                 aria-label="Switch language to {{ lang }}">
+                {{ lang }}
+              </a>
             {% endif %}
-            {% endfor %}
+          {% endfor %}
         </div>
+      </div>
+
+      <!-- Mobile Menu Button + Language Switcher -->
+      <div class="md:hidden flex items-center">
+        <!-- Language Switcher (Mobile) -->
+        <div class="md:hidden flex items-center mr-4">
+          {% for lang in languages %}
+            {% assign lang_data = lang_routes[lang] %}
+            {% assign lang_url = lang_data.url | relative_url %}
+            {% if lang == current_lang %}
+              <span class="text-ctp-lavender uppercase text-sm font-bold mr-2 px-2 py-1 rounded-md bg-ctp-surface1">
+                {{ lang }}
+              </span>
+            {% else %}
+              <a href="{{ lang_url }}"
+                 class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold mr-2 px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
+                 aria-label="Switch language to {{ lang }}">
+                {{ lang }}
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-btn" class="text-ctp-text hover:text-ctp-lavender">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
     </div>
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div id="mobile-menu" class="hidden md:hidden bg-ctp-mantle border-t border-ctp-surface0">
+    <div class="px-6 py-4 space-y-4">
+      {% for item in nav_links %}
+        {% assign first_char = item.url | slice: 0, 1 %}
+        {% if first_char == "#" %}
+          <a href="{{ item.url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">
+            {{ item.title }}
+          </a>
+        {% else %}
+          <a href="{{ item.url | prepend: '/' | relative_url }}"
+             class="block hover:text-ctp-lavender transition-colors mobile-nav-link">
+            {{ item.title }}
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
 </nav>
