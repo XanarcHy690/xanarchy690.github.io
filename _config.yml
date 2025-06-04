@@ -68,7 +68,7 @@ collections:
 # -----------------------------------------------------------------------------
 # TR: Sitenizde desteklenecek dillerin listesi.
 # EN: A list of languages your site will support.
-languages: ["en", "tr", "de"]
+languages: ["en", "tr"]
 
 # TR: Sitenizin varsayılan dili. URL'de dil kodu olmadan erişilen dildir.
 # EN: The default language of your site. This is the language accessed without a language code in the URL.
@@ -110,6 +110,12 @@ favicon: /assets/images/favicons/favicon-96x96.png # Kullandığınız bir favic
 # -----------------------------------------------------------------------------
 # Footer ve Lisans Bilgileri / Footer & License Information
 # -----------------------------------------------------------------------------
+
+
+# -----------------------------------------------------------------------------
+# Bu Alana Dokunmayınız / Do Not Touch This Area
+# -----------------------------------------------------------------------------
+
 # TR: Kullandığınız lisansın adı.
 # EN: The name of the license you are using.
 license_name: "Creative Commons Attribution 4.0 International (CC BY 4.0)"
@@ -118,17 +124,13 @@ license_name: "Creative Commons Attribution 4.0 International (CC BY 4.0)"
 # EN: Link to the license text or the LICENSE file in your project.
 license_url: "https://creativecommons.org/licenses/by/4.0/" # Veya {{ '/LICENSE' | relative_url }}
 
-# TR: Projenizin GitHub (veya başka bir platformdaki) depo URL'si.
-# EN: The URL of your project's repository on GitHub (or other platform).
-repository_url: "https://github.com/SahinMuhammetAbdullah/portfolio"
-
-# TR: Sitenin veya temanın tasarımcısının adı.
-# EN: The name of the site or theme designer.
+# TR: Sitenin tasarımcısının adı.
+# EN: The name of the site designer.
 designer_name: "Muhammet Abdullah Şahin"
 
 # TR: Tasarımcının web sitesi, portfolyosu veya sosyal medya linki.
 # EN: The designer's website, portfolio, or social media link.
-designer_url: "https://sahinmuhammetabdullah.github.io/portfolio/"
+designer_url: "https://github.com/SahinMuhammetAbdullah"
 
 # TR: Footer'da listelenecek, projede kullanılan ana teknolojiler.
 # EN: Main technologies used in the project, to be listed in the footer.
@@ -141,8 +143,17 @@ technologies_used:
     url: "https://fontawesome.com/"
   - name: "Catppuccin Theme" # (Eğer renk paletini bu temadan aldıysanız)
     url: "https://github.com/catppuccin/catppuccin"
-  # - name: "GitHub Pages"
-  #   url: "https://pages.github.com/"
+  - name: "GitHub Pages"
+    url: "https://pages.github.com/"
+
+# -----------------------------------------------------------------------------
+# Bitti / Finished
+# -----------------------------------------------------------------------------
+
+
+# TR: Sizin projenizin GitHub (veya başka bir platformdaki) depo URL'si.
+# EN: The URL of your project's repository on GitHub (or other platform).
+repository_url: "https://github.com/SahinMuhammetAbdullah/portfolio"
 
 # -----------------------------------------------------------------------------
 # Build Dışı Bırakılacaklar / Exclude from Processing
