@@ -24,27 +24,20 @@
 
                 <!-- Language Switcher (Desktop) -->
                 <div class="hidden md:flex items-center">
-                    {% assign current_lang = site.active_lang | default: page.lang | default: site.default_lang %}
                     {% assign languages = site.languages %}
-                    {% assign base = site.baseurl %}
-                
+                    {% assign default_lang = site.default_lang %}
+                    {% assign current_lang = page.lang | default: default_lang %}
+                    {% assign lang_routes = site.data.language_routes %}
+                    
                     {% for lang in languages %}
-                    {% if lang == current_lang %}
-                        <!-- Aktif dil -->
-                        <span class="text-ctp-lavender uppercase text-sm font-bold ml-4 px-3 py-1 rounded-md bg-ctp-surface1">
-                        {{ lang }}
-                        </span>
-                    {% else %}
-                        {% assign target_url = base | append: "/" | append: lang %}
-                        {% if lang == site.default_lang %}
-                        {% assign target_url = base %}
-                        {% endif %}
-                        <a href="{{ target_url }}"
-                        class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold ml-4 px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1"
-                        aria-label="Switch language to {{ lang }}">
-                        {{ lang }}
+                        {% assign route = lang_routes[lang] %}
+                        {% if lang == current_lang %}
+                        <span class="active-lang">{{ lang | upcase }}</span>
+                        {% else %}
+                        <a href="{{ route.url | relative_url }}" class="lang-switcher">
+                            {{ lang | upcase }}
                         </a>
-                    {% endif %} 
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>

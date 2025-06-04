@@ -1,0 +1,9 @@
+tr:
+  lang: "en"
+  url: "/"
+en:
+  lang: "tr"
+  url: "/tr"
+de:
+  lang: "de"
+  url: "/de"
