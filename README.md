@@ -1,20 +1,20 @@
 # My Jekyll Portfolio & Blog Theme (Catppuccin Styled)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-<!-- İsterseniz buraya GitHub Actions build status badge'i ekleyebilirsiniz -->
-<!-- ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/YourUsername/YourRepoName/deploy.yml?branch=main) -->
+[![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
+<!-- GitHub Actions Workflow Status Badge - Replace YOUR_USERNAME and YOUR_REPONAME -->
+<!-- ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/YOUR_USERNAME/YOUR_REPONAME/jekyll.yml?branch=main&logo=github) -->
 
-A responsive, a bilingual (English & Turkish) portfolio and blog theme for Jekyll, styled with the Catppuccin Mocha theme and Tailwind CSS. Built to be easily customizable and deployed on GitHub Pages.
+A responsive, multilingual portfolio and blog theme for Jekyll, styled with the Catppuccin Mocha theme and Tailwind CSS. Built to be easily customizable and deployed on GitHub Pages using GitHub Actions. This theme is initially configured for English (default) and Turkish, but can be extended to support more languages.
 
-[View Demo](https://sahinmuhammetabdullah.github.io/portfolio/en/) <!-- Kendi demo linkinizle değiştirin -->
-| [Türkçe Açıklama (Turkish Documentation)](#türkçe-açıklama-turkish-documentation) <!-- README_tr.md'ye link -->
+[View Demo](https://sahinmuhammetabdullah.github.io/portfolio/) <!-- Update with your demo link -->
+| [Türkçe Açıklama (Turkish Documentation)](README_tr.md)
 
 ## ✨ Features
 
-*   **Bilingual Support:** Easily manage content in English (default) and Turkish using Jekyll Polyglot.
+*   **Multilingual Support:** Easily manage content in multiple languages using Jekyll Polyglot. Configured પાણીof-the-box for English (default) and Turkish, extensible for more.
 *   **Responsive Design:** Looks great on desktops, tablets, and mobile devices.
 *   **Catppuccin Mocha Theming:** Beautiful, soothing dark theme.
-*   **Tailwind CSS:** Utility-first CSS framework for easy customization.
+*   **Tailwind CSS (CDN):** Utility-first CSS framework for easy customization via CDN.
 *   **Project Showcase:** Dedicated section to display your projects with details in a modal.
     *   Cover images for project cards (fallback to color gradients).
     *   Markdown support for project descriptions, allowing rich text and images within modals.
@@ -22,8 +22,8 @@ A responsive, a bilingual (English & Turkish) portfolio and blog theme for Jekyl
 *   **SEO Optimized:** With `jekyll-seo-tag`.
 *   **RSS Feed:** With `jekyll-feed`.
 *   **Sitemap:** With `jekyll-sitemap`.
-*   **Customizable Data Files:** Easily update profile information, social links, navigation, and UI strings via YAML files in the `_data` directory.
-*   **GitHub Pages Ready:** Includes a GitHub Actions workflow for automatic deployment.
+*   **Customizable Data Files:** Easily update profile information, social links, navigation, and UI strings via YAML files in the `_data` directory for each supported language.
+*   **GitHub Pages Ready:** Includes a GitHub Actions workflow for automatic building and deployment.
 
 ## 🚀 Getting Started
 
@@ -31,78 +31,100 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-*   **Ruby:** [Check version](https://www.ruby-lang.org/en/documentation/installation/) (Jekyll's requirement, e.g., 3.0.x)
+*   **Ruby:** [Check version](https://www.ruby-lang.org/en/documentation/installation/) (e.g., 3.0.x, 3.1.x as per `Gemfile` and workflow)
 *   **Bundler:** (`gem install bundler`)
 *   **Jekyll:** (`gem install jekyll`)
-*   (Optional) Node.js and npm/yarn if you plan to customize Tailwind CSS extensively and build it locally. Currently, this theme uses the Tailwind CSS CDN for simplicity.
+*   (Optional) Node.js and npm/yarn if you plan to install Tailwind CSS locally and use its full capabilities (e.g., `@tailwindcss/typography` plugin).
 
 ### Installation & Local Development
 
 1.  **Fork or Clone the Repository:**
     ```bash
-    git clone https://github.com/SahinMuhammetAbdullah/portfolio.git
+    git clone https://github.com/SahinMuhammetAbdullah/portfolio.git # Replace with your fork if applicable
     cd portfolio
     ```
 
 2.  **Install Dependencies:**
+    This command reads the `Gemfile` and installs all necessary Ruby gems.
     ```bash
     bundle install
     ```
 
 3.  **Serve the Site Locally:**
+    This command builds the site and starts a local web server.
     ```bash
-    bundle exec jekyll serve --livereload
+    bundle exec jekyll serve --livereload --baseurl ""
     ```
-    Your site should now be running at `http://localhost:4000`. The `--livereload` flag will automatically refresh the page when you make changes. By default, it will serve the English version.
-    *   To view the Turkish version: `http://localhost:4000/tr/`
+    *   Your site should now be running at `http://localhost:4000/`.
+    *   The `--livereload` flag automatically refreshes the page when you make changes.
+    *   `--baseurl ""` overrides the `baseurl` in `_config.yml` for local development, ensuring links work correctly when serving from the root.
+    *   The default language (English) will be served at `http://localhost:4000/`.
+    *   Other languages will be at their respective paths (e.g., Turkish: `http://localhost:4000/tr/`).
 
-### Deployment
+### ⚙️ Build and Deployment with GitHub Actions
 
-This repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that automatically builds and deploys the site to GitHub Pages when you push to the `main` branch.
+This repository is configured for easy deployment to GitHub Pages using a predefined **GitHub Actions workflow**.
 
-1.  Ensure your repository settings for GitHub Pages are configured to use "GitHub Actions" as the source.
-2.  Update the `url` and `baseurl` in `_config.yml` to match your GitHub Pages URL (e.g., `url: https://yourusername.github.io`, `baseurl: /your-repo-name`).
+**How it Works:**
+
+1.  **Workflow File:** The deployment process is defined in `.github/workflows/jekyll.yml`. This file tells GitHub Actions how to build and deploy your Jekyll site.
+2.  **Trigger:** The workflow is automatically triggered when you `push` changes to your `main` (or `master`) branch.
+3.  **Build Process:**
+    *   GitHub Actions sets up a virtual environment (Ubuntu).
+    *   It checks out your repository's code.
+    *   It sets up the Ruby environment and installs all dependencies from your `Gemfile` using `bundle install`. This includes `jekyll-polyglot` and other custom plugins.
+    *   It then runs `bundle exec jekyll build` to generate your static site into an `_site` directory. The `baseurl` configured in `_config.yml` (or determined by `actions/configure-pages`) is used here.
+4.  **Deployment to GitHub Pages:**
+    *   The contents of the `_site` directory are uploaded as a "Pages artifact".
+    *   This artifact is then deployed to your GitHub Pages site.
+
+**Steps for Forked Repositories:**
+
+If you have forked this repository and want to deploy it to your own GitHub Pages:
+
+1.  **Update `_config.yml`:**
+    *   Set `url` to your GitHub Pages root (e.g., `https://yourusername.github.io`).
+    *   Set `baseurl`:
+        *   If your repository is named `yourusername.github.io`, set `baseurl: ""`.
+        *   If your repository is named `my-portfolio`, set `baseurl: "/my-portfolio"`.
+    *   Update other site-specific details (`title`, `author`, `email`, etc.).
+
+2.  **Configure GitHub Pages Source:**
+    *   In your forked repository, go to **Settings** > **Pages**.
+    *   Under "Build and deployment", for the **Source**, select **GitHub Actions**.
+    *   This tells GitHub Pages to use the output from your `jekyll.yml` workflow instead of trying to build the site itself (which wouldn't support custom plugins like `jekyll-polyglot`).
+
+3.  **First Deployment Approval (If Needed):**
+    *   Sometimes, the first time a GitHub Actions workflow tries to deploy to a GitHub Pages environment, it might require a manual approval.
+    *   If your workflow run palavrasin the "Actions" tab, check for a "Waiting for approval" status or a "Review deployments" button. If present, approve it to proceed.
+
+4.  **Push Changes:**
+    *   Commit and push your changes (especially to `_config.yml`) to your `main` branch. This will trigger the GitHub Actions workflow, which will build and deploy your site. Your site should then be live at the URL specified in your Pages settings.
 
 ## 🛠️ Customization
 
-Most customizations can be done by editing YAML files in the `_data` directory and Markdown files for content.
-
 *   **Site Configuration (`_config.yml`):**
-    *   `title`, `author`, `description`, `email`
-    *   `url`, `baseurl` (CRITICAL for deployment)
-    *   `github_username`
-    *   Jekyll Polyglot settings: `languages`, `default_lang`, `default_lang_in_url`
-    *   Theme colors for PWA: `theme_color`, `background_color`, `ms_tile_color`
-    *   `technologies_used`, `license_name`, `license_url`, `repository_url`, `designer_name`, `designer_url` for the footer.
+    *   Update `title`, `author`, `description`, `email`, `url`, `baseurl`, `github_username`.
+    *   **Jekyll Polyglot:** `languages` (add new language codes here, e.g., `["en", "tr", "fr"]`), `default_lang`, `default_lang_in_url`.
+    *   Footer details: `technologies_used`, `license_name`, etc.
 
-*   **Profile Information (`_data/profile.yml`):**
-    *   Contains language-specific profile details like `tagline`, `greeting_intro`, `about_title`, `about_bio`, `skills`, and `footer_copyright` template.
-    *   Update your `avatar` path here.
+*   **Adding a New Language (e.g., French "fr"):**
+    1.  Add `"fr"` to the `languages` list in `_config.yml`.
+    2.  Create `_data/navigation.yml` (copy from `navigation.yml with en:` and translate).
+    3.  In `_data/translations.yml`, add an `fr:` section with all UI strings translated (copy from `en:` section and translate).
+    4.  In `_data/profile.yml`, add an `fr:` section with profile details translated.
+    5.  For each project in `_projects/en/`, create a corresponding file in `_projects/fr/` (e.g., `_projects/fr/my-project.md`) with translated content. Ensure the `id` front matter field remains the same.
+    6.  The language switcher in the header will automatically include "fr".
 
-*   **Navigation Links (`_data/navigation.tr.yml`, `_data/navigation.en.yml`):**
-    *   Define the main navigation links (title and URL) for each language.
-
-*   **UI Strings (`_data/translations.yml`):**
-    *   Contains all general UI text strings (section titles, button labels, etc.) for both `tr` and `en` under their respective language keys.
-
-*   **Social Links (`_data/social.yml`):**
-    *   Define your social media links, including `name`, `url`, and `icon_class` (Font Awesome).
+*   **Profile, Navigation, UI Strings, Social Links:** Edit files in the `_data` directory (`profile.yml`, `navigation.xx.yml`, `translations.yml`, `social.yml`).
 
 *   **Projects (`_projects/`):**
-    *   Create subfolders `tr` and `en` inside `_projects`.
-    *   For each project, create a `.md` file in both language folders (e.g., `_projects/tr/my-project.md` and `_projects/en/my-project.md`).
-    *   Ensure the `id` field in the front matter is THE SAME for both language versions of a project.
-    *   Customize `title`, `short_description`, `tags`, `cover_image`, `icon_class`, `github_url`, `live_url`.
-    *   The content after the front matter (---) is Markdown for the project's detailed description, which appears in the modal. You can include images here using Markdown syntax: `![Alt text]({{ '/assets/images/your-image.jpg' | relative_url }})`.
+    *   Maintain subfolders for each language (e.g., `en/`, `tr/`).
+    *   Project `.md` files use front matter for metadata (`id`, `title`, `cover_image`, `tags`, etc.) and Markdown for the detailed description in the modal.
+    *   Ensure `id` is consistent across language versions of the same project.
 
-*   **Styling (`assets/css/style.css`):**
-    *   Contains custom CSS, including styles for Markdown-generated HTML in modals and scrollbar styling.
-    *   Tailwind CSS is primarily used via CDN, but you can add overrides or new styles here.
-
-*   **Favicons:**
-    *   Place your favicon files (e.g., `favicon.ico`, `apple-touch-icon.png`, various `favicon-*.png`) in `assets/images/favicons/`.
-    *   Update paths in `_includes/head.html` and `manifest.json` (if you moved them from the root).
-    *   The `manifest.json` in the root directory configures PWA-like features. Ensure paths alegriaare correct.
+*   **Styling (`assets/css/style.css`):** Add custom CSS or overrides.
+*   **Favicons & Manifest:** Update files in `assets/images/favicons/` and the root `manifest.json`. Ensure paths in `_includes/head.html` and `manifest.json` are correct.
 
 ## 🤝 Contributing
 
@@ -115,7 +137,7 @@ Contributions are welcome! If you have suggestions for improving this theme, fee
 
 ## 📜 License
 
-This project is licensed under the **{{ site.license_name | default: "MIT License" }}**. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the **CC BY 4.0 License**. See the [LICENSE](LICENSE) file for more details.
 
 ## 🙏 Acknowledgements
 
@@ -124,7 +146,7 @@ This project is licensed under the **{{ site.license_name | default: "MIT Licens
 *   [Tailwind CSS](https://tailwindcss.com/)
 *   [Font Awesome](https://fontawesome.com/)
 *   [Catppuccin Theme Palette](https://github.com/catppuccin/catppuccin)
-*   Your Name (as the designer - this will be automatically picked up from `_config.yml` if you use `{{ site.designer_name }}`)
+*   Designed by **{{ site.designer_name }}**. This theme is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/) ({{ site.license_url }}). You are free to use, share, and adapt it, provided you give appropriate credit to **{{ site.designer_name }}** as the original designer. This typically means retaining the "Design by..." credit in the footer or a similar acknowledgements section.
 
 ---
 

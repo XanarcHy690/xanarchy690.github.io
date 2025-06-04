@@ -112,11 +112,11 @@ favicon: /assets/images/favicons/favicon-96x96.png # Kullandığınız bir favic
 # -----------------------------------------------------------------------------
 # TR: Kullandığınız lisansın adı.
 # EN: The name of the license you are using.
-license_name: "MIT License"
+license_name: "Creative Commons Attribution 4.0 International (CC BY 4.0)"
 
 # TR: Lisans metnine veya projenizdeki LICENSE dosyasına link.
 # EN: Link to the license text or the LICENSE file in your project.
-license_url: "https://opensource.org/licenses/MIT" # Veya {{ '/LICENSE' | relative_url }}
+license_url: "https://creativecommons.org/licenses/by/4.0/" # Veya {{ '/LICENSE' | relative_url }}
 
 # TR: Projenizin GitHub (veya başka bir platformdaki) depo URL'si.
 # EN: The URL of your project's repository on GitHub (or other platform).
