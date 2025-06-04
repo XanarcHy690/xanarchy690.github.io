@@ -27,7 +27,7 @@ url: "https://sahinmuhammetabdullah.github.io"
 #     Eğer kök dizinde yayınlanıyorsa (örn: kullaniciadi.github.io), boş bırakın ("").
 # EN: If your site is published in a subdirectory (e.g., username.github.io/REPO_NAME/), put /REPO_NAME here.
 #     If published at the root (e.g., username.github.io), leave it blank ("").
-baseurl: ""
+baseurl: "/portfolio"
 
 # TR: GitHub kullanıcı adınız (isteğe bağlı, sosyal linkler veya meta için).
 # EN: Your GitHub username (optional, for social links or meta).
@@ -66,8 +66,8 @@ collections:
 # -----------------------------------------------------------------------------
 # Jekyll Polyglot Ayarları / Jekyll Polyglot Settings
 # -----------------------------------------------------------------------------
-# TR: Sitenizde desteklenecek dillerin listesi. En fazla iki dilde istikrarlı bir şekilde çalışır.
-# EN: A list of languages your site will support. Works stably in at most two languages
+# TR: Sitenizde desteklenecek dillerin listesi.
+# EN: A list of languages your site will support.
 languages: ["en", "tr", "de"]
 
 # TR: Sitenizin varsayılan dili. URL'de dil kodu olmadan erişilen dildir.

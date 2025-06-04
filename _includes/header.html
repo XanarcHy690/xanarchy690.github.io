@@ -30,7 +30,7 @@
                     {% endif %}
                 {% endfor %}
 
-                <!-- Dil Değiştirici (Desktop) - BaseURL kontrolü ile -->
+                <!-- Dil Değiştirici (Desktop) - DÜZELTİLMİŞ VERSİYON -->
                 <div class="hidden md:flex items-center space-x-2 ml-4">
                     {% for lang in site.languages %}
                         {% if lang == current_active_lang %}
@@ -40,20 +40,29 @@
                         {% else %}
                             {% capture lang_url %}
                                 {% if lang == site.default_lang %}
+                                    {% comment %} Ana dile geçiş - dil kodunu tamamen kaldır {% endcomment %}
+                                    {% assign clean_url = page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' %}
+                                    {% if clean_url == '' %}{% assign clean_url = '/' %}{% endif %}
                                     {% if has_baseurl %}
-                                        {{ baseurl_prefix }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                        {{ baseurl_prefix }}{{ clean_url }}
                                     {% else %}
-                                        {{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' | prepend: '/' }}
+                                        {{ clean_url }}
                                     {% endif %}
                                 {% else %}
+                                    {% comment %} Diğer dillere geçiş - mevcut dil kodunu yeni dil koduyla değiştir {% endcomment %}
+                                    {% assign clean_url = page.url %}
+                                    {% if current_active_lang != site.default_lang %}
+                                        {% assign clean_url = page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' %}
+                                    {% endif %}
+                                    {% if clean_url == '' %}{% assign clean_url = '/' %}{% endif %}
                                     {% if has_baseurl %}
-                                        {{ baseurl_prefix }}/{{ lang }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                        {{ baseurl_prefix }}/{{ lang }}{{ clean_url }}
                                     {% else %}
-                                        /{{ lang }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                        /{{ lang }}{{ clean_url }}
                                     {% endif %}
                                 {% endif %}
                             {% endcapture %}
-                            <a href="{{ lang_url | replace: '//', '/' | replace: '//', '/' }}"
+                            <a href="{{ lang_url | replace: '//', '/' | replace: ' ', '' }}"
                                class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold px-3 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1">
                                 {{ lang }}
                             </a>
@@ -62,7 +71,7 @@
                 </div>
             </div>
 
-            <!-- Mobil Menü Butonu + Dil Değiştirici - BaseURL kontrolü ile -->
+            <!-- Mobil Menü Butonu + Dil Değiştirici - Aynı düzeltme burada da uygulandı -->
             <div class="md:hidden flex items-center">
                 <div class="md:hidden flex items-center mr-4 space-x-2">
                     {% for lang in site.languages %}
@@ -73,20 +82,27 @@
                         {% else %}
                             {% capture lang_url %}
                                 {% if lang == site.default_lang %}
+                                    {% assign clean_url = page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' %}
+                                    {% if clean_url == '' %}{% assign clean_url = '/' %}{% endif %}
                                     {% if has_baseurl %}
-                                        {{ baseurl_prefix }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                        {{ baseurl_prefix }}{{ clean_url }}
                                     {% else %}
-                                        {{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' | prepend: '/' }}
+                                        {{ clean_url }}
                                     {% endif %}
                                 {% else %}
+                                    {% assign clean_url = page.url %}
+                                    {% if current_active_lang != site.default_lang %}
+                                        {% assign clean_url = page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' %}
+                                    {% endif %}
+                                    {% if clean_url == '' %}{% assign clean_url = '/' %}{% endif %}
                                     {% if has_baseurl %}
-                                        {{ baseurl_prefix }}/{{ lang }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                        {{ baseurl_prefix }}/{{ lang }}{{ clean_url }}
                                     {% else %}
-                                        /{{ lang }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                        /{{ lang }}{{ clean_url }}
                                     {% endif %}
                                 {% endif %}
                             {% endcapture %}
-                            <a href="{{ lang_url | replace: '//', '/' | replace: '//', '/' }}"
+                            <a href="{{ lang_url | replace: '//', '/' | replace: ' ', '' }}"
                                class="hover:text-ctp-lavender transition-colors uppercase text-sm font-semibold px-2 py-1 rounded-md border border-ctp-surface1 hover:bg-ctp-surface1">
                                 {{ lang }}
                             </a>
