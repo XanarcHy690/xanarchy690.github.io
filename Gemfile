@@ -1,15 +1,16 @@
+# Gemfile
 source "https://rubygems.org"
-git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
-gem "jekyll", "~> 4.3.2"
-gem "jekyll-polyglot", "~> 1.8.0" # Çoklu dil desteği için
+gem "jekyll", "~> 4.3.3" # Veya kullandığınız güncel Jekyll versiyonu
+gem "jekyll-polyglot", "~> 1.8.1"
+gem "jekyll-feed", "~> 0.17.0"
+gem "jekyll-seo-tag", "~> 2.8.0"
+gem "jekyll-sitemap", "~> 1.4.0"
 
-# GitHub Pages'da desteklenen eklentiler (opsiyonel ama faydalı)
-group :jekyll_plugins do
-  gem "jekyll-feed", "~> 0.12"
-  gem "jekyll-seo-tag", "~> 2.7"
-  gem "jekyll-sitemap", "~> 1.4"
-end
+# Windows'ta dosya izleme için (isteğe bağlı ama önerilir)
+# :if yerine install_if kullanılıyor
+gem 'wdm', '>= 0.1.0', install_if: Gem.win_platform?
 
-# Windows kullanıyorsanız, Jekyll'ın düzgün çalışması için bu gerekebilir
-# gem "wdm", "~> 0.1.1", :install_if => Gem.win_platform?
+# Ruby 3.4+ için gelecekte gerekebilecekler (şimdilik Jekyll bunları çekmeli)
+# gem "csv"
+# gem "base64"

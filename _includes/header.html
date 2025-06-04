@@ -1,12 +1,14 @@
 {% assign current_active_lang = site.active_lang | default: site.default_lang %}
 {% assign nav_links = site.data.navigation[current_active_lang] %}
 {% assign s = site.data.translations[current_active_lang] %}
+{% assign baseurl_prefix = site.baseurl | default: '' %}
+{% assign has_baseurl = baseurl_prefix != '' %}
 
 <nav class="fixed top-0 w-full bg-ctp-base/95 backdrop-blur-sm border-b border-ctp-surface0 z-50">
     <div class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
-            <!-- Logo/Link - Tüm senaryolar için düzeltildi -->
-            <a href="{% if current_active_lang == site.default_lang %}{{ site.baseurl }}/{% else %}{{ site.baseurl }}/{{ current_active_lang }}/{% endif %}" 
+            <!-- Logo/Link - BaseURL kontrolü ile -->
+            <a href="{% if current_active_lang == site.default_lang %}{{ baseurl_prefix }}/{% else %}{{ baseurl_prefix }}/{{ current_active_lang }}/{% endif %}" 
                class="text-2xl font-bold text-ctp-lavender">
                 {{ site.data.profile.name | default: "Site Name" }}
             </a>
@@ -21,14 +23,14 @@
                         <a href="{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
                     {% else %}
                         {% if current_active_lang == site.default_lang %}
-                            <a href="{{ site.baseurl }}{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
+                            <a href="{{ baseurl_prefix }}{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
                         {% else %}
-                            <a href="{{ site.baseurl }}/{{ current_active_lang }}{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
+                            <a href="{{ baseurl_prefix }}/{{ current_active_lang }}{{ item.url }}" class="hover:text-ctp-lavender transition-colors">{{ item.title }}</a>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
 
-                <!-- Dil Değiştirici (Desktop) - Tüm senaryolar için düzeltildi -->
+                <!-- Dil Değiştirici (Desktop) - BaseURL kontrolü ile -->
                 <div class="hidden md:flex items-center space-x-2 ml-4">
                     {% for lang in site.languages %}
                         {% if lang == current_active_lang %}
@@ -38,9 +40,17 @@
                         {% else %}
                             {% capture lang_url %}
                                 {% if lang == site.default_lang %}
-                                    {{ site.baseurl }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                    {% if has_baseurl %}
+                                        {{ baseurl_prefix }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                    {% else %}
+                                        {{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' | prepend: '/' }}
+                                    {% endif %}
                                 {% else %}
-                                    {{ site.baseurl }}/{{ lang }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                    {% if has_baseurl %}
+                                        {{ baseurl_prefix }}/{{ lang }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                    {% else %}
+                                        /{{ lang }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                    {% endif %}
                                 {% endif %}
                             {% endcapture %}
                             <a href="{{ lang_url | replace: '//', '/' | replace: '//', '/' }}"
@@ -52,7 +62,7 @@
                 </div>
             </div>
 
-            <!-- Mobil Menü Butonu + Dil Değiştirici - Tüm senaryolar için düzeltildi -->
+            <!-- Mobil Menü Butonu + Dil Değiştirici - BaseURL kontrolü ile -->
             <div class="md:hidden flex items-center">
                 <div class="md:hidden flex items-center mr-4 space-x-2">
                     {% for lang in site.languages %}
@@ -63,9 +73,17 @@
                         {% else %}
                             {% capture lang_url %}
                                 {% if lang == site.default_lang %}
-                                    {{ site.baseurl }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                    {% if has_baseurl %}
+                                        {{ baseurl_prefix }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                    {% else %}
+                                        {{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' | prepend: '/' }}
+                                    {% endif %}
                                 {% else %}
-                                    {{ site.baseurl }}/{{ lang }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                    {% if has_baseurl %}
+                                        {{ baseurl_prefix }}/{{ lang }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                    {% else %}
+                                        /{{ lang }}{{ page.url | remove_first: '/' | remove_first: current_active_lang | remove_first: '/' }}
+                                    {% endif %}
                                 {% endif %}
                             {% endcapture %}
                             <a href="{{ lang_url | replace: '//', '/' | replace: '//', '/' }}"
@@ -84,7 +102,7 @@
         </div>
     </div>
 
-    <!-- Mobil Menü Açılır Pencere - Tüm senaryolar için düzeltildi -->
+    <!-- Mobil Menü Açılır Pencere - BaseURL kontrolü ile -->
     <div id="mobile-menu" class="hidden md:hidden bg-ctp-mantle border-t border-ctp-surface0">
         <div class="px-6 py-4 space-y-4">
             {% for item in nav_links %}
@@ -97,11 +115,11 @@
                     </a>
                 {% else %}
                     {% if current_active_lang == site.default_lang %}
-                        <a href="{{ site.baseurl }}{{ item.url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">
+                        <a href="{{ baseurl_prefix }}{{ item.url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">
                             {{ item.title }}
                         </a>
                     {% else %}
-                        <a href="{{ site.baseurl }}/{{ current_active_lang }}{{ item.url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">
+                        <a href="{{ baseurl_prefix }}/{{ current_active_lang }}{{ item.url }}" class="block hover:text-ctp-lavender transition-colors mobile-nav-link">
                             {{ item.title }}
                         </a>
                     {% endif %}

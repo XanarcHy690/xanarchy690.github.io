@@ -27,7 +27,7 @@ url: "https://sahinmuhammetabdullah.github.io"
 #     Eğer kök dizinde yayınlanıyorsa (örn: kullaniciadi.github.io), boş bırakın ("").
 # EN: If your site is published in a subdirectory (e.g., username.github.io/REPO_NAME/), put /REPO_NAME here.
 #     If published at the root (e.g., username.github.io), leave it blank ("").
-baseurl: "/portfolio"
+baseurl: ""
 
 # TR: GitHub kullanıcı adınız (isteğe bağlı, sosyal linkler veya meta için).
 # EN: Your GitHub username (optional, for social links or meta).
