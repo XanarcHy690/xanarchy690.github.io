@@ -1,6 +1,6 @@
-name: "Muhammet Abdullah Şahin"
-avatar: "/assets/images/profile.png"
-email: "m.sahinabdullah@gmail.com"
+name: "Portfolio"
+avatar: "/assets/images/profile.png" # 600*600 pixel
+email: "portfolio@gmail.com"
 phone: # "+90 555 555 55 55"
 
 tr:
