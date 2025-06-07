@@ -105,7 +105,7 @@ ms_tile_color: "#b4befe"     # Catppuccin Lavender
 
 # TR: Varsayılan favicon yolu (jekyll-seo-tag gibi bazı eklentiler tarafından kullanılabilir, ancak ana favicon yönetimi head.html'dedir).
 # EN: Default favicon path (can be used by some plugins like jekyll-seo-tag, but main favicon management is in head.html).
-favicon: /assets/images/favicons/favicon-96x96.png # Kullandığınız bir favicon dosyasına işaret etmeli
+favicon: /assets/images/favicons/favicon-96x96.png
 
 # -----------------------------------------------------------------------------
 # Footer ve Lisans Bilgileri / Footer & License Information

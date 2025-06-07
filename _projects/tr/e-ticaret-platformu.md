@@ -35,7 +35,7 @@ icon_class: "fas fa-shopping-cart"
 # KAPAK GÖRSELİ (İsteğe Bağlı):
 # Proje kartında gösterilecek ana görsel. Eğer bu alan varsa, image_gradient_* alanları kullanılmaz.
 # Yol, projenizin kök dizinine göre olmalı ve başında / olmalı.
-cover_image: "/assets/images/projects/ecommerce-cover.jpg" 
+cover_image: "/assets/images/projects/ecommerce-cover.png" # 1920*960 pixel
 
 # LİNKLER:
 github_url: "https://github.com/yourusername/ecommerce-project" # Projenin GitHub deposu (varsa)
@@ -50,7 +50,7 @@ Bu kısımda projenizin **detaylı Türkçe açıklamasını** yapacaksınız. S
 
 E-ticaret platformumuz, kesintisiz ve modern bir online alışveriş deneyimi sunmak üzere tasarlandı. Temel hedefler arasında kullanıcı dostu bir arayüz, güçlü bir arka plan altyapısı ve güvenli işlem süreçleri yer alıyordu. Büyüyen ürün kataloglarını ve kullanıcı tabanlarını desteklemek için ölçeklenebilirliğe odaklandık.
 
-![Ana Sayfa Ekran Görüntüsü]({{ '/assets/images/projects/ecommerce-cover.jpg' | relative_url }})
+![Ana Sayfa Ekran Görüntüsü]({{ '/assets/images/projects/ecommerce-cover.png' | relative_url }})
 *<center><small>Şek. 1: Öne çıkan ürünleri gösteren ana giriş sayfası.</small></center>*
 
 Platform kullanıcılara şunları sağlar:
@@ -70,7 +70,7 @@ Platform kullanıcılara şunları sağlar:
 *   **Sipariş Yönetimi:** Kullanıcılar sipariş geçmişlerini görüntüleyebilir; yöneticiler siparişleri yönetebilir.
 *   **İstek Listesi İşlevselliği:** Kullanıcılar ürünleri daha sonra için kaydedebilir.
 
-![Yönetici Paneli Ekran Görüntüsü]({{ '/assets/images/projects/ecommerce-cover.jpg' | relative_url }})
+![Yönetici Paneli Ekran Görüntüsü]({{ '/assets/images/projects/ecommerce-cover.png' | relative_url }})
 *<center><small>Şek. 2: Site istatistiklerini ve siparişleri yönetmek için yönetici paneli.</small></center>*
 
 #### Teknik Detaylar
