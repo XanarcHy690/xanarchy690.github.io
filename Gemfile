@@ -7,6 +7,10 @@ gem "jekyll-feed", "~> 0.17.0"
 gem "jekyll-seo-tag", "~> 2.8.0"
 gem "jekyll-sitemap", "~> 1.4.0"
 
+group :jekyll_plugins, :development, :test do
+    gem "html-proofer", "~> 4" # Veya en son uyumlu versiyon
+end
+
 # Windows'ta dosya izleme için (isteğe bağlı ama önerilir)
 # :if yerine install_if kullanılıyor
 gem 'wdm', '>= 0.1.0', install_if: Gem.win_platform?
