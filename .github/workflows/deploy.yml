@@ -1,50 +1,73 @@
-name: Build and Deploy Jekyll Site to GitHub Pages
-
+name: "Build and Deploy"
 on:
   push:
     branches:
-      - main  # Veya sitenizin ana dalı (master vb.)
+      - main
+      - master
+    paths-ignore:
+      - .gitignore
+      - README.md
+      - LICENSE
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build_and_deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read  # Depoyu okuma izni
-      pages: write    # GitHub Pages'a yazma izni
-      id-token: write # GitHub Pages deploy için gerekli
 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # submodules: true
+          # If using the 'assets' git submodule from Chirpy Starter, uncomment above
+          # (See: https://github.com/cotes2020/chirpy-starter/tree/main/assets)
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3
+          bundler-cache: true
+
+      - name: Build site
+        run: bundle exec jekyll b -d "_site${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: "production"
+
+      - name: Test site
+        run: |
+          bundle exec htmlproofer _site \
+            \-\-disable-external \
+            \-\-ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/"
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "_site${{ steps.pages.outputs.base_path }}"
+
+  deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
+    runs-on: ubuntu-latest
+    needs: build
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Ruby and Bundler
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.0' # Gemfile'ınızdaki veya projenizin gerektirdiği Ruby sürümü
-          bundler-cache: true # Gemfile.lock'a göre 'bundle install' çalıştırır ve gem'leri önbelleğe alır
-
-      - name: Setup GitHub Pages
-        id: pages
-        uses: actions/configure-pages@v4
-        # Bu adım, GitHub Pages için baseurl gibi ortam değişkenlerini ayarlar
-
-      - name: Build Jekyll site
-        # Kendi Gemfile'ınızdaki Jekyll ve eklentileri (jekyll-polyglot dahil) kullanarak build eder.
-        # Baseurl, bir önceki 'Setup GitHub Pages' adımından alınır.
-        run: bundle exec jekyll build --destination ./_site --baseurl "${{ steps.pages.outputs.base_path }}"
-        env:
-          JEKYLL_ENV: production # Üretim ortamı için build
-
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./_site # Build edilen _site klasörünü yükle
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        # Yüklenen artifact'i GitHub Pages'a deploy eder
