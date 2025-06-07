@@ -3,21 +3,21 @@
 # -----------------------------------------------------------------------------
 # TR: Sitenizin genel başlığı, tarayıcı sekmelerinde ve arama sonuçlarında görünür.
 # EN: The main title of your site, appears in browser tabs and search results.
-title: Muhammet Abdullah Şahin
+title: Portfolio
 
 # TR: Sitenin yazarının/sahibinin adı. Meta etiketlerinde ve tema içinde kullanılabilir.
 # EN: The name of the site author/owner. Can be used in meta tags and within the theme.
-author: Muhammet Abdullah Şahin
+author: Portfolio
 
 # TR: Sitenizin e-posta adresi (isteğe bağlı, iletişim veya meta için kullanılabilir).
 # EN: Your site's email address (optional, can be used for contact or meta).
-email: m.sahinabdullah@gmail.com
+email: portfolio@portfolio.com
 
 # TR: Sitenizin kısa açıklaması. Arama motorları ve sosyal medya paylaşımları için önemlidir.
 # EN: A short description of your site. Important for search engines and social media sharing.
 description: >-
-  Muhammet Abdullah Şahin'in Full Stack Developer ve UI/UX Designer olarak projelerini
-  ve deneyimlerini içeren kişisel portfolyo sitesi.
+  Personal portfolio site containing my projects and 
+  experiences as a Full Stack Developer and UI/UX Designer.
 
 # TR: Sitenizin yayınlanacağı ana URL. GitHub Pages için kullanıcıadınız.github.io şeklindedir.
 # EN: The base hostname & protocol for your site. For GitHub Pages, it's username.github.io.
@@ -31,7 +31,7 @@ baseurl: "/portfolio"
 
 # TR: GitHub kullanıcı adınız (isteğe bağlı, sosyal linkler veya meta için).
 # EN: Your GitHub username (optional, for social links or meta).
-github_username: SahinMuhammetAbdullah
+github_username: GitHubUserName
 
 # -----------------------------------------------------------------------------
 # Build Ayarları / Build Settings
