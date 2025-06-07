@@ -1,73 +1,100 @@
-name: "Build and Deploy"
+name: "Build and Deployment"
+
+# İş akışının tetiklenme koşulları
 on:
   push:
     branches:
       - main
-      - master
-    paths-ignore:
-      - .gitignore
-      - README.md
-      - LICENSE
 
-  # Allows you to run this workflow manually from the Actions tab
+    paths-ignore:
+      - '.gitignore'
+      - 'README.md'
+      - 'README_tr.md'
+      - 'LICENSE'
+      - '.vscode/**'   # VS Code ayar dosyaları
+
+  # GitHub arayüzünden manuel olarak da çalıştırılabilmesini sağlar
   workflow_dispatch:
 
+# İş akışının çalışması için gerekli izinler
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: read  # Depo içeriğini okuma izni (checkout için)
+  pages: write    # GitHub Pages'a yazma/deploy etme izni
+  id-token: write # GitHub Pages deploy için OpenID Connect token oluşturma izni
 
-# Allow one concurrent deployment
+# Aynı anda sadece bir "pages" deploy'unun çalışmasını sağlar, önceki bir deploy çalışıyorsa onu iptal eder.
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
 jobs:
+  # Sitenin build edileceği ve test edileceği iş
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # İşin çalışacağı sanal makine
 
     steps:
-      - name: Checkout
+      # Adım 1: Depo içeriğini (kodları) sanal makineye indir
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          # submodules: true
-          # If using the 'assets' git submodule from Chirpy Starter, uncomment above
-          # (See: https://github.com/cotes2020/chirpy-starter/tree/main/assets)
+          fetch-depth: 0 # Jekyll'ın tüm geçmişe erişebilmesi için (last_modified vb. için gerekebilir)
 
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v4
+      # Adım 2: GitHub Pages için ortamı yapılandır
+      # Bu, baseurl gibi değerleri sonraki adımlar için sağlar.
+      - name: Setup GitHub Pages
+        id: pages # Bu adıma referans vermek için ID
+        uses: actions/configure-pages@v5 # Güncel versiyonu kullanın
 
-      - name: Setup Ruby
+      # Adım 3: Ruby ortamını kur, Bundler'ı ayarla ve Gemfile'daki bağımlılıkları yükle
+      - name: Setup Ruby and Install Dependencies
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3
-          bundler-cache: true
+          ruby-version: '3.1' 
 
-      - name: Build site
-        run: bundle exec jekyll b -d "_site${{ steps.pages.outputs.base_path }}"
+          bundler-cache: true 
+
+      # Adım 4: Jekyll sitesini build et
+      - name: Build Jekyll site
+        # JEKYLL_ENV=production, sitenin üretim modunda build edilmesini sağlar.
+        # --destination ./_site, build çıktısının _site klasörüne yazılmasını belirtir.
+        # --baseurl "${{ steps.pages.outputs.base_path }}", sitenin doğru alt dizinde (baseurl) çalışmasını sağlar.
+        run: bundle exec jekyll build --destination ./_site --baseurl "${{ steps.pages.outputs.base_path }}" --verbose --profile
         env:
           JEKYLL_ENV: "production"
 
-      - name: Test site
+      # Adım 5: Oluşturulan siteyi htmlproofer ile test et (isteğe bağlı ama önerilir)
+      - name: Test site with HTMLProofer
+        # Bu adım, _site klasöründeki HTML dosyalarında bozuk linkler, eksik resimler vb. kontrol eder.
+        # --disable-external, dış linkleri kontrol etmez (build süresini kısaltır).
+        # --ignore-urls, belirtilen URL kalıplarını (örn: yerel sunucu adresleri) yok sayar.
         run: |
-          bundle exec htmlproofer _site \
-            \-\-disable-external \
-            \-\-ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/"
+          bundle exec htmlproofer ./_site \
+            --disable-external \
+            --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/" \
+            --check-html \
+            --assume-extension ".html" \
+            --empty-alt-ignore \
+            --log-level :debug
+        # --check-html: HTML geçerliliğini kontrol eder.
+        # --assume-extension ".html": /dizin/ gibi linklerin /dizin/index.html'e işaret ettiğini varsayar.
+        # --empty-alt-ignore: Boş alt etiketli resimleri görmezden gelir (önerilmez, erişilebilirlik için alt etiketi olmalı).
+        # --log-level :debug: Daha fazla çıktı verir.
 
+      # Adım 6: Build edilen siteyi (artifact) GitHub Pages'a yüklemek için hazırla
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "_site${{ steps.pages.outputs.base_path }}"
+          path: ./_site # Jekyll build çıktısının olduğu _site klasörü
 
+  # Sitenin GitHub Pages'a deploy edileceği iş
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }} # Deploy edilen sitenin URL'si
     runs-on: ubuntu-latest
-    needs: build
+    needs: build # Bu iş, 'build' işi başarıyla tamamlandıktan sonra çalışır
     steps:
+      # Adım 1: Yüklenen artifact'i GitHub Pages'a deploy et
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

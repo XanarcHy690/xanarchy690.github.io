@@ -91,7 +91,7 @@ Bu depoyu fork ettiyseniz ve kendi GitHub Pages'ınızda yayınlamak istiyorsan�
 2.  **GitHub Pages Kaynağını Yapılandırın:**
     *   Forkladığınız deponuzda **Ayarlar (Settings)** > **Sayfalar (Pages)** bölümüne gidin.
     *   "Oluşturma ve dağıtım (Build and deployment)" altında, **Kaynak (Source)** için **GitHub Actions**'ı seçin.
-    *   Bu, GitHub Pages'a sitenizi kendisinin oluşturması yerine (ki bu `jekyll-polyglot` gibi özel eklentileri desteklemez) sizin `jekyll.yml` iş akışınızın çıktısını kullanmasını söyler.
+    *   Bu, GitHub Pages'a sitenizi kendisinin oluşturması yerine (ki bu `jekyll-polyglot` gibi özel eklentileri desteklemez) sizin `deploy.yml` iş akışınızın çıktısını kullanmasını söyler.
 
 3.  **İlk Dağıtım Onayı (Gerekirse):**
     *   Bazen bir GitHub Actions iş akışı bir GitHub Pages ortamına ilk kez dağıtım yapmaya çalıştığında manuel bir onay gerekebilir.
@@ -99,6 +99,41 @@ Bu depoyu fork ettiyseniz ve kendi GitHub Pages'ınızda yayınlamak istiyorsan�
 
 4.  **Değişiklikleri Push Edin:**
     *   Değişikliklerinizi (özellikle `_config.yml`'e yaptıklarınızı) `main` dalınıza commit edip push edin. Bu, GitHub Actions iş akışını tetikleyecek, sitenizi oluşturacak ve dağıtacaktır. Siteniz daha sonra Pages ayarlarınızda belirtilen URL'de canlı olmalıdır.
+
+#### Sorun Giderme: Otomatik Dağıtım Çalışmıyorsa
+
+GitHub Pages ayarlarınızı kaynak olarak "GitHub Actions" kullanacak şekilde yapılandırdıktan sonra, dağıtım iş akışınız (`.github/workflows/deploy.yml`) push işlemlerinde otomatik olarak tetiklenmiyorsa veya GitHub Pages hala kendi build işlemini yapmaya çalışıyor gibi görünüyorsa, Pages ortamı için iş akışını manuel olarak etkinleştirmeniz veya yeniden tetiklemeniz gerekebilir.
+
+Siteniz özel GitHub Action'ınız aracılığıyla otomatik olarak dağıtılmıyorsa şu adımları izleyin:
+
+1.  **GitHub Pages Ayarlarına Gidin:**
+    *   Deponuzda **Ayarlar (Settings)** > **Sayfalar (Pages)** bölümüne gidin.
+    *   "Oluşturma ve dağıtım (Build and deployment)" kaynağının **GitHub Actions** olarak ayarlandığından emin olun.
+
+2.  **Pages İçin İş Akışı Çalıştırmalarına Erişin:**
+    *   Eğer iş akışlarının etkinleştirilmesi gerektiğine veya sorunlar olduğuna dair bir gösterge varsa, **"İş akışı çalıştırmalarını görüntüle (View workflow runs)"** gibi bir mesaj veya bağlantı görebilirsiniz (Pages ayarlarıyla ilgili benzer bir ifade). Buna tıklayın.
+    ![görsel](/assets/1.png)
+
+3.  **İş Akışlarını Etkinleştirin:**
+    *   GitHub Pages dağıtımı için iş akışlarını anladığınızı ve etkinleştirmek istediğinizi onaylamanızı isteyen bir sayfaya yönlendirilebilirsiniz.
+    *   **"İş akışlarımı anlıyorum, devam et ve etkinleştir (I understand my workflows, go ahead and enable them)"** (veya benzer bir onay butonuna) tıklayın.
+    ![görsel](/assets/2.png)
+
+4.  **Dağıtım İş Akışını Manuel Olarak Çalıştırın:**
+    *   Deponuzdaki **Eylemler (Actions)** sekmesine gidin.
+    *   Sol kenar çubuğunda, dağıtım iş akışınızı bulun ve tıklayın (örn: **"Jekyll Site Build and GitHub Pages Deployment"** veya "Build and Deploy").
+    ![görsel](/assets/3.png)
+    *   Genellikle sağ tarafta bir **"İş akışını çalıştır (Run workflow)"** butonu görmelisiniz. Bu butona tıklayın.
+    *   Hangi daldan çalıştırılacağını soran bir açılır menü görünebilir; ana dalınızı (örn: `main`) seçin ve yeşil renkli **"İş akışını çalıştır (Run workflow)"** butonuna tıklayın.
+    ![görsel](/assets/4.png)
+
+5.  **İş Akışı İsteğini Onaylayın:**
+    *   İş akışını başarıyla tetikledikten sonra, **"İş akışı çalıştırması başarıyla istendi (Workflow run was successfully requested.)"** gibi bir onay mesajı görmelisiniz.
+    ![görsel](/assets/5.png)
+    *   Şimdi bu manuel olarak tetiklenen iş akışı çalıştırmasının ilerlemesini izleyebilirsiniz. Başarıyla tamamlandıktan sonra siteniz GitHub Pages'a dağıtılmalıdır.
+
+Bu manuel tetikleme, genellikle GitHub Pages'ın özel iş akışınızı dağıtım süreciyle doğru bir şekilde ilişkilendirmesine yardımcı olur. Yapılandırılmış dalınıza sonraki push işlemleri, iş akışını otomatik olarak tetiklemelidir.
+
 
 ## 🛠️ Özelleştirme
 

@@ -92,7 +92,7 @@ If you have forked this repository and want to deploy it to your own GitHub Page
 2.  **Configure GitHub Pages Source:**
     *   In your forked repository, go to **Settings** > **Pages**.
     *   Under "Build and deployment", for the **Source**, select **GitHub Actions**.
-    *   This tells GitHub Pages to use the output from your `jekyll.yml` workflow instead of trying to build the site itself (which wouldn't support custom plugins like `jekyll-polyglot`).
+    *   This tells GitHub Pages to use the output from your `deploy.yml` workflow instead of trying to build the site itself (which wouldn't support custom plugins like `jekyll-polyglot`).
 
 3.  **First Deployment Approval (If Needed):**
     *   Sometimes, the first time a GitHub Actions workflow tries to deploy to a GitHub Pages environment, it might require a manual approval.
@@ -100,6 +100,41 @@ If you have forked this repository and want to deploy it to your own GitHub Page
 
 4.  **Push Changes:**
     *   Commit and push your changes (especially to `_config.yml`) to your `main` branch. This will trigger the GitHub Actions workflow, which will build and deploy your site. Your site should then be live at the URL specified in your Pages settings.
+
+### Troubleshooting: Automatic Deployment Not Working
+
+If, after configuring GitHub Pages to use "GitHub Actions" as the source, the deployment workflow (`.github/workflows/deploy.yml`) does not trigger automatically on push, or if GitHub Pages still seems to be attempting its own build, you might need to manually enable or re-trigger the workflow for the Pages environment.
+
+Follow these steps if your site is not deploying automatically via the custom GitHub Action:
+
+1.  **Navigate to GitHub Pages Settings:**
+    *   In your repository, go to **Settings** > **Pages**.
+    *   Ensure "Build and deployment" source is set to **GitHub Actions**.
+
+2.  **Access Workflow Runs for Pages:**
+    *   If there's an indication that workflows need to be enabled or there are issues, you might see a message or a link like **"View workflow runs"** (or similar, pertaining to Pages). Click on it.
+    ![picture](/assets/1.png)
+
+
+3.  **Enable Workflows (If Prompted):**
+    *   You might be taken to a page asking you to confirm that you understand and want to enable workflows for GitHub Pages deployment.
+    *   Click on **"I understand my workflows, go ahead and enable them"** (or a similar confirmation button).
+    ![picture](/assets/2.png)
+
+4.  **Manually Run the Deployment Workflow:**
+    *   Go to the **Actions** tab in your repository.
+    *   In the left sidebar, find and click on your deployment workflow (e.g., **"Jekyll Site Build and GitHub Pages Deployment"** or "Build and Deploy").
+    ![picture](/assets/3.png)
+    *   You should see a **"Run workflow"** button, usually on the right side. Click this button.
+    *   A dropdown might appear asking which branch to run from; select your main branch (e.g., `main`) and click the green **"Run workflow"** button.
+    ![picture](/assets/4.png)
+
+5.  **Confirm Workflow Request:**
+    *   After successfully triggering the workflow, you should see a confirmation message like **"Workflow run was successfully requested."**
+    ![picture](/assets/5.png)
+    *   You can now monitor the progress of this manually triggered workflow run. Once it completes successfully, your site should be deployed to GitHub Pages.
+
+This manual trigger often helps GitHub Pages correctly associate your custom workflow with its deployment process. Subsequent pushes to your configured branch should then trigger the workflow automatically.
 
 ## 🛠️ Customization
 
