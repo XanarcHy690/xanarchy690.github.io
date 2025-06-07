@@ -21,13 +21,13 @@ description: >-
 
 # TR: Sitenizin yayınlanacağı ana URL. GitHub Pages için kullanıcıadınız.github.io şeklindedir.
 # EN: The base hostname & protocol for your site. For GitHub Pages, it's username.github.io.
-url: "https://sahinmuhammetabdullah.github.io"
+url: "https://xanarchy690.github.io"
 
 # TR: Eğer siteniz bir alt dizinde yayınlanıyorsa (örn: kullaniciadi.github.io/DEPO_ADI/), buraya /DEPO_ADI yazın.
 #     Eğer kök dizinde yayınlanıyorsa (örn: kullaniciadi.github.io), boş bırakın ("").
 # EN: If your site is published in a subdirectory (e.g., username.github.io/REPO_NAME/), put /REPO_NAME here.
 #     If published at the root (e.g., username.github.io), leave it blank ("").
-baseurl: "/portfolio"
+baseurl: ""
 
 # TR: GitHub kullanıcı adınız (isteğe bağlı, sosyal linkler veya meta için).
 # EN: Your GitHub username (optional, for social links or meta).
