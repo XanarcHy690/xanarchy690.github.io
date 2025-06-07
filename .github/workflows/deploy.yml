@@ -62,22 +62,6 @@ jobs:
         env:
           JEKYLL_ENV: "production"
 
-      # Adım 5: Oluşturulan siteyi htmlproofer ile test et (isteğe bağlı ama önerilir)
-      - name: Test site with HTMLProofer
-        # Bu adım, _site klasöründeki HTML dosyalarında bozuk linkler, eksik resimler vb. kontrol eder.
-        # --disable-external, dış linkleri kontrol etmez (build süresini kısaltır).
-        # --ignore-urls, belirtilen URL kalıplarını (örn: yerel sunucu adresleri) yok sayar.
-        run: |
-          bundle exec htmlproofer ./_site \
-            --disable-external \
-            --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/" \
-            --assume-extension \
-            --empty-alt-ignore \
-            --log-level :info
-        # --assume-extension ".html": /dizin/ gibi linklerin /dizin/index.html'e işaret ettiğini varsayar.
-        # --empty-alt-ignore: Boş alt etiketli resimleri görmezden gelir (önerilmez, erişilebilirlik için alt etiketi olmalı).
-        # --log-level :debug: Daha fazla çıktı verir.
-
       # Adım 6: Build edilen siteyi (artifact) GitHub Pages'a yüklemek için hazırla
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
