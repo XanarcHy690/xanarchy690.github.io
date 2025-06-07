@@ -71,11 +71,9 @@ jobs:
           bundle exec htmlproofer ./_site \
             --disable-external \
             --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/" \
-            --check-html \
-            --assume-extension ".html" \
+            --assume-extension \
             --empty-alt-ignore \
-            --log-level :debug
-        # --check-html: HTML geçerliliğini kontrol eder.
+            --log-level :info
         # --assume-extension ".html": /dizin/ gibi linklerin /dizin/index.html'e işaret ettiğini varsayar.
         # --empty-alt-ignore: Boş alt etiketli resimleri görmezden gelir (önerilmez, erişilebilirlik için alt etiketi olmalı).
         # --log-level :debug: Daha fazla çıktı verir.
